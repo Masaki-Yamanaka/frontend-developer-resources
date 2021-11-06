@@ -34,6 +34,11 @@ const Home: NextPage = () => {
             <a>ISR Demo</a>
           </Link>
         </p>
+        <p className={styles.description}>
+          <Link href={'/login'}>
+            <a>Google Login Demo</a>
+          </Link>
+        </p>
       </main>
 
       <footer className={styles.footer}>
