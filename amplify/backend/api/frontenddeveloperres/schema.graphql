@@ -1,5 +1,51 @@
-type Todo @model {
+type Resource @model {
+  id: ID!
+  categoryId: ID!
+  userId: ID!
+  title: String!
+  url: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type User @model {
   id: ID!
   name: String!
-  description: String
+  email: String!
+  profileImagePath: String!
+  password: String!
+  progressRate: Int!
+  ResourcesCount: Int!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Category @model {
+  id: ID!
+  name: String!
+}
+
+type ResourceUser @model {
+  id: ID!
+  resourceId: ID!
+  userId: ID!
+}
+
+type Post @model {
+  id: ID!
+  categoryId: ID!
+  userId: ID!
+  title: String!
+  content: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Feed @model {
+  id: ID!
+  categoryId: ID!
+  userId: ID!
+  text: String!
+  createdAt: String!
+  updatedAt: String!
 }
