@@ -6,33 +6,7 @@
       "lastPushTimeStamp": "2021-11-02T02:30:23.294Z"
     }
   },
-  "auth": {
-    "frontenddeveloperresafbe46b3": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false,
-      "frontendAuthConfig": {
-        "loginMechanisms": [
-          "PREFERRED_USERNAME"
-        ],
-        "signupAttributes": [
-          "EMAIL"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": []
-        },
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
-      }
-    }
-  },
+  "auth": {},
   "api": {
     "frontenddeveloperres": {
       "service": "AppSync",
@@ -40,9 +14,10 @@
       "output": {
         "authConfig": {
           "defaultAuthentication": {
-            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-            "userPoolConfig": {
-              "userPoolId": "authfrontenddeveloperresafbe46b3"
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7,
+              "description": ""
             }
           },
           "additionalAuthenticationProviders": []
