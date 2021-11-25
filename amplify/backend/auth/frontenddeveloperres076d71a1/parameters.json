@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "frontenddeveloperresafbe46b3_identitypool_afbe46b3",
+    "identityPoolName": "frontenddeveloperres076d71a1_identitypool_076d71a1",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "fronteafbe46b3",
-    "userPoolName": "frontenddeveloperresafbe46b3_userpool_afbe46b3",
+    "resourceNameTruncated": "fronte076d71a1",
+    "userPoolName": "frontenddeveloperres076d71a1_userpool_076d71a1",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -29,10 +29,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "fronteafbe46b3_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "fronte076d71a1_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "afbe46b3",
-    "resourceName": "frontenddeveloperresafbe46b3",
+    "sharedId": "076d71a1",
+    "resourceName": "frontenddeveloperres076d71a1",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -48,12 +48,12 @@
     },
     "useDefault": "defaultSocial",
     "hostedUI": true,
-    "hostedUIDomainName": "frontenddeveloperresafbe46b3-afbe46b3",
+    "hostedUIDomainName": "frontenddeveloperres076d71a1-076d71a1",
     "authProvidersUserPool": [
         "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\",\"https://master.dyvpqo3rpg7l.amplifyapp.com/\"],\"LogoutURLs\":[\"http://localhost:3000/\",\"https://master.dyvpqo3rpg7l.amplifyapp.com/\"]}",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,

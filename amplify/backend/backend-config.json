@@ -7,7 +7,7 @@
     }
   },
   "auth": {
-    "frontenddeveloperresafbe46b3": {
+    "frontenddeveloperres076d71a1": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -42,7 +42,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authfrontenddeveloperresafbe46b3"
+              "userPoolId": "authfrontenddeveloperres076d71a1"
             }
           },
           "additionalAuthenticationProviders": []
