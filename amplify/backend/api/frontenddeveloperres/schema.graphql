@@ -6,8 +6,6 @@ type Resource @model {
   url: String!
   category: Category @connection(fields: ["categoryId"])
   user: User @connection(fields: ["userId"])
-  createdAt: String!
-  updatedAt: String!
 }
 
 type User @model {
@@ -17,10 +15,8 @@ type User @model {
   profileImagePath: String!
   password: String!
   progressRate: Int!
-  ResourcesCount: Int!
+  resourcesCount: Int!
   posts: [Post] @connection(keyName: "postsByUserId", fields: ["id"])
-  createdAt: String!
-  updatedAt: String!
 }
 
 type Category @model {
@@ -44,8 +40,6 @@ type Post
   content: String!
   category: Category @connection(fields: ["categoryId"])
   user: User @connection(fields: ["userId"])
-  createdAt: String!
-  updatedAt: String!
 }
 
 type Feed @model {
@@ -55,6 +49,4 @@ type Feed @model {
   text: String!
   category: Category @connection(fields: ["categoryId"])
   user: User @connection(fields: ["userId"])
-  createdAt: String!
-  updatedAt: String!
 }
