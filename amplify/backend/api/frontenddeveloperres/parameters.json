@@ -1,5 +1,12 @@
 {
   "AppSyncApiName": "frontenddeveloperres",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authfrontenddeveloperres7afe7b71",
+      "Outputs.UserPoolId"
+    ]
+  },
+  "AuthModeLastUpdated": "2021-11-29T23:30:17.091Z"
 }
