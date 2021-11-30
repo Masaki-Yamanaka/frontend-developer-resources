@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "frontenddeveloperres7afe7b71_identitypool_7afe7b71",
+    "identityPoolName": "frontenddeveloperresd62a6bab_identitypool_d62a6bab",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "fronte7afe7b71",
-    "userPoolName": "frontenddeveloperres7afe7b71_userpool_7afe7b71",
+    "resourceNameTruncated": "fronted62a6bab",
+    "userPoolName": "frontenddeveloperresd62a6bab_userpool_d62a6bab",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -31,37 +31,22 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "fronte7afe7b71_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "fronted62a6bab_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "7afe7b71",
-    "resourceName": "frontenddeveloperres7afe7b71",
+    "sharedId": "d62a6bab",
+    "resourceName": "frontenddeveloperresd62a6bab",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "defaultSocial",
     "hostedUI": true,
-    "hostedUIDomainName": "frontenddeveloperres7afe7b71-7afe7b71",
+    "hostedUIDomainName": "frontenddeveloperresd62a6bab-d62a6bab",
     "authProvidersUserPool": [
       "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "useEnabledMfas": false,
-    "authRoleArn": {
-      "Fn::GetAtt": [
-        "AuthRole",
-        "Arn"
-      ]
-    },
-    "unauthRoleArn": {
-      "Fn::GetAtt": [
-        "UnauthRole",
-        "Arn"
-      ]
-    },
-    "breakCircularDependency": true,
-    "dependsOn": [],
-    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\"}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\",\"https://master.dyvpqo3rpg7l.amplifyapp.com/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}"
+    "useEnabledMfas": false
   }
 }
