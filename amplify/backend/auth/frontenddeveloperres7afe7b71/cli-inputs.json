@@ -1,14 +1,16 @@
 {
-    "identityPoolName": "frontenddeveloperres076d71a1_identitypool_076d71a1",
+  "version": "1",
+  "cognitoConfig": {
+    "identityPoolName": "frontenddeveloperres7afe7b71_identitypool_7afe7b71",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "fronte076d71a1",
-    "userPoolName": "frontenddeveloperres076d71a1_userpool_076d71a1",
+    "resourceNameTruncated": "fronte7afe7b71",
+    "userPoolName": "frontenddeveloperres7afe7b71_userpool_7afe7b71",
     "autoVerifiedAttributes": [
-        "email"
+      "email"
     ],
     "mfaConfiguration": "OFF",
     "mfaTypes": [
-        "SMS Text Message"
+      "SMS Text Message"
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
@@ -18,44 +20,33 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-        "email"
+      "email"
     ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
-        "email"
+      "email"
     ],
     "userpoolClientReadAttributes": [
-        "email"
+      "email"
     ],
-    "userpoolClientLambdaRole": "fronte076d71a1_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "fronte7afe7b71_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "076d71a1",
-    "resourceName": "frontenddeveloperres076d71a1",
+    "sharedId": "7afe7b71",
+    "resourceName": "frontenddeveloperres7afe7b71",
     "authSelections": "identityPoolAndUserPool",
-    "authRoleArn": {
-        "Fn::GetAtt": [
-            "AuthRole",
-            "Arn"
-        ]
-    },
-    "unauthRoleArn": {
-        "Fn::GetAtt": [
-            "UnauthRole",
-            "Arn"
-        ]
-    },
     "useDefault": "defaultSocial",
     "hostedUI": true,
-    "hostedUIDomainName": "frontenddeveloperres076d71a1-076d71a1",
+    "hostedUIDomainName": "frontenddeveloperres7afe7b71-7afe7b71",
     "authProvidersUserPool": [
-        "Google"
+      "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
     "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "dependsOn": []
+    "useEnabledMfas": false
+  }
 }
