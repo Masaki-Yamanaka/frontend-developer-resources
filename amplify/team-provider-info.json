@@ -17,6 +17,9 @@
           "appId": "dyvpqo3rpg7l",
           "type": "cicd"
         }
+      },
+      "auth": {
+        "frontenddeveloperresd62a6bab": {}
       }
     }
   }
