@@ -39,9 +39,7 @@ amplify/.config/local-*
 amplify/logs
 amplify/mock-data
 amplify/backend/amplify-meta.json
-amplify/backend/awscloudformation
 amplify/backend/.temp
-amplify/backend/api/frontenddeveloperres/resolvers
 build/
 dist/
 node_modules/
