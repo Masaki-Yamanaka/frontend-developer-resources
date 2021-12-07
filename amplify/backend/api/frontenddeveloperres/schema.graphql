@@ -1,5 +1,51 @@
-type Todo @model {
+type Resource @model {
+  id: ID!
+  categoryId: ID!
+  userId: ID!
+  title: String!
+  url: String!
+  category: Category @connection(fields: ["categoryId"])
+  user: User @connection(fields: ["userId"])
+}
+
+type User @model {
   id: ID!
   name: String!
-  description: String
+  email: String!
+  profileImagePath: String!
+  progressRate: Int!
+  resourcesCount: Int!
+  posts: [Post] @connection(keyName: "postsByUserId", fields: ["id"])
+}
+
+type Category @model {
+  id: ID!
+  name: String!
+}
+
+type ResourceUser @model {
+  id: ID!
+  resourceId: ID!
+  userId: ID!
+}
+
+type Post 
+  @key(name: "postsByUserId", fields: ["userId"])
+  @model {
+  id: ID!
+  categoryId: ID!
+  userId: ID!
+  title: String!
+  content: String!
+  category: Category @connection(fields: ["categoryId"])
+  user: User @connection(fields: ["userId"])
+}
+
+type Feed @model {
+  id: ID!
+  categoryId: ID!
+  userId: ID!
+  text: String!
+  category: Category @connection(fields: ["categoryId"])
+  user: User @connection(fields: ["userId"])
 }
