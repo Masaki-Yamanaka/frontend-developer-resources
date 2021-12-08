@@ -1,0 +1,7 @@
+
+amplify/
+aws-exports.js
+.next/
+.eslintrc.json
+.prettierrc.json
+tsconfig.json
