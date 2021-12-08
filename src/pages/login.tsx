@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/Home.module.scss";
 import Auth from "@aws-amplify/auth";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth/lib/types";
 
