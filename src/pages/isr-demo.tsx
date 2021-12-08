@@ -1,9 +1,9 @@
-import Head from 'next/head';
-import styles from '@/styles/Home.module.scss';
-import { GetStaticProps } from 'next';
-import Link from 'next/link';
+import Head from 'next/head'
+import styles from '@/styles/Home.module.scss'
+import { GetStaticProps } from 'next'
+import Link from 'next/link'
 
-type Props = { nowDate: string; pageTitle: string };
+type Props = { nowDate: string; pageTitle: string }
 
 export default function ISRDemo(props: Props) {
   return (
@@ -25,15 +25,15 @@ export default function ISRDemo(props: Props) {
         </p>
       </main>
     </div>
-  );
+  )
 }
 
-export const getStaticProps: GetStaticProps<Props> = async (context) => {
+export const getStaticProps: GetStaticProps<Props> = async () => {
   return {
     props: {
       nowDate: new Date().toLocaleString(),
       pageTitle: 'ISR Demo',
     },
     revalidate: 5, // ISR settings
-  };
-};
+  }
+}

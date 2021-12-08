@@ -12,13 +12,9 @@ export const getTodo = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listTodos = /* GraphQL */ `
-  query ListTodos(
-    $filter: ModelTodoFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListTodos($filter: ModelTodoFilterInput, $limit: Int, $nextToken: String) {
     listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -30,4 +26,4 @@ export const listTodos = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`

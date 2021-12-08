@@ -1,13 +1,13 @@
-import type { NextPage } from "next";
-import styles from "@/styles/Home.module.scss";
-import Auth from "@aws-amplify/auth";
-import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth/lib/types";
+import type { NextPage } from 'next'
+import styles from '@/styles/Home.module.scss'
+import Auth from '@aws-amplify/auth'
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types'
 
 const Login: NextPage = () => {
   const checkUser = async () => {
-    const user = await Auth.currentAuthenticatedUser();
-    console.log("user: ", user);
-  };
+    const user = await Auth.currentAuthenticatedUser()
+    console.log('user: ', user)
+  }
   return (
     <div className={styles.container}>
       <button
@@ -23,7 +23,7 @@ const Login: NextPage = () => {
       <button onClick={() => Auth.signOut()}>Sign Out</button>
       <button onClick={checkUser}>Check User</button>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
