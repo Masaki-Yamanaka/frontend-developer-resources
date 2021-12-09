@@ -7,8 +7,11 @@ import { API } from "aws-amplify";
 import { createResource } from "@/src/graphql/mutations";
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api";
 import { useRouter } from "next/dist/client/router";
+import { useCreateCategory } from "@/src/hooks/Category/useCategory";
 const Resource: NextPage = () => {
- 
+ /**
+     * モックにて仮のリソースデータを作成する(本番つなぎこみの時に削除する)
+     */
   const  makeResourceData= async () => {
     try {
       const createInput: CreateResourceInput = {
@@ -30,6 +33,8 @@ const Resource: NextPage = () => {
       throw new Error(errors[0].message);
     }
   }
+  const count = useCreateCategory();
+
   useEffect(()=>{
     makeResourceData()
   })
