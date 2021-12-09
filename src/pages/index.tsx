@@ -1,7 +1,7 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import styles from '@/styles/Home.module.scss';
-import Link from 'next/link';
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import styles from '@/styles/Home.module.scss'
+import Link from 'next/link'
 
 const Home: NextPage = () => {
   return (
@@ -49,7 +49,7 @@ const Home: NextPage = () => {
         ></a>
       </footer>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
