@@ -5,7 +5,6 @@ type Resource @model {
   title: String!
   url: String!
   category: Category @connection(fields: ["categoryId"])
-  user: User @connection(fields: ["userId"])
 }
 
 type User @model {
@@ -21,12 +20,6 @@ type User @model {
 type Category @model {
   id: ID!
   name: String!
-}
-
-type ResourceUser @model {
-  id: ID!
-  resourceId: ID!
-  userId: ID!
 }
 
 type Post 
