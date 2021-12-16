@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import '@/styles/globals.scss'
 import type { AppProps } from 'next/app'
-import Amplify, { API, graphqlOperation }  from 'aws-amplify'
-import Auth from '@aws-amplify/auth'
+import Amplify from 'aws-amplify'
+import { fetchAuthUser, createUserInDynamoDB } from "@/src/components/api"
+import { UserInfo } from "@/src/types"
 import config from '../aws-exports'
-import { createUser } from "../graphql/mutations"
 Amplify.configure(config)
 
 if (typeof window !== 'undefined') {
@@ -17,10 +17,11 @@ if (typeof window !== 'undefined') {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
+  // Google認証したユーザー情報をDynamoDBに送信
   useEffect(() => {
     const createUserField = async () => {
-      const user = await Auth.currentAuthenticatedUser()
-      const userInfo = {
+      const user = await fetchAuthUser()
+      const userInfo: UserInfo = {
         id: user.username,
         name: user.attributes.name,
         email: user.attributes.email,
@@ -28,8 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         progressRate: 0,
         resourcesCount: 0,
       }
-      await API.graphql(graphqlOperation(createUser, {input: userInfo}))
-      console.log('ユーザーの作成に成功しました');
+      await createUserInDynamoDB(userInfo)
     }
     createUserField()
   }, [])
