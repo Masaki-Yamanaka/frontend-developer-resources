@@ -5,7 +5,7 @@ type Resource @model {
   title: String!
   url: String!
   category: Category @connection(fields: ["categoryId"])
-  user: User @connection(fields: ["userId"])
+  users: [User] @connection(keyName: "userByResourceId", fields: ["id"])
 }
 
 type User @model {
@@ -16,6 +16,7 @@ type User @model {
   progressRate: Int!
   resourcesCount: Int!
   posts: [Post] @connection(keyName: "postsByUserId", fields: ["id"])
+  resources: [Resource] @connection(keyName: "resourceByUserId", fields: ["id"])
 }
 
 type Category @model {
@@ -24,6 +25,8 @@ type Category @model {
 }
 
 type ResourceUser @model {
+  @key(name: userByResourceId, fields: ["resourceId"])
+  @key(name: resourceByUserId, fields: ["userId"])
   id: ID!
   resourceId: ID!
   userId: ID!
