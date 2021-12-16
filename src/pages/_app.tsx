@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     const createUserField = async () => {
       const user = await fetchAuthUser()
       const userInfo: UserInfo = {
-        id: user.username,
+        id: user.attributes.sub,
         name: user.attributes.name,
         email: user.attributes.email,
         profileImagePath: user.attributes.picture,
