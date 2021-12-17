@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export type UserInfo = {
   id: string,
   name: string,
@@ -8,4 +10,14 @@ export type UserInfo = {
   posts?: []
   createdAt?: string,
   updatedAt?: string,
+}
+
+export type ButtonProps = {
+  onClick: () => void
+  children: ReactNode
+}
+
+export type PageLinkProps = {
+  href: string
+  children: ReactNode
 }

@@ -1,11 +1,6 @@
-import { ReactNode } from 'react'
 import Link from 'next/link'
 import style from './PageLink.module.scss'
-
-type PageLinkProps = {
-  href: string
-  children: ReactNode
-}
+import { PageLinkProps } from '@/src/types'
 
 export const PageLink = ({ href, children }: PageLinkProps) => {
   return (

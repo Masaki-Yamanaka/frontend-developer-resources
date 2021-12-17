@@ -1,10 +1,5 @@
-import { ReactNode } from 'react'
 import style from './Button.module.scss'
-
-type ButtonProps = {
-  onClick: () => void
-  children: ReactNode
-}
+import { ButtonProps } from '@/src/types'
 
 export const Button = ({ onClick, children }: ButtonProps) => {
   return (
