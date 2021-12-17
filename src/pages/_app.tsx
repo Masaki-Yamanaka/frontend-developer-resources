@@ -22,6 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const createUserField = async () => {
       const user = await fetchAuthUser()
+      if (!user) return
       const userInfo: UserInfo = {
         id: user.attributes.sub,
         name: user.attributes.name,
