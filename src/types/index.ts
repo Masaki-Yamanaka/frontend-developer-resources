@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-export type UserInfo = {
+export type User = {
   id: string,
   name: string,
   email: string,
