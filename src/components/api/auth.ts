@@ -1,10 +1,21 @@
 import Auth from '@aws-amplify/auth'
 import { API, graphqlOperation }  from 'aws-amplify'
 import { createUser } from "@/src/graphql/mutations"
+import { getUser } from "@/src/graphql/queries"
+import { GraphQLResult } from "@aws-amplify/api";
+import { GetUserQuery } from "@/src/API"
 
 export const fetchAuthUser = async () => {
   try {
     return await Auth.currentAuthenticatedUser()
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const fetchCurrentUser = async (userId: string) => {
+  try {
+    return (await API.graphql(graphqlOperation(getUser, {id: userId}))) as GraphQLResult<GetUserQuery>
   } catch (error) {
     console.error(error)
   }
