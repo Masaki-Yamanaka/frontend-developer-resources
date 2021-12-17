@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+}
+
+.sidebar {
+  flex-shrink: 0;
+  width: 250px;
+  background-color: #e0f2fe;
+}
+
+.main {
+  width: 100%;
+}
