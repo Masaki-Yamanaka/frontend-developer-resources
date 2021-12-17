@@ -3,6 +3,7 @@ import '@/styles/globals.scss'
 import type { AppProps } from 'next/app'
 import Amplify from 'aws-amplify'
 import { fetchAuthUser, createUserInDynamoDB } from "@/src/components/api"
+import { SideBar } from "@/src/components/ui/SideBar"
 import { UserInfo } from "@/src/types"
 import config from '../aws-exports'
 Amplify.configure(config)
@@ -21,6 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const createUserField = async () => {
       const user = await fetchAuthUser()
+      if (!user) return
       const userInfo: UserInfo = {
         id: user.attributes.sub,
         name: user.attributes.name,
@@ -34,6 +36,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     createUserField()
   }, [])
 
-  return <Component {...pageProps} />
+  return (
+    <SideBar>
+      <Component {...pageProps} />
+    </SideBar> 
+  )
 }
 export default MyApp
