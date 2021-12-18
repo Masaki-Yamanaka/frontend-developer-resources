@@ -18,9 +18,7 @@ const Resource: NextPage = () => {
   const createCategory = async (name: string) => {
     await createCategoryData(name)
   }
-  const createResource = async (categoryId: string, uid: string) => {
-    await createResourceData(categoryId, uid)
-  }
+
   useEffect(() => {
     ;(async () => {
       const user = await Auth.currentAuthenticatedUser()
@@ -32,6 +30,12 @@ const Resource: NextPage = () => {
       setResources(resourceData)
     })()
   }, [])
+
+  const fetchNewData = async () => {
+    const resourceData = await fetchResources()
+    setResources(resourceData)
+    closeFunc()
+  }
 
   return (
     <>
@@ -102,7 +106,7 @@ const Resource: NextPage = () => {
           </tbody>
         </table>
       </div>
-      <ResourceCreateModal categories={categories} isOpen={isOpen} closeFunc={closeFunc} />
+      <ResourceCreateModal categories={categories} isOpen={isOpen} closeFunc={fetchNewData} />
     </>
   )
 }

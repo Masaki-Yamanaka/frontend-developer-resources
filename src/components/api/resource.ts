@@ -9,16 +9,10 @@ import { listResources } from '@/src/graphql/queries'
 /**
  * リソースデータを作成する
  */
-export const createResourceData = async (categoryId: string, uid: string) => {
+export const createResourceData = async (createInput: CreateResourceInput) => {
+  console.log('createInput_______', createInput)
   try {
     // TODO:タイトル名などが固定になっているので、後で修正する。
-    const createInput: CreateResourceInput = {
-      categoryId: categoryId,
-      userId: uid,
-      title: 'タイトル1',
-      url: 'https://qiita.com/cryptobox/items/6db66421b75520ff86a8',
-    }
-
     const response = (await API.graphql({
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       query: createResource,

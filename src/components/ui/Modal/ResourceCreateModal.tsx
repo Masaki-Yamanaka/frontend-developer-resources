@@ -2,12 +2,11 @@ import styles from './ResourceCreateModal.module.scss'
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
-// import { API } from 'aws-amplify'
-// import { CreateTodoInput, CreateTodoMutation } from '../API'
-// import { createTodo } from '../graphql/mutations'
-// import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api'
+import { CreateResourceInput } from '@/src/API'
 import BaseSelect from '@/src/components/ui/Input/BaseSelect'
-import { useState } from 'react'
+import { createResourceData } from '@/src/components/api/resource'
+import { useState, useContext } from 'react'
+import { AuthContext } from '@/src/components/model/auth'
 const style = {
   position: 'absolute' as const,
   top: '50%',
@@ -26,46 +25,37 @@ type Props = {
   isOpen: boolean
   closeFunc: () => void
 }
-type Form = {
-  title: string
-  url: string
-  categoryId: string
-  uid: string
-}
 
 export default function ChildModal(props: Props) {
-  const [form, setForm]: Form = useState({
+  const { currentUser } = useContext(AuthContext)
+  // TODO:型エラー出てます。後で修正します
+  const [form, setForm]: CreateResourceInput = useState({
     title: '',
     url: '',
     categoryId: '',
-    uid: '',
+    userId: currentUser?.getUser?.id,
   })
-  const handleCreateTodo = async (event: any) => {
+  const handleCreateResource = async (event: any) => {
     event.preventDefault()
-
-    // const form = new FormData(event.target)
-
-    // try {
-    //   const createInput: CreateTodoInput = {
-    //     name: form.get('title')?.toString(),
-    //     description: form.get('content')?.toString(),
-    //   }
-
-    //   const request = (await API.graphql({
-    //     authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    //     query: createTodo,
-    //     variables: {
-    //       input: createInput,
-    //     },
-    //   })) as { data: CreateTodoMutation; errors: any[] }
-    //   router.push(`/todo/${request.data.createTodo.id}`)
-    // } catch ({ errors }) {
-    //   console.error(...errors)
-    //   throw new Error(errors[0].message)
-    // }
+    try {
+      console.log('form', form)
+      setForm({ ...form, userId: currentUser?.getUser?.id })
+      await createResourceData(form)
+      props.closeFunc()
+    } catch (errors) {
+      console.error(errors)
+    }
   }
-  const handleChangeSelect = (event: any) => {
-    setForm({ title: form.title, url: form.url, categoryId: event, uid: form.uid })
+  const handleChangeSelect = (event: string) => {
+    setForm({ ...form, categoryId: event })
+  }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>, label: string) => {
+    if (label === 'title') {
+      setForm({ ...form, title: event.target?.value })
+    }
+    if (label === 'url') {
+      setForm({ ...form, url: event.target?.value })
+    }
   }
   return (
     <div>
@@ -74,17 +64,18 @@ export default function ChildModal(props: Props) {
           <Box sx={{ ...style }}>
             <div className={styles.card}>
               <div className={styles.header}>
-                <h3 className={styles.title}>New Todo</h3>
+                <h3 className={styles.title}>リソースを新規作成する</h3>
                 <p className={styles.close} onClick={() => props.closeFunc()}>
                   閉める
                 </p>
               </div>
-              <form onSubmit={handleCreateTodo} className={styles.form}>
-                <legend>Title</legend>
-                <input name='title' />
+              <form onSubmit={handleCreateResource} className={styles.form}>
+                <legend>タイトル</legend>
+                <input name='title' onChange={(event) => handleChange(event, 'title')} />
 
-                <legend>Content</legend>
-                <textarea name='content' />
+                <legend>URL</legend>
+                <input name='url' onChange={(event) => handleChange(event, 'url')} />
+                {/*TODO:新規カテゴリーの追加ができないので、おそらくselectBoxやめると思う */}
                 <BaseSelect
                   label='カテゴリー'
                   selected={form.categoryId}

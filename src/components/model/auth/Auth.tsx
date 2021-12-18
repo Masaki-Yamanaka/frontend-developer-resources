@@ -24,9 +24,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
           progressRate: 0,
           resourcesCount: 0,
         }
+
         let authUser = await fetchCurrentUser(userInfo.id)
         // 初回ログインか
-        if (!authUser) {
+        if (!authUser?.data?.getUser) {
           await createUserInDynamoDB(userInfo)
           authUser = await fetchCurrentUser(userInfo.id)
         }
