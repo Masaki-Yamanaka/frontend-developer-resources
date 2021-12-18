@@ -26,7 +26,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
         let authUser = await fetchCurrentUser(userInfo.id)
         // 初回ログインか
-        if (!authUser) {
+        if (!authUser?.data?.getUser) {
           await createUserInDynamoDB(userInfo)
           authUser = await fetchCurrentUser(userInfo.id)
         }
@@ -35,7 +35,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
       // TODO: ここにリダイレクト処理を入れたい
     })()
-  }, [])
+  }, [currentUser])
 
   return (
     <AuthContext.Provider
