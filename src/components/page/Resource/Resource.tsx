@@ -12,7 +12,7 @@ import Link from 'next/link'
 
 const Resource: NextPage = () => {
   const { isOpen, openFunc, closeFunc } = useModal()
-  const [categories, setCategories]: any[] = useState([])
+  const [categories, setCategories]: any[] = useState([{ id: '', name: '' }])
   const [resources, setResources]: any[] = useState([])
 
   const createCategory = async (name: string) => {
@@ -26,7 +26,8 @@ const Resource: NextPage = () => {
       const user = await Auth.currentAuthenticatedUser()
       console.log('user: ', user)
       const data = await fetchCategories()
-      setCategories(data)
+      const makeCategoriesData = data?.map((v) => ({ id: v.id, name: v.name }))
+      setCategories(makeCategoriesData)
       const resourceData = await fetchResources()
       setResources(resourceData)
     })()
@@ -101,7 +102,7 @@ const Resource: NextPage = () => {
           </tbody>
         </table>
       </div>
-      <ResourceCreateModal isOpen={isOpen} closeFunc={closeFunc} />
+      <ResourceCreateModal categories={categories} isOpen={isOpen} closeFunc={closeFunc} />
     </>
   )
 }

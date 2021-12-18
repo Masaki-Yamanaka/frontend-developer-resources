@@ -6,8 +6,8 @@ import Modal from '@mui/material/Modal'
 // import { CreateTodoInput, CreateTodoMutation } from '../API'
 // import { createTodo } from '../graphql/mutations'
 // import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api'
-import { useRouter } from 'next/dist/client/router'
-
+import BaseSelect from '@/src/components/ui/Input/BaseSelect'
+import { useState } from 'react'
 const style = {
   position: 'absolute' as const,
   top: '50%',
@@ -22,16 +22,28 @@ const style = {
 }
 
 type Props = {
+  categories: any[]
   isOpen: boolean
   closeFunc: () => void
 }
+type Form = {
+  title: string
+  url: string
+  categoryId: string
+  uid: string
+}
 
 export default function ChildModal(props: Props) {
-  const router = useRouter()
+  const [form, setForm]: Form = useState({
+    title: '',
+    url: '',
+    categoryId: '',
+    uid: '',
+  })
   const handleCreateTodo = async (event: any) => {
     event.preventDefault()
 
-    const form = new FormData(event.target)
+    // const form = new FormData(event.target)
 
     // try {
     //   const createInput: CreateTodoInput = {
@@ -52,6 +64,9 @@ export default function ChildModal(props: Props) {
     //   throw new Error(errors[0].message)
     // }
   }
+  const handleChangeSelect = (event: any) => {
+    setForm({ title: form.title, url: form.url, categoryId: event, uid: form.uid })
+  }
   return (
     <div>
       <React.Fragment>
@@ -64,14 +79,18 @@ export default function ChildModal(props: Props) {
                   閉める
                 </p>
               </div>
-
               <form onSubmit={handleCreateTodo} className={styles.form}>
                 <legend>Title</legend>
                 <input name='title' />
 
                 <legend>Content</legend>
                 <textarea name='content' />
-
+                <BaseSelect
+                  label='カテゴリー'
+                  selected={form.categoryId}
+                  change={handleChangeSelect}
+                  items={props.categories}
+                />
                 <button className={styles.button}>Create Todo</button>
               </form>
             </div>
