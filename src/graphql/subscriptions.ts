@@ -16,16 +16,6 @@ export const onCreateResource = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -45,16 +35,6 @@ export const onUpdateResource = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -71,16 +51,6 @@ export const onDeleteResource = /* GraphQL */ `
       category {
         id
         name
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
         createdAt
         updatedAt
       }
@@ -165,39 +135,6 @@ export const onDeleteCategory = /* GraphQL */ `
     onDeleteCategory {
       id
       name
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateResourceUser = /* GraphQL */ `
-  subscription OnCreateResourceUser {
-    onCreateResourceUser {
-      id
-      resourceId
-      userId
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateResourceUser = /* GraphQL */ `
-  subscription OnUpdateResourceUser {
-    onUpdateResourceUser {
-      id
-      resourceId
-      userId
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteResourceUser = /* GraphQL */ `
-  subscription OnDeleteResourceUser {
-    onDeleteResourceUser {
-      id
-      resourceId
-      userId
       createdAt
       updatedAt
     }

@@ -1,19 +1,28 @@
 import '@/styles/globals.scss'
 import type { AppProps } from 'next/app'
 import Amplify from 'aws-amplify'
+import { SideBar } from '@/src/components/ui/SideBar'
+import { AuthProvider } from '@/src/components/model/auth'
 import config from '../aws-exports'
+
 Amplify.configure(config)
 
 if (typeof window !== 'undefined') {
   const { host } = window.location
   if (config.oauth.redirectSignIn.includes(',')) {
     const filterHost = (url: string) => new URL(url).host === host
-    config.oauth.redirectSignIn = config.oauth.redirectSignIn.split(',').filter(filterHost).shift()!
-    config.oauth.redirectSignOut = config.oauth.redirectSignOut.split(',').filter(filterHost).shift()!
+    config.oauth.redirectSignIn = config.oauth.redirectSignIn.split(',').filter(filterHost).shift() || ''
+    config.oauth.redirectSignOut = config.oauth.redirectSignOut.split(',').filter(filterHost).shift() || ''
   }
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <AuthProvider>
+      <SideBar>
+        <Component {...pageProps} />
+      </SideBar>
+    </AuthProvider>
+  )
 }
 export default MyApp

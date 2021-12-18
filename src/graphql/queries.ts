@@ -16,16 +16,6 @@ export const getResource = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -109,35 +99,6 @@ export const listCategorys = /* GraphQL */ `
       items {
         id
         name
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getResourceUser = /* GraphQL */ `
-  query GetResourceUser($id: ID!) {
-    getResourceUser(id: $id) {
-      id
-      resourceId
-      userId
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listResourceUsers = /* GraphQL */ `
-  query ListResourceUsers(
-    $filter: ModelResourceUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listResourceUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        resourceId
-        userId
         createdAt
         updatedAt
       }

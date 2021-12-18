@@ -19,16 +19,6 @@ export const createResource = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -51,16 +41,6 @@ export const updateResource = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -80,16 +60,6 @@ export const deleteResource = /* GraphQL */ `
       category {
         id
         name
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
         createdAt
         updatedAt
       }
@@ -192,48 +162,6 @@ export const deleteCategory = /* GraphQL */ `
     deleteCategory(input: $input, condition: $condition) {
       id
       name
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createResourceUser = /* GraphQL */ `
-  mutation CreateResourceUser(
-    $input: CreateResourceUserInput!
-    $condition: ModelResourceUserConditionInput
-  ) {
-    createResourceUser(input: $input, condition: $condition) {
-      id
-      resourceId
-      userId
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateResourceUser = /* GraphQL */ `
-  mutation UpdateResourceUser(
-    $input: UpdateResourceUserInput!
-    $condition: ModelResourceUserConditionInput
-  ) {
-    updateResourceUser(input: $input, condition: $condition) {
-      id
-      resourceId
-      userId
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteResourceUser = /* GraphQL */ `
-  mutation DeleteResourceUser(
-    $input: DeleteResourceUserInput!
-    $condition: ModelResourceUserConditionInput
-  ) {
-    deleteResourceUser(input: $input, condition: $condition) {
-      id
-      resourceId
-      userId
       createdAt
       updatedAt
     }
