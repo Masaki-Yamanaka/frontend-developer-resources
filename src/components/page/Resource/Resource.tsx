@@ -3,9 +3,11 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import styles from './Resource.module.scss'
 import { createCategoryData, fetchCategories } from '@/src/components/api/category'
-import { createResourceData, fetchResources } from '@/src/components/api/resource'
+import { fetchResources } from '@/src/components/api/resource'
 import { useModal } from '@/src/components/hooks/useModal'
 import ResourceCreateModal from '@/src/components/ui/Modal/ResourceCreateModal'
+import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
+
 import _ from 'lodash'
 import Auth from '@aws-amplify/auth'
 import Link from 'next/link'
@@ -27,6 +29,7 @@ const Resource: NextPage = () => {
       const makeCategoriesData = data?.map((v) => ({ id: v.id, name: v.name }))
       setCategories(makeCategoriesData)
       const resourceData = await fetchResources()
+      console.log(resourceData)
       setResources(resourceData)
     })()
   }, [])
@@ -35,6 +38,12 @@ const Resource: NextPage = () => {
     const resourceData = await fetchResources()
     setResources(resourceData)
     closeFunc()
+  }
+  // カテゴリ名を返す
+  const getCategoryName = (categoryId: string) => {
+    return _.find(categories, function (o) {
+      return o.id === categoryId
+    }).name
   }
 
   return (
@@ -69,12 +78,12 @@ const Resource: NextPage = () => {
                 <td className={styles.td}>
                   <input type='checkbox' />
                 </td>
-                <td className={styles.td}>{resource.categoryId}</td>
-                <Link href={resource.url}>
+                <td className={styles.td}>{getCategoryName(resource.categoryId)}</td>
+                <Link href={resource.url} passHref>
                   <td className={styles.td}>{resource.title}</td>
                 </Link>
 
-                <td className={styles.td}>{resource.createdAt}</td>
+                <td className={styles.td}>{formatDateToSlashWithTime(resource.createdAt)}</td>
                 <td className={styles.td}>
                   <div className={styles.image}>
                     <img
@@ -86,23 +95,6 @@ const Resource: NextPage = () => {
                 </td>
               </tr>
             ))}
-            <tr className={styles.tr}>
-              <td className={styles.td}>
-                <input type='checkbox' />
-              </td>
-              <td className={styles.td}>セル</td>
-              <td className={styles.td}>表の中の１つ１つの項目</td>
-              <td className={styles.td}>2021/11/3</td>
-              <td className={styles.td}>
-                <div className={styles.image}>
-                  <img
-                    src='https://m.media-amazon.com/images/I/31pcfgVRTZL._AC_.jpg'
-                    alt='sample'
-                    className={styles.img}
-                  />
-                </div>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
