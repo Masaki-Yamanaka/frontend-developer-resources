@@ -1,30 +1,27 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import styles from './Resource.module.scss'
 import { createCategoryData, fetchCategories } from '@/src/components/api/category'
 import { fetchResources } from '@/src/components/api/resource'
 import { useModal } from '@/src/components/hooks/useModal'
 import ResourceCreateModal from '@/src/components/ui/Modal/ResourceCreateModal'
 import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
-
 import _ from 'lodash'
-import Auth from '@aws-amplify/auth'
 import Link from 'next/link'
+import { AuthContext } from '@/src/components/model/auth'
 
 const Resource: NextPage = () => {
   const { isOpen, openFunc, closeFunc } = useModal()
   const [categories, setCategories]: any[] = useState([{ id: '', name: '' }])
   const [resources, setResources]: any[] = useState([])
-
+  const { currentUser } = useContext(AuthContext)
   const createCategory = async (name: string) => {
     await createCategoryData(name)
   }
 
   useEffect(() => {
     ;(async () => {
-      const user = await Auth.currentAuthenticatedUser()
-      console.log('user: ', user)
       const data = await fetchCategories()
       const makeCategoriesData = data?.map((v) => ({ id: v.id, name: v.name }))
       setCategories(makeCategoriesData)
@@ -46,6 +43,9 @@ const Resource: NextPage = () => {
     }).name
   }
 
+  const handleCheck = () => {
+    console.log('aaaaaaaaaa')
+  }
   return (
     <>
       <div className={styles.resource}>
@@ -54,11 +54,15 @@ const Resource: NextPage = () => {
           <meta name='description' content='Resource' />
           <link rel='icon' href='/favicon.ico' />
         </Head>
+        <h1> {currentUser?.getUser?.name}さん、こんにちは</h1>
         <div className={styles.head}>
           <h2>カテゴリー一覧</h2>
-          {categories.map((caterory: any) => (
-            <li key={caterory.id}>{caterory.name}</li>
+          {categories.map((category: any) => (
+            <li key={category.id} style={{ marginLeft: 20 }}>
+              {category.name}
+            </li>
           ))}
+
           <h2 className={styles.create} onClick={openFunc}>
             リソース新規作作成
           </h2>
@@ -76,7 +80,7 @@ const Resource: NextPage = () => {
             {resources.map((resource: any) => (
               <tr className={styles.tr} key={resource.id}>
                 <td className={styles.td}>
-                  <input type='checkbox' />
+                  <input type='checkbox' onChange={handleCheck} />
                 </td>
                 <td className={styles.td}>{getCategoryName(resource.categoryId)}</td>
                 <Link href={resource.url} passHref>

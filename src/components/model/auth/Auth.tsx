@@ -36,7 +36,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
       // TODO: ここにリダイレクト処理を入れたい
     })()
-  }, [])
+  }, [currentUser])
 
   return (
     <AuthContext.Provider

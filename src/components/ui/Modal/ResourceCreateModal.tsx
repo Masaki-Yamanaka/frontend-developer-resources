@@ -33,13 +33,12 @@ export default function ChildModal(props: Props) {
     title: '',
     url: '',
     categoryId: '',
-    userId: currentUser?.getUser?.id,
+    userId: '',
   })
   const handleCreateResource = async (event: any) => {
     event.preventDefault()
     try {
-      console.log('form', form)
-      setForm({ ...form, userId: currentUser?.getUser?.id })
+      await setForm({ ...form, userId: currentUser?.getUser?.id })
       await createResourceData(form)
       props.closeFunc()
     } catch (errors) {
