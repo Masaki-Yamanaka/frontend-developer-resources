@@ -13,6 +13,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<GetUserQuery | undefined>()
   useEffect(() => {
     ;(async () => {
+      if (currentUser) {
+        return
+      }
       const user = await fetchAuthUser()
       // ログインしているか
       if (user) {
