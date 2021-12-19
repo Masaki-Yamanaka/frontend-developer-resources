@@ -6,26 +6,28 @@ import { createCategoryData, fetchCategories } from '@/src/components/api/catego
 import { fetchResources, deleteResourceData } from '@/src/components/api/resource'
 import { useModal } from '@/src/components/hooks/useModal'
 import ResourceCreateModal from '@/src/components/ui/Modal/ResourceCreateModal'
+import ResourceEditModal from '@/src/components/ui/Modal/ResourceEditModal'
 import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
 import _ from 'lodash'
 import Link from 'next/link'
 import { AuthContext } from '@/src/components/model/auth'
+import { UpdateResourceInput } from '@/src/API'
 
 const Resource: NextPage = () => {
-  const { isOpen, openFunc, closeFunc } = useModal()
+  const { isOpen, openFunc, closeFunc, isOpen2, openFunc2, closeFunc2 } = useModal()
   const [categories, setCategories]: any[] = useState([{ id: '', name: '' }])
+  const [editItem, setEditItem]: UpdateResourceInput = useState({
+    id: '',
+    categoryId: '',
+    userId: '',
+    title: '',
+    url: '',
+  })
+
   const [resources, setResources]: any[] = useState([])
   const { currentUser } = useContext(AuthContext)
   const createCategory = async (name: string) => {
     await createCategoryData(name)
-  }
-  const deleteResource = async (id: string) => {
-    await deleteResourceData(id)
-    setResources(
-      _.filter(resources, function (o) {
-        return o.id !== id
-      })
-    )
   }
 
   useEffect(() => {
@@ -38,6 +40,26 @@ const Resource: NextPage = () => {
       setResources(resourceData)
     })()
   }, [])
+
+  const deleteResource = async (id: string) => {
+    await deleteResourceData(id)
+    setResources(
+      _.filter(resources, function (o) {
+        return o.id !== id
+      })
+    )
+  }
+
+  const updateResource = (resource: UpdateResourceInput) => {
+    setEditItem(resource)
+    openFunc2()
+  }
+  const closeEditModal = async () => {
+    const resourceData = await fetchResources()
+    setResources(resourceData)
+    setEditItem({})
+    closeFunc2()
+  }
 
   const fetchNewData = async () => {
     const resourceData = await fetchResources()
@@ -107,7 +129,9 @@ const Resource: NextPage = () => {
                     />
                   </div>
                 </td>
-                <td className={styles.td}>編集</td>
+                <td className={styles.td} onClick={() => updateResource(resource)}>
+                  編集
+                </td>
                 <td className={styles.td} onClick={() => deleteResource(resource.id)}>
                   削除
                 </td>
@@ -117,6 +141,7 @@ const Resource: NextPage = () => {
         </table>
       </div>
       <ResourceCreateModal categories={categories} isOpen={isOpen} closeFunc={fetchNewData} />
+      <ResourceEditModal categories={categories} isOpen={isOpen2} closeFunc={closeEditModal} defaultData={editItem} />
     </>
   )
 }
