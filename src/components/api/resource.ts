@@ -10,7 +10,6 @@ import { listResources } from '@/src/graphql/queries'
  * リソースデータを作成する
  */
 export const createResourceData = async (createInput: CreateResourceInput) => {
-  console.log('createInput_______', createInput)
   try {
     // TODO:タイトル名などが固定になっているので、後で修正する。
     const response = (await API.graphql({

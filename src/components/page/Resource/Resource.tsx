@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useEffect, useState, useContext } from 'react'
 import styles from './Resource.module.scss'
 import { createCategoryData, fetchCategories } from '@/src/components/api/category'
-import { fetchResources } from '@/src/components/api/resource'
+import { fetchResources, deleteResourceData } from '@/src/components/api/resource'
 import { useModal } from '@/src/components/hooks/useModal'
 import ResourceCreateModal from '@/src/components/ui/Modal/ResourceCreateModal'
 import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
@@ -18,6 +18,14 @@ const Resource: NextPage = () => {
   const { currentUser } = useContext(AuthContext)
   const createCategory = async (name: string) => {
     await createCategoryData(name)
+  }
+  const deleteResource = async (id: string) => {
+    await deleteResourceData(id)
+    setResources(
+      _.filter(resources, function (o) {
+        return o.id !== id
+      })
+    )
   }
 
   useEffect(() => {
@@ -76,6 +84,8 @@ const Resource: NextPage = () => {
               <th className={styles.th}>タイトル</th>
               <th className={styles.th}>更新日</th>
               <th className={styles.th}>完了者</th>
+              <th className={styles.th}>編集</th>
+              <th className={styles.th}>削除</th>
             </tr>
             {resources.map((resource: any) => (
               <tr className={styles.tr} key={resource.id}>
@@ -96,6 +106,10 @@ const Resource: NextPage = () => {
                       className={styles.img}
                     />
                   </div>
+                </td>
+                <td className={styles.td}>編集</td>
+                <td className={styles.td} onClick={() => deleteResource(resource.id)}>
+                  削除
                 </td>
               </tr>
             ))}

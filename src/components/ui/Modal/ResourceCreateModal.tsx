@@ -81,7 +81,7 @@ export default function ChildModal(props: Props) {
                   change={handleChangeSelect}
                   items={props.categories}
                 />
-                <button className={styles.button}>Create Todo</button>
+                <button className={styles.button}>作成する</button>
               </form>
             </div>
           </Box>
