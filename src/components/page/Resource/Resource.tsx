@@ -121,7 +121,7 @@ const Resource: NextPage = () => {
         <div className={styles.head}>
           <h2
             onClick={() => {
-              createCategory('css')
+              createCategory('javascript')
             }}
           >
             カテゴリー一覧
