@@ -16,9 +16,6 @@ export const onCreateResource = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      users {
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -37,9 +34,6 @@ export const onUpdateResource = /* GraphQL */ `
         name
         createdAt
         updatedAt
-      }
-      users {
-        nextToken
       }
       createdAt
       updatedAt
@@ -60,99 +54,6 @@ export const onDeleteResource = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      users {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateResourceUser = /* GraphQL */ `
-  subscription OnCreateResourceUser {
-    onCreateResourceUser {
-      id
-      resourceId
-      resource {
-        id
-        categoryId
-        userId
-        title
-        url
-        createdAt
-        updatedAt
-      }
-      userId
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateResourceUser = /* GraphQL */ `
-  subscription OnUpdateResourceUser {
-    onUpdateResourceUser {
-      id
-      resourceId
-      resource {
-        id
-        categoryId
-        userId
-        title
-        url
-        createdAt
-        updatedAt
-      }
-      userId
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteResourceUser = /* GraphQL */ `
-  subscription OnDeleteResourceUser {
-    onDeleteResourceUser {
-      id
-      resourceId
-      resource {
-        id
-        categoryId
-        userId
-        title
-        url
-        createdAt
-        updatedAt
-      }
-      userId
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -168,9 +69,6 @@ export const onCreateUser = /* GraphQL */ `
       progressRate
       resourcesCount
       posts {
-        nextToken
-      }
-      resources {
         nextToken
       }
       createdAt
@@ -190,9 +88,6 @@ export const onUpdateUser = /* GraphQL */ `
       posts {
         nextToken
       }
-      resources {
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -208,9 +103,6 @@ export const onDeleteUser = /* GraphQL */ `
       progressRate
       resourcesCount
       posts {
-        nextToken
-      }
-      resources {
         nextToken
       }
       createdAt

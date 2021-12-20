@@ -16,9 +16,6 @@ export const getResource = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      users {
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -54,9 +51,6 @@ export const getUser = /* GraphQL */ `
       progressRate
       resourcesCount
       posts {
-        nextToken
-      }
-      resources {
         nextToken
       }
       createdAt

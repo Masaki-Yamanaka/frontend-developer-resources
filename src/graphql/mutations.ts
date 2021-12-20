@@ -19,9 +19,6 @@ export const createResource = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      users {
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -43,9 +40,6 @@ export const updateResource = /* GraphQL */ `
         name
         createdAt
         updatedAt
-      }
-      users {
-        nextToken
       }
       createdAt
       updatedAt
@@ -69,108 +63,6 @@ export const deleteResource = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      users {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createResourceUser = /* GraphQL */ `
-  mutation CreateResourceUser(
-    $input: CreateResourceUserInput!
-    $condition: ModelResourceUserConditionInput
-  ) {
-    createResourceUser(input: $input, condition: $condition) {
-      id
-      resourceId
-      resource {
-        id
-        categoryId
-        userId
-        title
-        url
-        createdAt
-        updatedAt
-      }
-      userId
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateResourceUser = /* GraphQL */ `
-  mutation UpdateResourceUser(
-    $input: UpdateResourceUserInput!
-    $condition: ModelResourceUserConditionInput
-  ) {
-    updateResourceUser(input: $input, condition: $condition) {
-      id
-      resourceId
-      resource {
-        id
-        categoryId
-        userId
-        title
-        url
-        createdAt
-        updatedAt
-      }
-      userId
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteResourceUser = /* GraphQL */ `
-  mutation DeleteResourceUser(
-    $input: DeleteResourceUserInput!
-    $condition: ModelResourceUserConditionInput
-  ) {
-    deleteResourceUser(input: $input, condition: $condition) {
-      id
-      resourceId
-      resource {
-        id
-        categoryId
-        userId
-        title
-        url
-        createdAt
-        updatedAt
-      }
-      userId
-      user {
-        id
-        name
-        email
-        profileImagePath
-        progressRate
-        resourcesCount
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -189,9 +81,6 @@ export const createUser = /* GraphQL */ `
       progressRate
       resourcesCount
       posts {
-        nextToken
-      }
-      resources {
         nextToken
       }
       createdAt
@@ -214,9 +103,6 @@ export const updateUser = /* GraphQL */ `
       posts {
         nextToken
       }
-      resources {
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -235,9 +121,6 @@ export const deleteUser = /* GraphQL */ `
       progressRate
       resourcesCount
       posts {
-        nextToken
-      }
-      resources {
         nextToken
       }
       createdAt

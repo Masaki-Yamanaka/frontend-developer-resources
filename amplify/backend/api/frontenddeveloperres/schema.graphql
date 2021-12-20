@@ -5,19 +5,8 @@ type Resource @model {
   title: String!
   url: String!
   category: Category @connection(fields: ["categoryId"])
-  users: [ResourceUser] @connection(keyName: "byResource", fields: ["id"])
 }
 
-type ResourceUser
-  @model(queries: null)
-  @key(name: "byResource", fields: ["resourceId", "userId"])
-  @key(name: "byUser", fields: ["userId", "resourceId"]) {
-  id: ID!
-  resourceId: ID!
-  resource: Resource! @connection(fields: ["resourceId"])
-  userId: ID!
-  user: User! @connection(fields: ["userId"])
-}
 type User @model {
   id: ID!
   name: String!
@@ -26,7 +15,6 @@ type User @model {
   progressRate: Int!
   resourcesCount: Int!
   posts: [Post] @connection(keyName: "postsByUserId", fields: ["id"])
-  resources: [ResourceUser] @connection(keyName: "byUser", fields: ["id"])
 }
 
 type Category @model {
@@ -34,7 +22,9 @@ type Category @model {
   name: String!
 }
 
-type Post @key(name: "postsByUserId", fields: ["userId"]) @model {
+type Post 
+  @key(name: "postsByUserId", fields: ["userId"])
+  @model {
   id: ID!
   categoryId: ID!
   userId: ID!
