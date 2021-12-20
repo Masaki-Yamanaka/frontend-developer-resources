@@ -84,6 +84,7 @@ export type Resource = {
   title: string,
   url: string,
   category?: Category | null,
+  users?: ModelResourceUserConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -92,6 +93,56 @@ export type Category = {
   __typename: "Category",
   id: string,
   name: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelResourceUserConnection = {
+  __typename: "ModelResourceUserConnection",
+  items:  Array<ResourceUser >,
+  nextToken?: string | null,
+};
+
+export type ResourceUser = {
+  __typename: "ResourceUser",
+  id: string,
+  resourceId: string,
+  resource: Resource,
+  userId: string,
+  user: User,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type User = {
+  __typename: "User",
+  id: string,
+  name: string,
+  email: string,
+  profileImagePath: string,
+  progressRate: number,
+  resourcesCount: number,
+  posts?: ModelPostConnection | null,
+  resources?: ModelResourceUserConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelPostConnection = {
+  __typename: "ModelPostConnection",
+  items:  Array<Post >,
+  nextToken?: string | null,
+};
+
+export type Post = {
+  __typename: "Post",
+  id: string,
+  categoryId: string,
+  userId: string,
+  title: string,
+  content: string,
+  category?: Category | null,
+  user?: User | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -105,6 +156,30 @@ export type UpdateResourceInput = {
 };
 
 export type DeleteResourceInput = {
+  id: string,
+};
+
+export type CreateResourceUserInput = {
+  id?: string | null,
+  resourceId: string,
+  userId: string,
+};
+
+export type ModelResourceUserConditionInput = {
+  resourceId?: ModelIDInput | null,
+  userId?: ModelIDInput | null,
+  and?: Array< ModelResourceUserConditionInput | null > | null,
+  or?: Array< ModelResourceUserConditionInput | null > | null,
+  not?: ModelResourceUserConditionInput | null,
+};
+
+export type UpdateResourceUserInput = {
+  id: string,
+  resourceId?: string | null,
+  userId?: string | null,
+};
+
+export type DeleteResourceUserInput = {
   id: string,
 };
 
@@ -138,38 +213,6 @@ export type ModelIntInput = {
   between?: Array< number | null > | null,
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
-};
-
-export type User = {
-  __typename: "User",
-  id: string,
-  name: string,
-  email: string,
-  profileImagePath: string,
-  progressRate: number,
-  resourcesCount: number,
-  posts?: ModelPostConnection | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type ModelPostConnection = {
-  __typename: "ModelPostConnection",
-  items:  Array<Post >,
-  nextToken?: string | null,
-};
-
-export type Post = {
-  __typename: "Post",
-  id: string,
-  categoryId: string,
-  userId: string,
-  title: string,
-  content: string,
-  category?: Category | null,
-  user?: User | null,
-  createdAt: string,
-  updatedAt: string,
 };
 
 export type UpdateUserInput = {
@@ -371,6 +414,10 @@ export type CreateResourceMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    users?:  {
+      __typename: "ModelResourceUserConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -395,6 +442,10 @@ export type UpdateResourceMutation = {
       name: string,
       createdAt: string,
       updatedAt: string,
+    } | null,
+    users?:  {
+      __typename: "ModelResourceUserConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -421,6 +472,121 @@ export type DeleteResourceMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    users?:  {
+      __typename: "ModelResourceUserConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateResourceUserMutationVariables = {
+  input: CreateResourceUserInput,
+  condition?: ModelResourceUserConditionInput | null,
+};
+
+export type CreateResourceUserMutation = {
+  createResourceUser?:  {
+    __typename: "ResourceUser",
+    id: string,
+    resourceId: string,
+    resource:  {
+      __typename: "Resource",
+      id: string,
+      categoryId: string,
+      userId: string,
+      title: string,
+      url: string,
+      createdAt: string,
+      updatedAt: string,
+    },
+    userId: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      email: string,
+      profileImagePath: string,
+      progressRate: number,
+      resourcesCount: number,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateResourceUserMutationVariables = {
+  input: UpdateResourceUserInput,
+  condition?: ModelResourceUserConditionInput | null,
+};
+
+export type UpdateResourceUserMutation = {
+  updateResourceUser?:  {
+    __typename: "ResourceUser",
+    id: string,
+    resourceId: string,
+    resource:  {
+      __typename: "Resource",
+      id: string,
+      categoryId: string,
+      userId: string,
+      title: string,
+      url: string,
+      createdAt: string,
+      updatedAt: string,
+    },
+    userId: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      email: string,
+      profileImagePath: string,
+      progressRate: number,
+      resourcesCount: number,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteResourceUserMutationVariables = {
+  input: DeleteResourceUserInput,
+  condition?: ModelResourceUserConditionInput | null,
+};
+
+export type DeleteResourceUserMutation = {
+  deleteResourceUser?:  {
+    __typename: "ResourceUser",
+    id: string,
+    resourceId: string,
+    resource:  {
+      __typename: "Resource",
+      id: string,
+      categoryId: string,
+      userId: string,
+      title: string,
+      url: string,
+      createdAt: string,
+      updatedAt: string,
+    },
+    userId: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      email: string,
+      profileImagePath: string,
+      progressRate: number,
+      resourcesCount: number,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -442,6 +608,10 @@ export type CreateUserMutation = {
     resourcesCount: number,
     posts?:  {
       __typename: "ModelPostConnection",
+      nextToken?: string | null,
+    } | null,
+    resources?:  {
+      __typename: "ModelResourceUserConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -467,6 +637,10 @@ export type UpdateUserMutation = {
       __typename: "ModelPostConnection",
       nextToken?: string | null,
     } | null,
+    resources?:  {
+      __typename: "ModelResourceUserConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -488,6 +662,10 @@ export type DeleteUserMutation = {
     resourcesCount: number,
     posts?:  {
       __typename: "ModelPostConnection",
+      nextToken?: string | null,
+    } | null,
+    resources?:  {
+      __typename: "ModelResourceUserConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -772,6 +950,10 @@ export type GetResourceQuery = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    users?:  {
+      __typename: "ModelResourceUserConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -815,6 +997,10 @@ export type GetUserQuery = {
     resourcesCount: number,
     posts?:  {
       __typename: "ModelPostConnection",
+      nextToken?: string | null,
+    } | null,
+    resources?:  {
+      __typename: "ModelResourceUserConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -1009,6 +1195,10 @@ export type OnCreateResourceSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    users?:  {
+      __typename: "ModelResourceUserConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1028,6 +1218,10 @@ export type OnUpdateResourceSubscription = {
       name: string,
       createdAt: string,
       updatedAt: string,
+    } | null,
+    users?:  {
+      __typename: "ModelResourceUserConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1049,6 +1243,106 @@ export type OnDeleteResourceSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    users?:  {
+      __typename: "ModelResourceUserConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateResourceUserSubscription = {
+  onCreateResourceUser?:  {
+    __typename: "ResourceUser",
+    id: string,
+    resourceId: string,
+    resource:  {
+      __typename: "Resource",
+      id: string,
+      categoryId: string,
+      userId: string,
+      title: string,
+      url: string,
+      createdAt: string,
+      updatedAt: string,
+    },
+    userId: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      email: string,
+      profileImagePath: string,
+      progressRate: number,
+      resourcesCount: number,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateResourceUserSubscription = {
+  onUpdateResourceUser?:  {
+    __typename: "ResourceUser",
+    id: string,
+    resourceId: string,
+    resource:  {
+      __typename: "Resource",
+      id: string,
+      categoryId: string,
+      userId: string,
+      title: string,
+      url: string,
+      createdAt: string,
+      updatedAt: string,
+    },
+    userId: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      email: string,
+      profileImagePath: string,
+      progressRate: number,
+      resourcesCount: number,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteResourceUserSubscription = {
+  onDeleteResourceUser?:  {
+    __typename: "ResourceUser",
+    id: string,
+    resourceId: string,
+    resource:  {
+      __typename: "Resource",
+      id: string,
+      categoryId: string,
+      userId: string,
+      title: string,
+      url: string,
+      createdAt: string,
+      updatedAt: string,
+    },
+    userId: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      email: string,
+      profileImagePath: string,
+      progressRate: number,
+      resourcesCount: number,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1065,6 +1359,10 @@ export type OnCreateUserSubscription = {
     resourcesCount: number,
     posts?:  {
       __typename: "ModelPostConnection",
+      nextToken?: string | null,
+    } | null,
+    resources?:  {
+      __typename: "ModelResourceUserConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -1085,6 +1383,10 @@ export type OnUpdateUserSubscription = {
       __typename: "ModelPostConnection",
       nextToken?: string | null,
     } | null,
+    resources?:  {
+      __typename: "ModelResourceUserConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1101,6 +1403,10 @@ export type OnDeleteUserSubscription = {
     resourcesCount: number,
     posts?:  {
       __typename: "ModelPostConnection",
+      nextToken?: string | null,
+    } | null,
+    resources?:  {
+      __typename: "ModelResourceUserConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
