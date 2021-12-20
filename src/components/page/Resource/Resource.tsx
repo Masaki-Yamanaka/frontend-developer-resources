@@ -44,16 +44,19 @@ const Resource: NextPage = () => {
       const makeCategoriesData = data?.map((v) => ({ id: v.id, name: v.name }))
       setCategories(makeCategoriesData)
       const resourceData = await fetchResources()
-      console.log(resourceData)
       setResources(resourceData)
     })()
   }, [])
 
-  const deleteResource = async (id: string) => {
-    await deleteResourceData(id)
+  const deleteResource = async (resource: any) => {
+    for await (const item of resource.users.items) {
+      await deleteResourceUserData(item.id)
+    }
+
+    await deleteResourceData(resource.id)
     setResources(
       _.filter(resources, function (o) {
-        return o.id !== id
+        return o.id !== resource.id
       })
     )
   }
@@ -177,7 +180,7 @@ const Resource: NextPage = () => {
                 <td className={styles.td} onClick={() => updateResource(resource)}>
                   編集
                 </td>
-                <td className={styles.td} onClick={() => deleteResource(resource.id)}>
+                <td className={styles.td} onClick={() => deleteResource(resource)}>
                   削除
                 </td>
               </tr>
