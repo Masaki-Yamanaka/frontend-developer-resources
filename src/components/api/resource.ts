@@ -10,7 +10,7 @@ import {
   DeleteResourceUserInput,
   DeleteResourceUserMutation,
 } from '@/src/API'
-import { API } from 'aws-amplify'
+import { API, graphqlOperation } from 'aws-amplify'
 import {
   createResource,
   deleteResource,
@@ -18,7 +18,6 @@ import {
   createResourceUser,
   deleteResourceUser,
 } from '@/src/graphql/mutations'
-import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api'
 import { ListResourcesQuery } from '@/src/API'
 
 import { listResources, getResource } from '@/src/graphql/queries'
@@ -29,14 +28,9 @@ import { GraphQLResult } from '@aws-amplify/api'
  */
 export const createResourceData = async (updateInput: CreateResourceInput) => {
   try {
-    const response = (await API.graphql({
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      query: createResource,
-      variables: {
-        input: updateInput,
-      },
-    })) as { data: CreateResourceMutation; errors: any[] }
-    return response
+    return (await API.graphql(
+      graphqlOperation(createResource, { input: updateInput })
+    )) as GraphQLResult<CreateResourceMutation>
   } catch ({ errors }) {
     console.error(...errors)
     throw new Error(errors[0].message)
@@ -47,10 +41,16 @@ export const createResourceData = async (updateInput: CreateResourceInput) => {
  * 全リソースデータを取得する
  */
 export const fetchResources = async () => {
-  const ResourcesQuery = (await API.graphql({
-    query: listResources,
-  })) as { data: ListResourcesQuery; errors: any[] }
-  return ResourcesQuery.data.listResources?.items
+  try {
+    const ResourcesQuery = (await API.graphql(graphqlOperation(listResources))) as {
+      data: ListResourcesQuery
+      errors: any[]
+    }
+    return ResourcesQuery.data.listResources?.items
+  } catch (errors) {
+    console.error(...errors)
+    throw new Error(errors[0].message)
+  }
 }
 
 /**
@@ -61,15 +61,13 @@ export const deleteResourceData = async (query: string) => {
   const deleteInput: DeleteResourceInput = {
     id: query,
   }
-  const response = (await API.graphql({
-    query: deleteResource,
-    variables: {
-      input: deleteInput,
-    },
-  })) as { data: DeleteResourceMutation; errors: any[] }
-
-  return {
-    response,
+  try {
+    return (await API.graphql(
+      graphqlOperation(deleteResource, { input: deleteInput })
+    )) as GraphQLResult<DeleteResourceMutation>
+  } catch ({ errors }) {
+    console.error(...errors)
+    throw new Error(errors[0].message)
   }
 }
 
@@ -77,16 +75,11 @@ export const deleteResourceData = async (query: string) => {
  * リソースデータを編集する
  */
 export const updateResourceData = async (updateInput: UpdateResourceInput) => {
+  // TODO:管理者のみリソースデータを編集ができるように制御する
   try {
-    // TODO:管理者のみリソースデータを編集ができるように制御する
-    const response = (await API.graphql({
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      query: updateResource,
-      variables: {
-        input: updateInput,
-      },
-    })) as { data: UpdateResourceMutation; errors: any[] }
-    return response
+    return (await API.graphql(
+      graphqlOperation(updateResource, { input: updateInput })
+    )) as GraphQLResult<UpdateResourceMutation>
   } catch ({ errors }) {
     console.error(...errors)
     throw new Error(errors[0].message)
@@ -97,19 +90,14 @@ export const updateResourceData = async (updateInput: UpdateResourceInput) => {
  * リソースに対してチェックをつける
  */
 export const createResourceUserData = async (userId: string, resourceId: string) => {
+  const resourceUserInput: CreateResourceUserInput = {
+    userId: userId,
+    resourceId: resourceId,
+  }
   try {
-    const resourceUserInput: CreateResourceUserInput = {
-      userId: userId,
-      resourceId: resourceId,
-    }
-    const response = (await API.graphql({
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      query: createResourceUser,
-      variables: {
-        input: resourceUserInput,
-      },
-    })) as { data: CreateResourceUserMutation; errors: any[] }
-    return response
+    return (await API.graphql(
+      graphqlOperation(createResourceUser, { input: resourceUserInput })
+    )) as GraphQLResult<CreateResourceUserMutation>
   } catch ({ errors }) {
     console.error(...errors)
     throw new Error(errors[0].message)
@@ -120,18 +108,13 @@ export const createResourceUserData = async (userId: string, resourceId: string)
  * リソースに対してチェックを外す
  */
 export const deleteResourceUserData = async (id: string) => {
+  const resourceUserInput: DeleteResourceUserInput = {
+    id: id,
+  }
   try {
-    const resourceUserInput: DeleteResourceUserInput = {
-      id: id,
-    }
-    const response = (await API.graphql({
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      query: deleteResourceUser,
-      variables: {
-        input: resourceUserInput,
-      },
-    })) as { data: DeleteResourceUserMutation; errors: any[] }
-    return response
+    return (await API.graphql(
+      graphqlOperation(deleteResourceUser, { input: resourceUserInput })
+    )) as GraphQLResult<DeleteResourceUserMutation>
   } catch ({ errors }) {
     console.error(...errors)
     throw new Error(errors[0].message)
@@ -143,13 +126,8 @@ export const deleteResourceUserData = async (id: string) => {
  */
 export const fetchResourceUser = async (resourceId: string) => {
   try {
-    return (await API.graphql({
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      query: getResource,
-      variables: {
-        id: resourceId,
-      },
-    })) as { data: GraphQLResult<any>; errors: any[] }
+    // ジェネリクスの型わからないので、一旦anyと書いています。
+    return (await API.graphql(graphqlOperation(getResource, { id: resourceId }))) as GraphQLResult<any>
   } catch ({ errors }) {
     console.error(...errors)
     throw new Error(errors[0].message)

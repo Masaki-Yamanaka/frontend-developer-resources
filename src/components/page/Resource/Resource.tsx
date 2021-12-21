@@ -23,8 +23,8 @@ type Inputs = {
 }
 const Resource: NextPage = () => {
   const { isOpen, openFunc, closeFunc, isOpen2, openFunc2, closeFunc2 } = useModal()
-  const [categories, setCategories]: any[] = useState([{ id: '', name: '' }])
-  const [editItem, setEditItem]: UpdateResourceInput = useState({
+  const [categories, setCategories] = useState<any>([{ id: '', name: '' }])
+  const [editItem, setEditItem] = useState<UpdateResourceInput>({
     id: '',
     categoryId: '',
     userId: '',
