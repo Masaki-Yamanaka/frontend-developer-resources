@@ -3,11 +3,12 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { useState } from 'react'
+import { Category } from '@/src/types/index'
 type Props = {
   label: string
   selected: string
   change: (event: string) => void
-  items: any[] //TODO: {id:string,name:string}[]で指定したかったが,うまく記載できなかったので、一旦any[]を使っています。後で修正します。
+  items: Category[] | undefined
 }
 
 export default function SelectVariants(props: Props) {
@@ -29,7 +30,7 @@ export default function SelectVariants(props: Props) {
           onChange={handleChange}
           label={props.label}
         >
-          {props.items.map((item: any) => (
+          {props.items?.map((item: Category) => (
             <MenuItem key={item.id} value={item.id}>
               {item.name}
             </MenuItem>

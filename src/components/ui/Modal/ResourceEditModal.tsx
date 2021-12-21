@@ -8,6 +8,7 @@ import { updateResourceData } from '@/src/components/api/resource'
 import { useState, useContext } from 'react'
 import { AuthContext } from '@/src/components/model/auth'
 import { useForm } from 'react-hook-form'
+import { Category } from '@/src/types/index'
 const style = {
   position: 'absolute' as const,
   top: '50%',
@@ -22,9 +23,9 @@ const style = {
 }
 
 type Props = {
-  categories: any[]
+  categories: Category[] | undefined
   isOpen: boolean
-  closeFunc: () => void
+  closeModal: () => void
   defaultData: UpdateResourceInput
 }
 
@@ -45,7 +46,7 @@ export default function ChildModal(props: Props) {
     data = { ...data, userId: currentUser?.getUser?.id, id: props.defaultData.id, categoryId: categoryId }
     try {
       await updateResourceData(data)
-      props.closeFunc()
+      props.closeModal()
     } catch (errors) {
       console.error(errors)
     }
@@ -61,7 +62,7 @@ export default function ChildModal(props: Props) {
             <div className={styles.card}>
               <div className={styles.header}>
                 <h3 className={styles.title}>リソースを編集する</h3>
-                <p className={styles.close} onClick={() => props.closeFunc()}>
+                <p className={styles.close} onClick={() => props.closeModal()}>
                   閉める
                 </p>
               </div>

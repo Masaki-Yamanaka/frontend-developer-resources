@@ -17,13 +17,15 @@ import _ from 'lodash'
 import Link from 'next/link'
 import { AuthContext } from '@/src/components/model/auth'
 import { UpdateResourceInput } from '@/src/API'
+import { Category } from '@/src/types/index'
+
 import { useForm } from 'react-hook-form'
 type Inputs = {
   checked: number
 }
 const Resource: NextPage = () => {
-  const { isOpen, openFunc, closeFunc, isOpen2, openFunc2, closeFunc2 } = useModal()
-  const [categories, setCategories] = useState<any>([{ id: '', name: '' }])
+  const { isOpen, openModal, closeModal, isOpenSecond, openModalSecond, closeModalSecond } = useModal()
+  const [categories, setCategories] = useState<Category[] | undefined>([{ id: '', name: '' }])
   const [editItem, setEditItem] = useState<UpdateResourceInput>({
     id: '',
     categoryId: '',
@@ -40,8 +42,11 @@ const Resource: NextPage = () => {
 
   useEffect(() => {
     ;(async () => {
-      const data = await fetchCategories()
-      const makeCategoriesData = data?.map((v) => ({ id: v.id, name: v.name }))
+      const categoryItems = await fetchCategories()
+      const makeCategoriesData = categoryItems?.map((categoryItem) => ({
+        id: categoryItem.id,
+        name: categoryItem.name,
+      }))
       setCategories(makeCategoriesData)
       const resourceData = await fetchResources()
       setResources(resourceData)
@@ -55,33 +60,39 @@ const Resource: NextPage = () => {
 
     await deleteResourceData(resource.id)
     setResources(
-      _.filter(resources, function (o) {
-        return o.id !== resource.id
+      _.filter(resources, function (resourceItem) {
+        return resourceItem.id !== resource.id
       })
     )
   }
 
   const updateResource = (resource: UpdateResourceInput) => {
     setEditItem(resource)
-    openFunc2()
+    openModalSecond()
   }
   const closeEditModal = async () => {
     const resourceData = await fetchResources()
     setResources(resourceData)
-    setEditItem({})
-    closeFunc2()
+    setEditItem({
+      id: '',
+      categoryId: '',
+      userId: '',
+      title: '',
+      url: '',
+    })
+    closeModalSecond()
   }
 
   const fetchNewData = async () => {
     const resourceData = await fetchResources()
     setResources(resourceData)
-    closeFunc()
+    closeModal()
   }
   // カテゴリ名を返す
   const getCategoryName = (categoryId: string) => {
-    return _.find(categories, function (o) {
-      return o.id === categoryId
-    }).name
+    return _.find(categories, function (category) {
+      return category.id === categoryId
+    })?.name
   }
 
   const handleCheck = async (resource: any) => {
@@ -126,13 +137,13 @@ const Resource: NextPage = () => {
           >
             カテゴリー一覧
           </h2>
-          {categories.map((category: any) => (
+          {categories?.map((category: Category) => (
             <li key={category.id} style={{ marginLeft: 20 }}>
               {category.name}
             </li>
           ))}
 
-          <h2 className={styles.create} onClick={openFunc}>
+          <h2 className={styles.create} onClick={openModal}>
             リソース新規作作成
           </h2>
         </div>
@@ -188,8 +199,13 @@ const Resource: NextPage = () => {
           </tbody>
         </table>
       </div>
-      <ResourceCreateModal categories={categories} isOpen={isOpen} closeFunc={fetchNewData} />
-      <ResourceEditModal categories={categories} isOpen={isOpen2} closeFunc={closeEditModal} defaultData={editItem} />
+      <ResourceCreateModal categories={categories} isOpen={isOpen} closeModal={fetchNewData} />
+      <ResourceEditModal
+        categories={categories}
+        isOpen={isOpenSecond}
+        closeModal={closeEditModal}
+        defaultData={editItem}
+      />
     </>
   )
 }

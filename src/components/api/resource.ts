@@ -31,9 +31,8 @@ export const createResourceData = async (updateInput: CreateResourceInput) => {
     return (await API.graphql(
       graphqlOperation(createResource, { input: updateInput })
     )) as GraphQLResult<CreateResourceMutation>
-  } catch ({ errors }) {
-    console.error(...errors)
-    throw new Error(errors[0].message)
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -65,9 +64,8 @@ export const deleteResourceData = async (query: string) => {
     return (await API.graphql(
       graphqlOperation(deleteResource, { input: deleteInput })
     )) as GraphQLResult<DeleteResourceMutation>
-  } catch ({ errors }) {
-    console.error(...errors)
-    throw new Error(errors[0].message)
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -80,9 +78,8 @@ export const updateResourceData = async (updateInput: UpdateResourceInput) => {
     return (await API.graphql(
       graphqlOperation(updateResource, { input: updateInput })
     )) as GraphQLResult<UpdateResourceMutation>
-  } catch ({ errors }) {
-    console.error(...errors)
-    throw new Error(errors[0].message)
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -98,9 +95,8 @@ export const createResourceUserData = async (userId: string, resourceId: string)
     return (await API.graphql(
       graphqlOperation(createResourceUser, { input: resourceUserInput })
     )) as GraphQLResult<CreateResourceUserMutation>
-  } catch ({ errors }) {
-    console.error(...errors)
-    throw new Error(errors[0].message)
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -115,9 +111,8 @@ export const deleteResourceUserData = async (id: string) => {
     return (await API.graphql(
       graphqlOperation(deleteResourceUser, { input: resourceUserInput })
     )) as GraphQLResult<DeleteResourceUserMutation>
-  } catch ({ errors }) {
-    console.error(...errors)
-    throw new Error(errors[0].message)
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -128,8 +123,7 @@ export const fetchResourceUser = async (resourceId: string) => {
   try {
     // ジェネリクスの型わからないので、一旦anyと書いています。
     return (await API.graphql(graphqlOperation(getResource, { id: resourceId }))) as GraphQLResult<any>
-  } catch ({ errors }) {
-    console.error(...errors)
-    throw new Error(errors[0].message)
+  } catch (error) {
+    console.log(error)
   }
 }

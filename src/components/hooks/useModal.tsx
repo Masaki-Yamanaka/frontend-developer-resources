@@ -2,25 +2,25 @@ import { useState } from 'react'
 
 export const useModal = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const openFunc = () => {
+  const openModal = () => {
     setIsOpen(true)
   }
-  const closeFunc = () => {
+  const closeModal = () => {
     setIsOpen(false)
   }
-  const [isOpen2, setIsOpen2] = useState(false)
-  const openFunc2 = () => {
-    setIsOpen2(true)
+  const [isOpenSecond, setIsOpenSecond] = useState(false)
+  const openModalSecond = () => {
+    setIsOpenSecond(true)
   }
-  const closeFunc2 = () => {
-    setIsOpen2(false)
+  const closeModalSecond = () => {
+    setIsOpenSecond(false)
   }
   return {
     isOpen: isOpen,
-    openFunc: openFunc,
-    closeFunc: closeFunc,
-    isOpen2: isOpen2,
-    openFunc2: openFunc2,
-    closeFunc2: closeFunc2,
+    openModal: openModal,
+    closeModal: closeModal,
+    isOpenSecond: isOpenSecond,
+    openModalSecond: openModalSecond,
+    closeModalSecond: closeModalSecond,
   }
 }
