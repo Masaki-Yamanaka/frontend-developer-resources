@@ -9,6 +9,7 @@ import {
   CreateResourceUserMutation,
   DeleteResourceUserInput,
   DeleteResourceUserMutation,
+  Resource,
 } from '@/src/API'
 import { API, graphqlOperation } from 'aws-amplify'
 import {
@@ -39,13 +40,14 @@ export const createResourceData = async (updateInput: CreateResourceInput) => {
 /**
  * 全リソースデータを取得する
  */
+
 export const fetchResources = async () => {
   try {
     const ResourcesQuery = (await API.graphql(graphqlOperation(listResources))) as {
       data: ListResourcesQuery
       errors: any[]
     }
-    return ResourcesQuery.data.listResources?.items
+    return ResourcesQuery.data.listResources?.items as Resource[]
   } catch (errors) {
     console.error(...errors)
     throw new Error(errors[0].message)

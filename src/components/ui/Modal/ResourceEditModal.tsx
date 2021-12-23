@@ -26,7 +26,7 @@ type Props = {
   categories: Category[] | undefined
   isOpen: boolean
   closeModal: () => void
-  defaultData: UpdateResourceInput
+  defaultData: UpdateResourceInput | undefined
 }
 
 type Inputs = {
@@ -43,12 +43,14 @@ export default function ChildModal(props: Props) {
   const { currentUser } = useContext(AuthContext)
   const handleUpdateResource = async (data: Inputs) => {
     // NOTE:props.defaultData.idをそのままsetFormするとなぜかidが空になるので下記のように書いています。
-    data = { ...data, userId: currentUser?.getUser?.id, id: props.defaultData.id, categoryId: categoryId }
-    try {
-      await updateResourceData(data)
-      props.closeModal()
-    } catch (errors) {
-      console.error(errors)
+    if (props.defaultData) {
+      data = { ...data, userId: currentUser?.getUser?.id, id: props.defaultData.id, categoryId: categoryId }
+      try {
+        await updateResourceData(data)
+        props.closeModal()
+      } catch (errors) {
+        console.error(errors)
+      }
     }
   }
   const handleChangeSelect = (event: string) => {
@@ -68,18 +70,26 @@ export default function ChildModal(props: Props) {
               </div>
               <form onSubmit={handleSubmit(handleUpdateResource)} className={styles.form}>
                 <legend>タイトル</legend>
-                <input
-                  name='title'
-                  defaultValue={props.defaultData.title ? props.defaultData.title : ''}
-                  ref={register({ required: true })}
-                />
+                {props.defaultData ? (
+                  <input
+                    name='title'
+                    defaultValue={props.defaultData.title ? props.defaultData.title : ''}
+                    ref={register({ required: true })}
+                  />
+                ) : (
+                  <input name='url' ref={register({ required: true })} />
+                )}
                 {errors.title && 'タイトルは必須です。'}
                 <legend>URL</legend>
-                <input
-                  name='url'
-                  defaultValue={props.defaultData.url ? props.defaultData.url : ''}
-                  ref={register({ required: true })}
-                />
+                {props.defaultData ? (
+                  <input
+                    name='url'
+                    defaultValue={props.defaultData.url ? props.defaultData.url : ''}
+                    ref={register({ required: true })}
+                  />
+                ) : (
+                  <input name='url' ref={register({ required: true })} />
+                )}
                 {errors.url && 'URLは必須です。'}
                 {/*TODO:新規カテゴリーの追加ができないので、おそらくselectBoxやめると思う */}
                 <BaseSelect

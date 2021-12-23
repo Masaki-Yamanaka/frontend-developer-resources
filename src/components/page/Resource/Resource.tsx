@@ -15,26 +15,21 @@ import ResourceEditModal from '@/src/components/ui/Modal/ResourceEditModal'
 import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
 import _ from 'lodash'
 import Link from 'next/link'
+
 import { AuthContext } from '@/src/components/model/auth'
-import { UpdateResourceInput } from '@/src/API'
+import { UpdateResourceInput, Resource } from '@/src/API'
 import { Category } from '@/src/types/index'
 
 import { useForm } from 'react-hook-form'
 type Inputs = {
   checked: number
 }
-const Resource: NextPage = () => {
+const ResourcePage: NextPage = () => {
   const { isOpen, openModal, closeModal, isOpenSecond, openModalSecond, closeModalSecond } = useModal()
-  const [categories, setCategories] = useState<Category[] | undefined>([{ id: '', name: '' }])
-  const [editItem, setEditItem] = useState<UpdateResourceInput>({
-    id: '',
-    categoryId: '',
-    userId: '',
-    title: '',
-    url: '',
-  })
+  const [categories, setCategories] = useState<Category[] | undefined>([])
+  const [editItem, setEditItem] = useState<UpdateResourceInput>()
   const { register } = useForm<Inputs>()
-  const [resources, setResources]: any[] = useState([])
+  const [resources, setResources] = useState<Resource[]>([])
   const { currentUser } = useContext(AuthContext)
   const createCategory = async (name: string) => {
     await createCategoryData(name)
@@ -49,11 +44,12 @@ const Resource: NextPage = () => {
       }))
       setCategories(makeCategoriesData)
       const resourceData = await fetchResources()
-      setResources(resourceData)
+      setResources([...resourceData])
     })()
   }, [])
 
-  const deleteResource = async (resource: any) => {
+  const deleteResource = async (resource: Resource) => {
+    if (!resource.users) return
     for await (const item of resource.users.items) {
       await deleteResourceUserData(item.id)
     }
@@ -95,13 +91,13 @@ const Resource: NextPage = () => {
     })?.name
   }
 
-  const handleCheck = async (resource: any) => {
+  const handleCheck = async (resource: Resource) => {
+    if (!resource.users) return
     const uid = currentUser?.getUser?.id as string
     if (isCurrentUserChecked(resource)) {
       // チェックをはずす
-      const resourceUser = _.find(resource.users.items, function (item: any) {
-        return item.userId === uid
-      })
+      const resourceUser = resource.users.items.find((item) => item.userId === uid)
+      if (!resourceUser) return
       await deleteResourceUserData(resourceUser.id)
     } else {
       // チェックをつける
@@ -111,12 +107,11 @@ const Resource: NextPage = () => {
     setResources(resourceData)
   }
 
-  const isCurrentUserChecked = (resource: any): boolean => {
+  const isCurrentUserChecked = (resource: Resource): boolean => {
     if (currentUser?.getUser) {
-      const uid = currentUser.getUser.id as string
-      return _.some(resource.users.items, function (item: any) {
-        return item.userId === uid
-      })
+      const uid = currentUser.getUser.id
+      if (!resource.users) return false
+      return resource.users.items.some((item) => item.userId === uid)
     }
     return false
   }
@@ -159,7 +154,7 @@ const Resource: NextPage = () => {
               <th className={styles.th}>編集</th>
               <th className={styles.th}>削除</th>
             </tr>
-            {resources.map((resource: any) => (
+            {resources.map((resource: Resource) => (
               <tr className={styles.tr} key={resource.id}>
                 <td className={styles.td}>
                   <form className={styles.form}>
@@ -181,11 +176,14 @@ const Resource: NextPage = () => {
 
                 <td className={styles.td}>{formatDateToSlashWithTime(resource.createdAt)}</td>
                 <td className={styles.td} style={{ display: 'flex' }}>
-                  {resource.users.items.map((item: any) => (
-                    <div className={styles.image} key={item.id}>
-                      <img src={item.user.profileImagePath} alt='sample' className={styles.img} />
-                    </div>
-                  ))}
+                  {resource.users
+                    ? resource.users.items.map((item) => (
+                        <div className={styles.image} key={item.id}>
+                          {/* TODO:後でnext/imageを使う */}
+                          <img src={item.user.profileImagePath} alt='sample' className={styles.img} />
+                        </div>
+                      ))
+                    : null}
                 </td>
 
                 <td className={styles.td} onClick={() => updateResource(resource)}>
@@ -210,4 +208,4 @@ const Resource: NextPage = () => {
   )
 }
 
-export default Resource
+export default ResourcePage
