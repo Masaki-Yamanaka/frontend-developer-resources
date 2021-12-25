@@ -1,120 +1,48 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useEffect, useState, useContext } from 'react'
+import { useContext, useState } from 'react'
 import styles from './Resource.module.scss'
-import { createCategoryData, fetchCategories } from '@/src/components/api/category'
-import {
-  fetchResources,
-  deleteResourceData,
-  createResourceUserData,
-  deleteResourceUserData,
-} from '@/src/components/api/resource'
 import { useModal } from '@/src/components/hooks/useModal'
-import ResourceCreateModal from '@/src/components/ui/Modal/ResourceCreateModal'
-import ResourceEditModal from '@/src/components/ui/Modal/ResourceEditModal'
+import ResourceForm from '@/src/components/ui/Resource/ResourceForm'
+import BaseModal from '@/src/components/ui/Modal/BaseModal'
 import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
-import _ from 'lodash'
 import Link from 'next/link'
-
+import { Checked } from '@/src/types/index'
 import { AuthContext } from '@/src/components/model/auth'
-import { UpdateResourceInput, Resource } from '@/src/API'
+import { Resource } from '@/src/API'
 import { Category } from '@/src/types/index'
-
 import { useForm } from 'react-hook-form'
-type Inputs = {
-  checked: number
-}
+import { useResource } from '@/src/components/model/resource'
+
 const ResourcePage: NextPage = () => {
-  const { isOpen, openModal, closeModal, isOpenSecond, openModalSecond, closeModalSecond } = useModal()
-  const [categories, setCategories] = useState<Category[] | undefined>([])
-  const [editItem, setEditItem] = useState<UpdateResourceInput>()
-  const { register } = useForm<Inputs>()
-  const [resources, setResources] = useState<Resource[]>([])
+  const { isOpen, openModal, closeModal } = useModal()
+  const {
+    categories,
+    editItem,
+    resources,
+    isCurrentUserChecked,
+    createCategory,
+    deleteResource,
+    updateResource,
+    setNewData,
+    getCategoryName,
+    handleCheck,
+    setEditData,
+  } = useResource()
+
+  const [modalType, setModalType] = useState<string>('')
+  const { register } = useForm<Checked>()
   const { currentUser } = useContext(AuthContext)
-  const createCategory = async (name: string) => {
-    await createCategoryData(name)
+  const openCreateModal = () => {
+    openModal()
+    setModalType('create')
+  }
+  const openEditModal = (resource: Resource) => {
+    updateResource(resource)
+    openModal()
+    setModalType('edit')
   }
 
-  useEffect(() => {
-    ;(async () => {
-      const categoryItems = await fetchCategories()
-      const makeCategoriesData = categoryItems?.map((categoryItem) => ({
-        id: categoryItem.id,
-        name: categoryItem.name,
-      }))
-      setCategories(makeCategoriesData)
-      const resourceData = await fetchResources()
-      setResources([...resourceData])
-    })()
-  }, [])
-
-  const deleteResource = async (resource: Resource) => {
-    if (!resource.users) return
-    for await (const item of resource.users.items) {
-      await deleteResourceUserData(item.id)
-    }
-
-    await deleteResourceData(resource.id)
-    setResources(
-      _.filter(resources, function (resourceItem) {
-        return resourceItem.id !== resource.id
-      })
-    )
-  }
-
-  const updateResource = (resource: UpdateResourceInput) => {
-    setEditItem(resource)
-    openModalSecond()
-  }
-  const closeEditModal = async () => {
-    const resourceData = await fetchResources()
-    setResources(resourceData)
-    setEditItem({
-      id: '',
-      categoryId: '',
-      userId: '',
-      title: '',
-      url: '',
-    })
-    closeModalSecond()
-  }
-
-  const fetchNewData = async () => {
-    const resourceData = await fetchResources()
-    setResources(resourceData)
-    closeModal()
-  }
-  // カテゴリ名を返す
-  const getCategoryName = (categoryId: string) => {
-    return _.find(categories, function (category) {
-      return category.id === categoryId
-    })?.name
-  }
-
-  const handleCheck = async (resource: Resource) => {
-    if (!resource.users) return
-    const uid = currentUser?.getUser?.id as string
-    if (isCurrentUserChecked(resource)) {
-      // チェックをはずす
-      const resourceUser = resource.users.items.find((item) => item.userId === uid)
-      if (!resourceUser) return
-      await deleteResourceUserData(resourceUser.id)
-    } else {
-      // チェックをつける
-      await createResourceUserData(uid, resource.id)
-    }
-    const resourceData = await fetchResources()
-    setResources(resourceData)
-  }
-
-  const isCurrentUserChecked = (resource: Resource): boolean => {
-    if (currentUser?.getUser) {
-      const uid = currentUser.getUser.id
-      if (!resource.users) return false
-      return resource.users.items.some((item) => item.userId === uid)
-    }
-    return false
-  }
   return (
     <>
       <div className={styles.resource}>
@@ -137,8 +65,7 @@ const ResourcePage: NextPage = () => {
               {category.name}
             </li>
           ))}
-
-          <h2 className={styles.create} onClick={openModal}>
+          <h2 className={styles.create} onClick={openCreateModal}>
             リソース新規作作成
           </h2>
         </div>
@@ -185,8 +112,7 @@ const ResourcePage: NextPage = () => {
                       ))
                     : null}
                 </td>
-
-                <td className={styles.td} onClick={() => updateResource(resource)}>
+                <td className={styles.td} onClick={() => openEditModal(resource)}>
                   編集
                 </td>
                 <td className={styles.td} onClick={() => deleteResource(resource)}>
@@ -197,13 +123,20 @@ const ResourcePage: NextPage = () => {
           </tbody>
         </table>
       </div>
-      <ResourceCreateModal categories={categories} isOpen={isOpen} closeModal={fetchNewData} />
-      <ResourceEditModal
-        categories={categories}
-        isOpen={isOpenSecond}
-        closeModal={closeEditModal}
-        defaultData={editItem}
-      />
+      <BaseModal
+        title={modalType === 'create' ? 'リソースを新規作成する' : 'リソースを編集する'}
+        isOpen={isOpen}
+        closeModal={closeModal}
+        child={
+          <ResourceForm
+            type={modalType}
+            categories={categories}
+            closeModal={closeModal}
+            setNewData={modalType === 'create' ? setNewData : setEditData}
+            defaultData={modalType === 'create' ? undefined : editItem}
+          />
+        }
+      ></BaseModal>
     </>
   )
 }

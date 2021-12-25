@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { UpdateResourceInput } from '@/src/API'
 
 export type User = {
   id: string
@@ -33,4 +34,22 @@ export type Resource = {
 export type Category = {
   id: string
   name: string
+}
+export type BaseModal = {
+  title: string
+  isOpen: boolean
+  closeModal: () => void
+  child: ReactNode
+}
+
+export type ResourceFormType = {
+  type: string
+  categories: Category[] | undefined
+  closeModal: () => void
+  setNewData: (resource: Resource) => Promise<void>
+  defaultData: UpdateResourceInput | undefined
+}
+
+export type Checked = {
+  checked: number
 }
