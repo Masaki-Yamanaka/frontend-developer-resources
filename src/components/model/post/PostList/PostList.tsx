@@ -1,34 +1,9 @@
-import { useState, useEffect } from 'react'
-import { Post, Category } from '@/src/API'
-import { fetchPosts } from '@/src/components/api/post'
-import { fetchCategories } from '@/src/components/api/category'
+import { usePost } from '@/src/components/hooks/usePost'
 import { NextImage } from '@/src/components/ui/Image'
 import { PostCreateForm } from '@/src/components/model/post/PostCreateForm'
 
 export const PostList = () => {
-  const [posts, setPosts] = useState<Post[]>([])
-  const [categories, setCategories] = useState<Category[]>([])
-
-  const updateDisplayPosts = async () => {
-    const fetchedPosts = await fetchPosts()
-    if (!fetchedPosts) return
-    setPosts(fetchedPosts)
-  }
-
-  useEffect(() => {
-    ;(async () => {
-      await updateDisplayPosts()
-    })()
-  }, [])
-
-  useEffect(() => {
-    (async () => {
-      const fetchedCategories = await fetchCategories()
-      if (!fetchedCategories) return
-      setCategories(fetchedCategories)
-    })()
-  }, [])
-
+  const { categories, posts, updateDisplayPosts } = usePost()
   return (
     <div>
       <h1>PostList</h1>
