@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Post } from '@/src/API'
 import { fetchAllPosts } from '@/src/components/api/post'
+import { NextImage } from '@/src/components/ui/Image'
 
 export const PostList = () => {
   const [posts, setPosts] = useState<Post[]>([])
@@ -18,7 +19,7 @@ export const PostList = () => {
         <div key={post.id}>
           <div>{post.title}</div>
           <div>{post.content}</div>
-          <img src={post.user?.profileImagePath} alt={`${post.user?.name}_icon`} />
+          <NextImage src={post.user?.profileImagePath || ''} alt={`${post.user?.name}_icon`} width={100} height={80} />
           <div>{post.category?.name}</div>
         </div>
       ))}

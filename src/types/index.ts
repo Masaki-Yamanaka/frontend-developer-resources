@@ -21,3 +21,10 @@ export type PageLinkProps = {
   href: string
   children: ReactNode
 }
+
+export type NextImageProps = {
+  src: string
+  alt: string
+  width: number
+  height: number
+}
