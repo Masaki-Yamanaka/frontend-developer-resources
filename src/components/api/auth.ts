@@ -4,6 +4,7 @@ import { createUser } from "@/src/graphql/mutations"
 import { getUser } from "@/src/graphql/queries"
 import { GraphQLResult } from "@aws-amplify/api";
 import { GetUserQuery } from "@/src/API"
+import { User } from '@/src/types'
 
 export const fetchAuthUser = async () => {
   try {
@@ -21,7 +22,7 @@ export const fetchCurrentUser = async (userId: string) => {
   }
 }
 
-export const createUserInDynamoDB = async (userInfo: any) => {
+export const createUserInDynamoDB = async (userInfo: User) => {
   try {
     await API.graphql(graphqlOperation(createUser, {input: userInfo}))
     console.log('ユーザーの作成に成功しました');
