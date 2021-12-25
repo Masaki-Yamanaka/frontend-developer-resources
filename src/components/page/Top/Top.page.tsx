@@ -1,7 +1,10 @@
 import { Top } from './Top'
+import { SideBar } from '@/src/components/ui/SideBar'
 
 export const TopPage = () => (
   <>
-    <Top />
+    <SideBar>
+      <Top />
+    </SideBar>
   </>
 )

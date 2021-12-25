@@ -1,7 +1,6 @@
 import '@/styles/globals.scss'
 import type { AppProps } from 'next/app'
 import Amplify from 'aws-amplify'
-import { SideBar } from '@/src/components/ui/SideBar'
 import { AuthProvider } from '@/src/components/model/auth'
 import config from '../aws-exports'
 
@@ -19,9 +18,7 @@ if (typeof window !== 'undefined') {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
-      <SideBar>
-        <Component {...pageProps} />
-      </SideBar>
+      <Component {...pageProps} />
     </AuthProvider>
   )
 }
