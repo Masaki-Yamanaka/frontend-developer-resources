@@ -12,11 +12,11 @@ export default function ResourceForm(props: ResourceFormType) {
 
   return (
     <>
+      {/* TODO:後でインプットのコンポーネントを分離する */}
       <form
         onSubmit={props.type === 'create' ? handleSubmit(handleCreateResource) : handleSubmit(handleUpdateResource)}
         className={styles.form}
       >
-        {props.type}
         <legend>タイトル</legend>
         {props.defaultData ? (
           <input

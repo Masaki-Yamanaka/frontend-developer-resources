@@ -24,7 +24,8 @@ export const useResource = () => {
   const createCategory = async (name: string) => {
     await createCategoryData(name)
   }
-
+  
+  // TODO:後でエラーハンドリング追加する！
   useEffect(() => {
     ;(async () => {
       const categoryItems = await fetchCategories()
@@ -38,6 +39,7 @@ export const useResource = () => {
     })()
   }, [])
 
+  // TODO:後でエラーハンドリング追加する！
   const deleteResource = async (resource: Resource) => {
     if (!resource.users) return
     for await (const item of resource.users.items) {
@@ -65,6 +67,7 @@ export const useResource = () => {
     })?.name
   }
 
+  // TODO:後でエラーハンドリング追加する！
   const handleCheck = async (resource: Resource) => {
     if (!resource.users) return
     const uid = currentUser?.getUser?.id as string
