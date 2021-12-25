@@ -1,13 +1,10 @@
-import { usePost } from '@/src/components/hooks/usePost'
 import { NextImage } from '@/src/components/ui/Image'
-import { PostCreateForm } from '@/src/components/model/post/PostCreateForm'
+import { Post } from '@/src/API'
 
-export const PostList = () => {
-  const { categories, posts, updateDisplayPosts } = usePost()
+export const PostList = ({ posts }: { posts: Post[] }) => {
   return (
     <div>
       <h1>PostList</h1>
-      <PostCreateForm categories={categories} updateDisplayPosts={updateDisplayPosts}/>
       {posts.map((post) => (
         <div key={post.id}>
           <div>{post.title}</div>
