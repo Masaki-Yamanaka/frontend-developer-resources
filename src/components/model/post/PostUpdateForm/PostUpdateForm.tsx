@@ -1,29 +1,31 @@
 import { useState } from 'react'
 import { useCurrentUser } from '@/src/components/hooks/useCurrentUser'
-import { createPostData } from '@/src/components/api/post'
-import { Category, CreatePostInput } from '@/src/API'
+import { updatePostData } from '@/src/components/api/post'
+import { Category, UpdatePostInput, Post } from '@/src/API'
 
 export type PostCreateFormProps = {
+  post: Post
   categories: Category[]
   updateDisplayPosts: () => Promise<void>
 }
 
 // このコンポーネントは仮実装なのでReactHookFormに書き換える
-export const PostUpdateForm = ({ categories, updateDisplayPosts }: PostCreateFormProps) => {
-  const [title, setTitle] = useState<string>('')
-  const [content, setContent] = useState<string>('')
-  const [category, setCategory] = useState<string>('')
+export const PostUpdateForm = ({ post, categories, updateDisplayPosts }: PostCreateFormProps) => {
+  const [title, setTitle] = useState<string>(post.title)
+  const [content, setContent] = useState<string>(post.content)
+  const [categoryId, setCategoryId] = useState<string>(post.category?.id || '')
   const { currentUser } = useCurrentUser()
 
   const handleClickSubmitButton = async () => {
     if (currentUser && currentUser.getUser) {
-      const createPostInput: CreatePostInput = {
+      const updatePostInput: UpdatePostInput = {
+        id: post.id,
         title: title,
         content: content,
-        categoryId: category,
+        categoryId: categoryId,
         userId: currentUser.getUser.id,
       }
-      await createPostData(createPostInput)
+      await updatePostData(updatePostInput)
       await updateDisplayPosts()
     }
   }
@@ -32,11 +34,11 @@ export const PostUpdateForm = ({ categories, updateDisplayPosts }: PostCreateFor
     <section>
       <h1>PostUpdateForm</h1>
       <p>title</p>
-      <input type='text' onChange={(e) => setTitle(e.target.value)} />
+      <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} />
       <p>content</p>
-      <input type='textarea' onChange={(e) => setContent(e.target.value)} />
+      <input type='textarea' value={content} onChange={(e) => setContent(e.target.value)} />
       <p>category</p>
-      <select name='category' onChange={(e) => setCategory(e.target.value)}>
+      <select name='category' value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
         {categories.map((category) => (
           <option key={category.id} value={category.id}>
             {category.name}

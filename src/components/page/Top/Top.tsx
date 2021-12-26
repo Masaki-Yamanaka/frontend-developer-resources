@@ -14,7 +14,7 @@ export const Top = () => {
           {posts.map((post) => (
             <div key={post.id} className={style.postCard}>
               <PostCard post={post} />
-              <PostUpdateForm categories={categories} updateDisplayPosts={updateDisplayPosts} />
+              <PostUpdateForm post={post} categories={categories} updateDisplayPosts={updateDisplayPosts} />
             </div>
           ))}
         </section>
