@@ -10,7 +10,6 @@ type Resource @model {
 
 type ResourceUser
   @model(queries: null)
-
   @key(name: "byResource", fields: ["resourceId", "userId"])
   @key(name: "byUser", fields: ["userId", "resourceId"]) {
   id: ID!
