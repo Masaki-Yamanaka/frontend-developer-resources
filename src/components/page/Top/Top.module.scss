@@ -2,10 +2,16 @@
   display: flex;
 }
 
-.post {
+.postContainer {
   width: 70%;
 }
 
 .notification {
   width: 30%;
+}
+
+.postCard {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 50px;
 }
