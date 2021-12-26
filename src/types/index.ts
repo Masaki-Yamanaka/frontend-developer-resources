@@ -31,7 +31,7 @@ export type Resource = {
   createdAt: string
   updatedAt: string
 }
-export type Category = {
+export type CategoryType = {
   id: string
   name: string
 }
@@ -44,7 +44,7 @@ export type BaseModal = {
 
 export type ResourceFormType = {
   type: string
-  categories: Category[] | undefined
+  categories: CategoryType[] | undefined
   closeModal: () => void
   setNewData: (resource: Resource) => Promise<void>
   defaultData: UpdateResourceInput | undefined
@@ -52,4 +52,10 @@ export type ResourceFormType = {
 
 export type Checked = {
   checked: number
+}
+
+export type ResourceFromSpreadsheet = {
+  title: string
+  category: string
+  url: string
 }

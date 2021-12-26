@@ -10,9 +10,10 @@ import Link from 'next/link'
 import { Checked } from '@/src/types/index'
 import { AuthContext } from '@/src/components/model/auth'
 import { Resource } from '@/src/API'
-import { Category } from '@/src/types/index'
+import { CategoryType } from '@/src/types/index'
 import { useForm } from 'react-hook-form'
 import { useResource } from '@/src/components/model/resource'
+import { Button } from '../../ui/Button'
 
 const ResourcePage: NextPage = () => {
   const { isOpen, openModal, closeModal } = useModal()
@@ -20,6 +21,7 @@ const ResourcePage: NextPage = () => {
     categories,
     editItem,
     resources,
+    isLoading,
     isCurrentUserChecked,
     createCategory,
     deleteResource,
@@ -52,6 +54,8 @@ const ResourcePage: NextPage = () => {
           <link rel='icon' href='/favicon.ico' />
         </Head>
         <h1> {currentUser?.getUser?.name}さん、こんにちは</h1>
+        {isLoading ? <p>isLoading</p> : null}
+
         <div className={styles.head}>
           <h2
             onClick={() => {
@@ -60,14 +64,16 @@ const ResourcePage: NextPage = () => {
           >
             カテゴリー一覧
           </h2>
-          {categories?.map((category: Category) => (
-            <li key={category.id} style={{ marginLeft: 20 }}>
-              {category.name}
-            </li>
-          ))}
-          <h2 className={styles.create} onClick={openCreateModal}>
-            リソース新規作作成
-          </h2>
+          <ul className={styles.categories}>
+            {categories?.map((category: CategoryType) => (
+              <li key={category.id} style={{ marginLeft: 20 }}>
+                {category.name}
+              </li>
+            ))}
+          </ul>
+          <div className={styles.create}>
+            <Button onClick={openCreateModal}> リソース新規作作成</Button>
+          </div>
         </div>
 
         <table className={styles.table}>

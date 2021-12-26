@@ -5,39 +5,101 @@ import {
   deleteResourceData,
   createResourceUserData,
   deleteResourceUserData,
+  createResourceData,
 } from '@/src/components/api/resource'
 import { useModal } from '@/src/components/hooks/useModal'
 import _ from 'lodash'
 
 import { AuthContext } from '@/src/components/model/auth'
 import { UpdateResourceInput, Resource } from '@/src/API'
-import { Category } from '@/src/types/index'
+import { CategoryType } from '@/src/types/index'
+import { useSpreadsheet } from '@/src/components/api/spreadsheet'
 
 export const useResource = () => {
   const { isOpen, openModal } = useModal()
-  const [categories, setCategories] = useState<Category[] | undefined>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [categories, setCategories] = useState<CategoryType[]>([])
   const [editItem, setEditItem] = useState<UpdateResourceInput>()
 
   const [resources, setResources] = useState<Resource[]>([])
   const { currentUser } = useContext(AuthContext)
 
   const createCategory = async (name: string) => {
-    await createCategoryData(name)
+    return await createCategoryData(name)
   }
-  
-  // TODO:後でエラーハンドリング追加する！
+  const { fetchCategoriesFromSpreadsheet, fetchResourceFromSpreadsheet } = useSpreadsheet()
   useEffect(() => {
     ;(async () => {
-      const categoryItems = await fetchCategories()
-      const makeCategoriesData = categoryItems?.map((categoryItem) => ({
-        id: categoryItem.id,
-        name: categoryItem.name,
-      }))
-      setCategories(makeCategoriesData)
-      const resourceData = await fetchResources()
-      setResources([...resourceData])
+      setIsLoading(true)
+      try {
+        const fetchCategoriesData = await fetchCategories()
+        if (!fetchCategoriesData) return
+        const categoryItems = [...fetchCategoriesData]
+        if (fetchCategoriesData.length === 0) {
+          // 初期データが何にも入ってなかったら、スプレットシート内のカテゴリーとリソースをDynamoに入れる
+          const categoriesArray = await createInitializeCategory()
+          await createInitializeResource(categoriesArray)
+          return
+        }
+        const makeCategoriesData = categoryItems?.map((categoryItem) => ({
+          id: categoryItem.id,
+          name: categoryItem.name,
+        }))
+        setCategories(makeCategoriesData)
+        const resourceData = await fetchResources()
+        setResources([...resourceData])
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setIsLoading(false)
+      }
     })()
   }, [])
+
+  const createInitializeCategory = async () => {
+    try {
+      const fetchCategories = await fetchCategoriesFromSpreadsheet()
+      if (!fetchCategories) return
+      const categoriesArray = []
+      for await (const fetchCategory of fetchCategories) {
+        try {
+          const res = await createCategory(fetchCategory)
+          if (!res?.data?.createCategory?.id || !res?.data?.createCategory.name) return
+          categoriesArray.push({ id: res?.data?.createCategory.id, name: res?.data?.createCategory.name })
+        } catch (error) {
+          console.error(error)
+        }
+      }
+      setCategories(categoriesArray)
+      return categoriesArray
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const createInitializeResource = async (categoriesArray: CategoryType[] | undefined) => {
+    try {
+      const fetchResources = await fetchResourceFromSpreadsheet()
+      if (!fetchResources) return
+      const userId = currentUser?.getUser?.id as string
+      const resourcesArray = []
+      for await (const fetchResource of fetchResources) {
+        if (!getCategoryId(categoriesArray, fetchResource.category)) {
+          return
+        }
+        const createResourceInput = {
+          categoryId: getCategoryId(categoriesArray, fetchResource.category) as string,
+          userId: userId,
+          title: fetchResource.title,
+          url: fetchResource.url,
+        }
+        const response = await createResourceData(createResourceInput)
+        resourcesArray.push(response?.data?.createResource as Resource)
+      }
+      setResources(resourcesArray)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   // TODO:後でエラーハンドリング追加する！
   const deleteResource = async (resource: Resource) => {
@@ -65,6 +127,12 @@ export const useResource = () => {
     return _.find(categories, function (category) {
       return category.id === categoryId
     })?.name
+  }
+  // カテゴリーIDを返す
+  const getCategoryId = (categoriesArray: CategoryType[] | undefined, categoryName: string) => {
+    return _.find(categoriesArray, function (category) {
+      return category.name === categoryName
+    })?.id
   }
 
   // TODO:後でエラーハンドリング追加する！
@@ -118,5 +186,7 @@ export const useResource = () => {
     isOpen,
     openModal,
     setEditData,
+
+    isLoading,
   }
 }

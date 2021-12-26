@@ -36,9 +36,14 @@
     border-radius: 50%;
   }
 }
-.head {
-  display: flex;
-}
+
 .create {
-  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
 }
