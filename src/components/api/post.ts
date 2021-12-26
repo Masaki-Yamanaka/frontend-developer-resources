@@ -1,8 +1,8 @@
 import { API, graphqlOperation } from 'aws-amplify'
 import { listPosts } from '@/src/graphql/queries'
-import { createPost } from '@/src/graphql/mutations'
+import { createPost, updatePost } from '@/src/graphql/mutations'
 import { GraphQLResult } from '@aws-amplify/api'
-import { ListPostsQuery, Post, CreatePostInput } from '@/src/API'
+import { ListPostsQuery, Post, CreatePostInput, UpdatePostInput } from '@/src/API'
 
 export const fetchPosts = async () => {
   try {
@@ -15,8 +15,17 @@ export const fetchPosts = async () => {
 
 export const createPostData = async (post: CreatePostInput) => {
   try {
-    await API.graphql(graphqlOperation(createPost, {input: post}))
-    console.log('記事の作成に成功しました');
+    await API.graphql(graphqlOperation(createPost, { input: post }))
+    console.log('記事の作成に成功しました')
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const updatePostData = async (post: UpdatePostInput) => {
+  try {
+    await API.graphql(graphqlOperation(updatePost, { input: post }))
+    console.log('記事の更新に成功しました')
   } catch (error) {
     console.error(error)
   }
