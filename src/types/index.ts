@@ -13,7 +13,7 @@ export type User = {
 }
 
 export type ButtonProps = {
-  onClick: () => void
+  onClick: () => void | Promise<void>
   children: ReactNode
 }
 
