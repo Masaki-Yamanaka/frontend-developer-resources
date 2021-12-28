@@ -5,9 +5,12 @@ import { GetUserQuery } from '@/src/API'
 
 type IAuthContext = {
   currentUser?: GetUserQuery
+  updateCurrentUser: (data: any) => void
 }
 
-const AuthContext = createContext<IAuthContext>({ currentUser: undefined })
+// 初期値を作成するが、eslintに引っかかるのでeslint-disableにしてます
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const AuthContext = createContext<IAuthContext>({ currentUser: undefined, updateCurrentUser: () => {} })
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<GetUserQuery | undefined>()
@@ -41,10 +44,16 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     })()
   }, [currentUser])
 
+  const updateCurrentUser = (data: GetUserQuery): void => {
+    if (!currentUser?.getUser) return
+    setCurrentUser({ ...currentUser, getUser: { ...currentUser?.getUser, ...data } })
+  }
+
   return (
     <AuthContext.Provider
       value={{
         currentUser: currentUser,
+        updateCurrentUser: updateCurrentUser,
       }}
     >
       {children}

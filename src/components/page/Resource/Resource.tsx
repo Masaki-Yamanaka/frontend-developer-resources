@@ -54,6 +54,7 @@ const ResourcePage: NextPage = () => {
           <link rel='icon' href='/favicon.ico' />
         </Head>
         <h1> {currentUser?.getUser?.name}さん、こんにちは</h1>
+
         {isLoading ? <p>isLoading</p> : null}
 
         <div className={styles.head}>
@@ -75,7 +76,7 @@ const ResourcePage: NextPage = () => {
             <Button onClick={openCreateModal}> リソース新規作作成</Button>
           </div>
         </div>
-
+        {/* TODO:後で別コンポーネントに分ける */}
         <table className={styles.table}>
           <tbody>
             <tr className={styles.tr}>

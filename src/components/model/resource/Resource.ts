@@ -7,6 +7,8 @@ import {
   deleteResourceUserData,
   createResourceData,
 } from '@/src/components/api/resource'
+import { updateAuthUser } from '@/src/components/api/auth'
+
 import { useModal } from '@/src/components/hooks/useModal'
 import _ from 'lodash'
 
@@ -22,7 +24,7 @@ export const useResource = () => {
   const [editItem, setEditItem] = useState<UpdateResourceInput>()
 
   const [resources, setResources] = useState<Resource[]>([])
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser, updateCurrentUser } = useContext(AuthContext)
 
   const createCategory = async (name: string) => {
     return await createCategoryData(name)
@@ -35,7 +37,7 @@ export const useResource = () => {
         const fetchCategoriesData = await fetchCategories()
         if (!fetchCategoriesData) return
         const categoryItems = [...fetchCategoriesData]
-        if (fetchCategoriesData.length === 0) {
+        if (!fetchCategoriesData.length) {
           // 初期データが何にも入ってなかったら、スプレットシート内のカテゴリーとリソースをDynamoに入れる
           const categoriesArray = await createInitializeCategory()
           await createInitializeResource(categoriesArray)
@@ -135,7 +137,7 @@ export const useResource = () => {
     })?.id
   }
 
-  // TODO:後でエラーハンドリング追加する！
+  // TODO:後でエラーハンドリング追加する(createResourceUserDataがエラーだった時にupdateUserResourceDataが作動しないようにハンドリングしたい)
   const handleCheck = async (resource: Resource) => {
     if (!resource.users) return
     const uid = currentUser?.getUser?.id as string
@@ -144,9 +146,11 @@ export const useResource = () => {
       const resourceUser = resource.users.items.find((item) => item.userId === uid)
       if (!resourceUser) return
       await deleteResourceUserData(resourceUser.id)
+      await updateUserResourceData(false)
     } else {
       // チェックをつける
       await createResourceUserData(uid, resource.id)
+      await updateUserResourceData(true)
     }
     const resourceData = await fetchResources()
     setResources(resourceData)
@@ -170,6 +174,30 @@ export const useResource = () => {
       title: '',
       url: '',
     })
+  }
+  // 進捗率と完了済みタスク数を変更する
+  const updateUserResourceData = async (isAdd: boolean) => {
+    if (!currentUser?.getUser) return
+    //NOTE:進捗率=(ユーザーの完了済みリソース数)/(全リソース数)
+    const newResourcesCount: number = isAdd
+      ? currentUser.getUser.resourcesCount + 1
+      : currentUser.getUser.resourcesCount - 1
+    const newProgressRate: number = Math.round((newResourcesCount / resources.length) * 100)
+    const userInfo = { ...currentUser?.getUser, resourcesCount: newResourcesCount, progressRate: newProgressRate }
+    const updateUserInput = {
+      id: currentUser.getUser.id,
+      name: currentUser.getUser.name,
+      email: currentUser.getUser.email,
+      profileImagePath: currentUser.getUser.profileImagePath,
+      progressRate: newProgressRate,
+      resourcesCount: newResourcesCount,
+    }
+    try {
+      await updateAuthUser(updateUserInput)
+      updateCurrentUser(userInfo)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return {
