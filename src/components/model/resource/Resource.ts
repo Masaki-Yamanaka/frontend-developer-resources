@@ -6,6 +6,7 @@ import {
   createResourceUserData,
   deleteResourceUserData,
   createResourceData,
+  fetchResourcesSortByTitle,
 } from '@/src/components/api/resource'
 import { updateAuthUser } from '@/src/components/api/auth'
 
@@ -13,7 +14,7 @@ import { useModal } from '@/src/components/hooks/useModal'
 import _ from 'lodash'
 
 import { AuthContext } from '@/src/components/model/auth'
-import { UpdateResourceInput, Resource } from '@/src/API'
+import { UpdateResourceInput, Resource, ResourceType, ModelSortDirection } from '@/src/API'
 import { CategoryType } from '@/src/types/index'
 import { useSpreadsheet } from '@/src/components/api/spreadsheet'
 
@@ -48,8 +49,7 @@ export const useResource = () => {
           name: categoryItem.name,
         }))
         setCategories(makeCategoriesData)
-        const resourceData = await fetchResources()
-        setResources([...resourceData])
+        fetchResourcesSortResourcesByCreatedAt(ModelSortDirection.DESC)
       } catch (error) {
         console.log(error)
       } finally {
@@ -93,6 +93,7 @@ export const useResource = () => {
           userId: userId,
           title: fetchResource.title,
           url: fetchResource.url,
+          ResourceType: ResourceType.RESOURCE,
         }
         const response = await createResourceData(createResourceInput)
         resourcesArray.push(response?.data?.createResource as Resource)
@@ -219,6 +220,15 @@ export const useResource = () => {
       console.error(error)
     }
   }
+  const fetchResourcesSortResourcesByTitle = async (query: ModelSortDirection) => {
+    const response = await fetchResourcesSortByTitle(query)
+    setResources([...response])
+  }
+
+  const fetchResourcesSortResourcesByCreatedAt = async (query: ModelSortDirection) => {
+    const response = await fetchResources(query)
+    setResources([...response])
+  }
 
   return {
     categories,
@@ -236,5 +246,7 @@ export const useResource = () => {
     setEditData,
     updateUserResourceData,
     isLoading,
+    fetchResourcesSortResourcesByTitle,
+    fetchResourcesSortResourcesByCreatedAt,
   }
 }

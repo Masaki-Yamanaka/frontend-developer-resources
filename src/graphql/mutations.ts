@@ -46,8 +46,9 @@ export const createResource = /* GraphQL */ `
               }
               nextToken
             }
-            createdAt
             updatedAt
+            createdAt
+            ResourceType
           }
           user {
             id
@@ -86,8 +87,9 @@ export const createResource = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
       updatedAt
+      createdAt
+      ResourceType
     }
   }
 `;
@@ -135,8 +137,9 @@ export const updateResource = /* GraphQL */ `
               }
               nextToken
             }
-            createdAt
             updatedAt
+            createdAt
+            ResourceType
           }
           user {
             id
@@ -175,8 +178,9 @@ export const updateResource = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
       updatedAt
+      createdAt
+      ResourceType
     }
   }
 `;
@@ -224,8 +228,9 @@ export const deleteResource = /* GraphQL */ `
               }
               nextToken
             }
-            createdAt
             updatedAt
+            createdAt
+            ResourceType
           }
           user {
             id
@@ -264,8 +269,9 @@ export const deleteResource = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
       updatedAt
+      createdAt
+      ResourceType
     }
   }
 `;
@@ -310,8 +316,9 @@ export const createResourceUser = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -334,8 +341,9 @@ export const createResourceUser = /* GraphQL */ `
           }
           nextToken
         }
-        createdAt
         updatedAt
+        createdAt
+        ResourceType
       }
       user {
         id
@@ -398,8 +406,9 @@ export const createResourceUser = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -471,8 +480,9 @@ export const updateResourceUser = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -495,8 +505,9 @@ export const updateResourceUser = /* GraphQL */ `
           }
           nextToken
         }
-        createdAt
         updatedAt
+        createdAt
+        ResourceType
       }
       user {
         id
@@ -559,8 +570,9 @@ export const updateResourceUser = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -632,8 +644,9 @@ export const deleteResourceUser = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -656,8 +669,9 @@ export const deleteResourceUser = /* GraphQL */ `
           }
           nextToken
         }
-        createdAt
         updatedAt
+        createdAt
+        ResourceType
       }
       user {
         id
@@ -720,8 +734,9 @@ export const deleteResourceUser = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -841,8 +856,9 @@ export const createUser = /* GraphQL */ `
               }
               nextToken
             }
-            createdAt
             updatedAt
+            createdAt
+            ResourceType
           }
           user {
             id
@@ -975,8 +991,9 @@ export const updateUser = /* GraphQL */ `
               }
               nextToken
             }
-            createdAt
             updatedAt
+            createdAt
+            ResourceType
           }
           user {
             id
@@ -1109,8 +1126,9 @@ export const deleteUser = /* GraphQL */ `
               }
               nextToken
             }
-            createdAt
             updatedAt
+            createdAt
+            ResourceType
           }
           user {
             id
@@ -1271,8 +1289,9 @@ export const createPost = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -1381,8 +1400,9 @@ export const updatePost = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -1491,8 +1511,9 @@ export const deletePost = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -1600,8 +1621,9 @@ export const createFeed = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -1709,8 +1731,9 @@ export const updateFeed = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -1818,8 +1841,9 @@ export const deleteFeed = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id

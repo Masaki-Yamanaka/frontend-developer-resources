@@ -1,4 +1,7 @@
-type Resource @model {
+type Resource
+  @model
+  @key(name: "SortByCreatedAt", fields: ["ResourceType", "createdAt"], queryField: "listResourceSortByCreatedAt")
+  @key(name: "SortByTitle", fields: ["ResourceType", "title"], queryField: "listResourceSortByTitle") {
   id: ID!
   categoryId: ID!
   userId: ID!
@@ -6,6 +9,12 @@ type Resource @model {
   url: String!
   category: Category @connection(fields: ["categoryId"])
   users: [ResourceUser] @connection(keyName: "byResource", fields: ["id"])
+  updatedAt: AWSDateTime
+  createdAt: AWSDateTime!
+  ResourceType: ResourceType!
+}
+enum ResourceType {
+  RESOURCE
 }
 
 type ResourceUser
@@ -51,4 +60,3 @@ type Feed @model {
   category: Category @connection(fields: ["categoryId"])
   user: User @connection(fields: ["userId"])
 }
-

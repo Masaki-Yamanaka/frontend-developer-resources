@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import styles from './Resource.module.scss'
 import { useModal } from '@/src/components/hooks/useModal'
 import ResourceForm from '@/src/components/ui/Resource/ResourceForm'
@@ -8,8 +8,7 @@ import BaseModal from '@/src/components/ui/Modal/BaseModal'
 import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
 import Link from 'next/link'
 import { Checked } from '@/src/types/index'
-import { AuthContext } from '@/src/components/model/auth'
-import { Resource } from '@/src/API'
+import { Resource, ModelSortDirection } from '@/src/API'
 import { CategoryType } from '@/src/types/index'
 import { useForm } from 'react-hook-form'
 import { useResource } from '@/src/components/model/resource'
@@ -30,11 +29,12 @@ const ResourcePage: NextPage = () => {
     getCategoryName,
     handleCheck,
     setEditData,
+    fetchResourcesSortResourcesByTitle,
+    fetchResourcesSortResourcesByCreatedAt,
   } = useResource()
 
   const [modalType, setModalType] = useState<string>('')
   const { register } = useForm<Checked>()
-  const { currentUser } = useContext(AuthContext)
   const openCreateModal = () => {
     openModal()
     setModalType('create')
@@ -44,7 +44,6 @@ const ResourcePage: NextPage = () => {
     openModal()
     setModalType('edit')
   }
-
   return (
     <>
       <div className={styles.resource}>
@@ -53,9 +52,8 @@ const ResourcePage: NextPage = () => {
           <meta name='description' content='Resource' />
           <link rel='icon' href='/favicon.ico' />
         </Head>
-        <h1> {currentUser?.getUser?.name}さん、こんにちは</h1>
 
-        {isLoading ? <p>isLoading</p> : null}
+        {isLoading ? <p>Loading.........</p> : null}
 
         <div className={styles.head}>
           <h2
@@ -72,6 +70,13 @@ const ResourcePage: NextPage = () => {
               </li>
             ))}
           </ul>
+          <div className={styles.sort}>
+            <h2>ソート</h2>
+            <p onClick={() => fetchResourcesSortResourcesByCreatedAt(ModelSortDirection.DESC)}>新着順</p>
+            <p onClick={() => fetchResourcesSortResourcesByTitle(ModelSortDirection.DESC)}>タイトル:降順</p>
+            <p onClick={() => fetchResourcesSortResourcesByTitle(ModelSortDirection.ASC)}>タイトル:昇順</p>
+            {/* <BaseSelect label='ソート' selected={categoryId} change={handleChangeSelect} items={props.categories} /> */}
+          </div>
           <div className={styles.create}>
             <Button onClick={openCreateModal}> リソース新規作作成</Button>
           </div>

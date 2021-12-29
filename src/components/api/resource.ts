@@ -9,7 +9,6 @@ import {
   CreateResourceUserMutation,
   DeleteResourceUserInput,
   DeleteResourceUserMutation,
-  Resource,
 } from '@/src/API'
 import { API, graphqlOperation } from 'aws-amplify'
 import {
@@ -19,9 +18,15 @@ import {
   createResourceUser,
   deleteResourceUser,
 } from '@/src/graphql/mutations'
-import { ListResourcesQuery } from '@/src/API'
+import {
+  ListResourceSortByCreatedAtQuery,
+  ListResourceSortByTitleQuery,
+  ResourceType,
+  ModelSortDirection,
+  Resource,
+} from '@/src/API'
 
-import { listResources, getResource } from '@/src/graphql/queries'
+import { getResource, listResourceSortByCreatedAt, listResourceSortByTitle } from '@/src/graphql/queries'
 import { GraphQLResult } from '@aws-amplify/api'
 
 /**
@@ -39,16 +44,42 @@ export const createResourceData = async (updateInput: CreateResourceInput) => {
 }
 
 /**
- * 全リソースデータを取得する
+ * 全リソースデータを日付降順で取得する
  */
 
-export const fetchResources = async () => {
+export const fetchResources = async (query: ModelSortDirection) => {
   try {
-    const ResourcesQuery = (await API.graphql(graphqlOperation(listResources))) as {
-      data: ListResourcesQuery
+    const res = (await API.graphql(
+      graphqlOperation(listResourceSortByCreatedAt, {
+        ResourceType: ResourceType.RESOURCE,
+        sortDirection: query,
+      })
+    )) as {
+      data: ListResourceSortByCreatedAtQuery
       errors: any[]
     }
-    return ResourcesQuery.data.listResources?.items as Resource[]
+    return res?.data.listResourceSortByCreatedAt?.items as Resource[]
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+/**
+ * 全リソースデータをタイトル順で取得する
+ */
+
+export const fetchResourcesSortByTitle = async (query: ModelSortDirection) => {
+  try {
+    const res = (await API.graphql(
+      graphqlOperation(listResourceSortByTitle, {
+        ResourceType: ResourceType.RESOURCE,
+        sortDirection: query,
+      })
+    )) as {
+      data: ListResourceSortByTitleQuery
+      errors: any[]
+    }
+    return res?.data.listResourceSortByTitle?.items as Resource[]
   } catch (error) {
     console.error(error)
     throw error

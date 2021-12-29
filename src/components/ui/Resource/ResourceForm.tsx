@@ -1,10 +1,11 @@
 import styles from './ResourceForm.module.scss'
 import * as React from 'react'
-import { CreateResourceInput } from '@/src/API'
+import { CreateResourceInput, ResourceType } from '@/src/API'
 import BaseSelect from '@/src/components/ui/Input/BaseSelect'
 import { useForm } from 'react-hook-form'
 import { ResourceFormType } from '@/src/types/index'
 import { useResourceForm } from '@/src/components/model/resource'
+
 
 export default function ResourceForm(props: ResourceFormType) {
   const { register, handleSubmit, errors } = useForm<CreateResourceInput>()
@@ -41,6 +42,12 @@ export default function ResourceForm(props: ResourceFormType) {
         {errors.url && 'URLは必須です。'}
         {/*TODO:新規カテゴリーの追加ができないので、おそらくselectBoxやめると思う */}
         <BaseSelect label='カテゴリー' selected={categoryId} change={handleChangeSelect} items={props.categories} />
+        <input
+          name='ResourceType'
+          defaultValue={ResourceType.RESOURCE}
+          ref={register({ required: true })}
+          style={{ display: 'none' }}
+        />
         <input type='submit' className={styles.button} value='保存' />
       </form>
     </>
