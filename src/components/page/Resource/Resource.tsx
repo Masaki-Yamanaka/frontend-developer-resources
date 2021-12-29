@@ -1,36 +1,49 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import styles from './Resource.module.scss'
-import { createCategoryData, fetchCategories } from '@/src/components/api/category'
-import { createResourceData, fetchResources } from '@/src/components/api/resource'
 import { useModal } from '@/src/components/hooks/useModal'
-import ResourceCreateModal from '@/src/components/ui/Modal/ResourceCreateModal'
-import _ from 'lodash'
-import Auth from '@aws-amplify/auth'
+import ResourceForm from '@/src/components/ui/Resource/ResourceForm'
+import BaseModal from '@/src/components/ui/Modal/BaseModal'
+import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
 import Link from 'next/link'
+import { Checked } from '@/src/types/index'
+import { AuthContext } from '@/src/components/model/auth'
+import { Resource } from '@/src/API'
+import { CategoryType } from '@/src/types/index'
+import { useForm } from 'react-hook-form'
+import { useResource } from '@/src/components/model/resource'
+import { Button } from '../../ui/Button'
 
-const Resource: NextPage = () => {
-  const { isOpen, openFunc, closeFunc } = useModal()
-  const [categories, setCategories]: any[] = useState([])
-  const [resources, setResources]: any[] = useState([])
+const ResourcePage: NextPage = () => {
+  const { isOpen, openModal, closeModal } = useModal()
+  const {
+    categories,
+    editItem,
+    resources,
+    isLoading,
+    isCurrentUserChecked,
+    createCategory,
+    deleteResource,
+    updateResource,
+    setNewData,
+    getCategoryName,
+    handleCheck,
+    setEditData,
+  } = useResource()
 
-  const createCategory = async (name: string) => {
-    await createCategoryData(name)
+  const [modalType, setModalType] = useState<string>('')
+  const { register } = useForm<Checked>()
+  const { currentUser } = useContext(AuthContext)
+  const openCreateModal = () => {
+    openModal()
+    setModalType('create')
   }
-  const createResource = async (categoryId: string, uid: string) => {
-    await createResourceData(categoryId, uid)
+  const openEditModal = (resource: Resource) => {
+    updateResource(resource)
+    openModal()
+    setModalType('edit')
   }
-  useEffect(() => {
-    ;(async () => {
-      const user = await Auth.currentAuthenticatedUser()
-      console.log('user: ', user)
-      const data = await fetchCategories()
-      setCategories(data)
-      const resourceData = await fetchResources()
-      setResources(resourceData)
-    })()
-  }, [])
 
   return (
     <>
@@ -40,16 +53,30 @@ const Resource: NextPage = () => {
           <meta name='description' content='Resource' />
           <link rel='icon' href='/favicon.ico' />
         </Head>
-        <div className={styles.head}>
-          <h2>カテゴリー一覧</h2>
-          {categories.map((caterory: any) => (
-            <li key={caterory.id}>{caterory.name}</li>
-          ))}
-          <h2 className={styles.create} onClick={openFunc}>
-            リソース新規作作成
-          </h2>
-        </div>
+        <h1> {currentUser?.getUser?.name}さん、こんにちは</h1>
 
+        {isLoading ? <p>isLoading</p> : null}
+
+        <div className={styles.head}>
+          <h2
+            onClick={() => {
+              createCategory('javascript')
+            }}
+          >
+            カテゴリー一覧
+          </h2>
+          <ul className={styles.categories}>
+            {categories?.map((category: CategoryType) => (
+              <li key={category.id} style={{ marginLeft: 20 }}>
+                {category.name}
+              </li>
+            ))}
+          </ul>
+          <div className={styles.create}>
+            <Button onClick={openCreateModal}> リソース新規作作成</Button>
+          </div>
+        </div>
+        {/* TODO:後で別コンポーネントに分ける */}
         <table className={styles.table}>
           <tbody>
             <tr className={styles.tr}>
@@ -58,52 +85,67 @@ const Resource: NextPage = () => {
               <th className={styles.th}>タイトル</th>
               <th className={styles.th}>更新日</th>
               <th className={styles.th}>完了者</th>
+              <th className={styles.th}>編集</th>
+              <th className={styles.th}>削除</th>
             </tr>
-            {resources.map((resource: any) => (
+            {resources.map((resource: Resource) => (
               <tr className={styles.tr} key={resource.id}>
                 <td className={styles.td}>
-                  <input type='checkbox' />
+                  <form className={styles.form}>
+                    <input
+                      type='checkbox'
+                      name='checked'
+                      ref={register}
+                      checked={isCurrentUserChecked(resource)}
+                      onChange={() => {
+                        handleCheck(resource)
+                      }}
+                    />
+                  </form>
                 </td>
-                <td className={styles.td}>{resource.categoryId}</td>
-                <Link href={resource.url}>
+                <td className={styles.td}>{getCategoryName(resource.categoryId)}</td>
+                <Link href={resource.url} passHref>
                   <td className={styles.td}>{resource.title}</td>
                 </Link>
 
-                <td className={styles.td}>{resource.createdAt}</td>
-                <td className={styles.td}>
-                  <div className={styles.image}>
-                    <img
-                      src='https://m.media-amazon.com/images/I/31pcfgVRTZL._AC_.jpg'
-                      alt='sample'
-                      className={styles.img}
-                    />
-                  </div>
+                <td className={styles.td}>{formatDateToSlashWithTime(resource.createdAt)}</td>
+                <td className={styles.td} style={{ display: 'flex' }}>
+                  {resource.users
+                    ? resource.users.items.map((item) => (
+                        <div className={styles.image} key={item.id}>
+                          {/* TODO:後でnext/imageを使う */}
+                          <img src={item.user.profileImagePath} alt='sample' className={styles.img} />
+                        </div>
+                      ))
+                    : null}
+                </td>
+                <td className={styles.td} onClick={() => openEditModal(resource)}>
+                  編集
+                </td>
+                <td className={styles.td} onClick={() => deleteResource(resource)}>
+                  削除
                 </td>
               </tr>
             ))}
-            <tr className={styles.tr}>
-              <td className={styles.td}>
-                <input type='checkbox' />
-              </td>
-              <td className={styles.td}>セル</td>
-              <td className={styles.td}>表の中の１つ１つの項目</td>
-              <td className={styles.td}>2021/11/3</td>
-              <td className={styles.td}>
-                <div className={styles.image}>
-                  <img
-                    src='https://m.media-amazon.com/images/I/31pcfgVRTZL._AC_.jpg'
-                    alt='sample'
-                    className={styles.img}
-                  />
-                </div>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
-      <ResourceCreateModal isOpen={isOpen} closeFunc={closeFunc} />
+      <BaseModal
+        title={modalType === 'create' ? 'リソースを新規作成する' : 'リソースを編集する'}
+        isOpen={isOpen}
+        closeModal={closeModal}
+        child={
+          <ResourceForm
+            type={modalType}
+            categories={categories}
+            closeModal={closeModal}
+            setNewData={modalType === 'create' ? setNewData : setEditData}
+            defaultData={modalType === 'create' ? undefined : editItem}
+          />
+        }
+      ></BaseModal>
     </>
   )
 }
 
-export default Resource
+export default ResourcePage

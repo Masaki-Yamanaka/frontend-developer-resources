@@ -51,3 +51,4 @@ type Feed @model {
   category: Category @connection(fields: ["categoryId"])
   user: User @connection(fields: ["userId"])
 }
+

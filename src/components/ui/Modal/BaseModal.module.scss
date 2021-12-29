@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.close {
+  margin-left: auto;
+  cursor: pointer;
+}
+.close:hover {
+  color: #f9e547;
+}
