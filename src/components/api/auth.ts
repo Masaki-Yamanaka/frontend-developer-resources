@@ -37,7 +37,8 @@ export const createUserInDynamoDB = async (userInfo: User) => {
 export const updateAuthUser = async (userInfo: UpdateUserInput) => {
   try {
     await API.graphql(graphqlOperation(updateUser, { input: userInfo }))
-  } catch (error: any) {
+  } catch (error) {
     console.error(error)
+    throw error
   }
 }

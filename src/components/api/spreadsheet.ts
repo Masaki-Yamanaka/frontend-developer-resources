@@ -11,18 +11,18 @@ export const useSpreadsheet = () => {
     try {
       const res = await axios.get(categoryPath)
       return res.data
-    } catch (e) {
-      console.error(e.message)
-      return e.message
+    } catch (error) {
+      console.error(error)
+      throw error
     }
   }
   const fetchResourceFromSpreadsheet = async (): Promise<ResourceFromSpreadsheet[]> => {
     try {
       const res = await axios.get(resourcePath)
       return res.data
-    } catch (e) {
-      console.error(e.message)
-      return e.message
+    } catch (error) {
+      console.error(error)
+      throw error
     }
   }
 

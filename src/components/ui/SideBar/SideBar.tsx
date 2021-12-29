@@ -21,6 +21,7 @@ export const SideBar = ({ children }: { children: ReactNode }) => {
           <div className={styles.linkContainer}>
             <PageLink href='/'>Home</PageLink>
             <PageLink href='/resource'>CheckList</PageLink>
+            <PageLink href='/login'>Login</PageLink>
             <Button onClick={() => Auth.signOut()}>LogOut</Button>
           </div>
         </section>

@@ -16,7 +16,8 @@ export const createCategoryData = async (name: string) => {
       graphqlOperation(createCategory, { input: createInput })
     )) as GraphQLResult<CreateCategoryMutation>
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    throw error
   }
 }
 
@@ -29,10 +30,10 @@ export const fetchCategories = async () => {
       data: ListCategorysQuery
       errors: any[]
     }
-
     return categoriesQuery.data.listCategorys?.items
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    throw error
   }
 }
 
@@ -48,6 +49,7 @@ export const deleteCategoryData = async (query: string) => {
       graphqlOperation(deleteCategory, { input: deleteInput })
     )) as GraphQLResult<DeleteCategoryMutation>
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    throw error
   }
 }

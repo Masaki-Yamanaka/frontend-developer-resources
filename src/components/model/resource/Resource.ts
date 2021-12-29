@@ -116,6 +116,7 @@ export const useResource = () => {
         return resourceItem.id !== resource.id
       })
     )
+    await updateUserResourceData('unCheckResources')
   }
 
   const updateResource = (resource: UpdateResourceInput) => {
@@ -146,11 +147,11 @@ export const useResource = () => {
       const resourceUser = resource.users.items.find((item) => item.userId === uid)
       if (!resourceUser) return
       await deleteResourceUserData(resourceUser.id)
-      await updateUserResourceData(false)
+      await updateUserResourceData('unCheckResources')
     } else {
       // チェックをつける
       await createResourceUserData(uid, resource.id)
-      await updateUserResourceData(true)
+      await updateUserResourceData('checkResources')
     }
     const resourceData = await fetchResources()
     setResources(resourceData)
@@ -176,13 +177,32 @@ export const useResource = () => {
     })
   }
   // 進捗率と完了済みタスク数を変更する
-  const updateUserResourceData = async (isAdd: boolean) => {
+  const updateUserResourceData = async (
+    type: 'checkResources' | 'unCheckResources' | 'deleteResources' | 'addResources'
+  ) => {
     if (!currentUser?.getUser) return
     //NOTE:進捗率=(ユーザーの完了済みリソース数)/(全リソース数)
-    const newResourcesCount: number = isAdd
-      ? currentUser.getUser.resourcesCount + 1
-      : currentUser.getUser.resourcesCount - 1
-    const newProgressRate: number = Math.round((newResourcesCount / resources.length) * 100)
+    let newResourcesCount = currentUser.getUser.resourcesCount
+    let allResourcesCount = resources.length
+    switch (type) {
+      case 'checkResources':
+        newResourcesCount = currentUser.getUser.resourcesCount + 1
+        break
+      case 'unCheckResources':
+        newResourcesCount = currentUser.getUser.resourcesCount - 1
+        break
+      case 'addResources':
+        allResourcesCount = resources.length + 1
+
+        break
+      case 'deleteResources':
+        allResourcesCount = resources.length - 1
+        break
+
+      default:
+        null
+    }
+    const newProgressRate: number = Math.round((newResourcesCount / allResourcesCount) * 100)
     const userInfo = { ...currentUser?.getUser, resourcesCount: newResourcesCount, progressRate: newProgressRate }
     const updateUserInput = {
       id: currentUser.getUser.id,
@@ -196,7 +216,7 @@ export const useResource = () => {
       await updateAuthUser(updateUserInput)
       updateCurrentUser(userInfo)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
@@ -214,7 +234,7 @@ export const useResource = () => {
     isOpen,
     openModal,
     setEditData,
-
+    updateUserResourceData,
     isLoading,
   }
 }
