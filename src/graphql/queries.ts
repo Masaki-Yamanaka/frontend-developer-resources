@@ -43,8 +43,9 @@ export const getResource = /* GraphQL */ `
               }
               nextToken
             }
-            createdAt
             updatedAt
+            createdAt
+            ResourceType
           }
           user {
             id
@@ -83,8 +84,9 @@ export const getResource = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
       updatedAt
+      createdAt
+      ResourceType
     }
   }
 `;
@@ -127,8 +129,9 @@ export const listResources = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -151,8 +154,9 @@ export const listResources = /* GraphQL */ `
           }
           nextToken
         }
-        createdAt
         updatedAt
+        createdAt
+        ResourceType
       }
       nextToken
     }
@@ -244,8 +248,9 @@ export const getUser = /* GraphQL */ `
               }
               nextToken
             }
-            createdAt
             updatedAt
+            createdAt
+            ResourceType
           }
           user {
             id
@@ -357,8 +362,9 @@ export const listUsers = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -490,8 +496,9 @@ export const getPost = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -587,8 +594,9 @@ export const listPosts = /* GraphQL */ `
                 userId
                 title
                 url
-                createdAt
                 updatedAt
+                createdAt
+                ResourceType
               }
               user {
                 id
@@ -689,8 +697,9 @@ export const getFeed = /* GraphQL */ `
               users {
                 nextToken
               }
-              createdAt
               updatedAt
+              createdAt
+              ResourceType
             }
             user {
               id
@@ -785,8 +794,9 @@ export const listFeeds = /* GraphQL */ `
                 userId
                 title
                 url
-                createdAt
                 updatedAt
+                createdAt
+                ResourceType
               }
               user {
                 id
@@ -808,6 +818,170 @@ export const listFeeds = /* GraphQL */ `
         }
         createdAt
         updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listResourceSortByCreatedAt = /* GraphQL */ `
+  query ListResourceSortByCreatedAt(
+    $ResourceType: ResourceType
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelResourceFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listResourceSortByCreatedAt(
+      ResourceType: $ResourceType
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        categoryId
+        userId
+        title
+        url
+        category {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        users {
+          items {
+            id
+            resourceId
+            userId
+            resource {
+              id
+              categoryId
+              userId
+              title
+              url
+              category {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              users {
+                nextToken
+              }
+              updatedAt
+              createdAt
+              ResourceType
+            }
+            user {
+              id
+              name
+              email
+              profileImagePath
+              progressRate
+              resourcesCount
+              posts {
+                nextToken
+              }
+              resources {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        updatedAt
+        createdAt
+        ResourceType
+      }
+      nextToken
+    }
+  }
+`;
+export const listResourceSortByTitle = /* GraphQL */ `
+  query ListResourceSortByTitle(
+    $ResourceType: ResourceType
+    $title: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelResourceFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listResourceSortByTitle(
+      ResourceType: $ResourceType
+      title: $title
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        categoryId
+        userId
+        title
+        url
+        category {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        users {
+          items {
+            id
+            resourceId
+            userId
+            resource {
+              id
+              categoryId
+              userId
+              title
+              url
+              category {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              users {
+                nextToken
+              }
+              updatedAt
+              createdAt
+              ResourceType
+            }
+            user {
+              id
+              name
+              email
+              profileImagePath
+              progressRate
+              resourcesCount
+              posts {
+                nextToken
+              }
+              resources {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        updatedAt
+        createdAt
+        ResourceType
       }
       nextToken
     }
