@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { UpdateResourceInput } from '@/src/API'
+import { UpdateResourceInput, Category, Post } from '@/src/API'
 
 export type User = {
   id: string
@@ -65,4 +65,26 @@ export type NextImageProps = {
   alt: string
   width: number
   height: number
+}
+
+export type PostCreateFormProps = {
+  categories: Category[]
+  updateDisplayPosts: () => Promise<void>
+}
+
+export type PostFormInput = 'title' | 'content' | 'categoryId'
+
+export type IPostFormInput = {
+  [key in PostFormInput]: string
+}
+
+export type PostUpdateFormProps = {
+  post: Post
+  categories: Category[]
+  updateDisplayPosts: () => Promise<void>
+}
+
+export type PostDeleteButtonProps = {
+  postId: string
+  updateDisplayPosts: () => Promise<void>
 }

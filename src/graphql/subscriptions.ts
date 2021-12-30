@@ -21,72 +21,13 @@ export const onCreateResource = /* GraphQL */ `
           id
           resourceId
           userId
-          resource {
-            id
-            categoryId
-            userId
-            title
-            url
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            users {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            updatedAt
-            createdAt
-            ResourceType
-          }
-          user {
-            id
-            name
-            email
-            profileImagePath
-            progressRate
-            resourcesCount
-            posts {
-              items {
-                id
-                categoryId
-                userId
-                title
-                content
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            resources {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
         }
         nextToken
       }
-      updatedAt
       createdAt
-      ResourceType
+      updatedAt
     }
   }
 `;
@@ -109,72 +50,13 @@ export const onUpdateResource = /* GraphQL */ `
           id
           resourceId
           userId
-          resource {
-            id
-            categoryId
-            userId
-            title
-            url
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            users {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            updatedAt
-            createdAt
-            ResourceType
-          }
-          user {
-            id
-            name
-            email
-            profileImagePath
-            progressRate
-            resourcesCount
-            posts {
-              items {
-                id
-                categoryId
-                userId
-                title
-                content
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            resources {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
         }
         nextToken
       }
-      updatedAt
       createdAt
-      ResourceType
+      updatedAt
     }
   }
 `;
@@ -197,72 +79,13 @@ export const onDeleteResource = /* GraphQL */ `
           id
           resourceId
           userId
-          resource {
-            id
-            categoryId
-            userId
-            title
-            url
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            users {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            updatedAt
-            createdAt
-            ResourceType
-          }
-          user {
-            id
-            name
-            email
-            profileImagePath
-            progressRate
-            resourcesCount
-            posts {
-              items {
-                id
-                categoryId
-                userId
-                title
-                content
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            resources {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
         }
         nextToken
       }
-      updatedAt
       createdAt
-      ResourceType
+      updatedAt
     }
   }
 `;
@@ -285,53 +108,10 @@ export const onCreateResourceUser = /* GraphQL */ `
           updatedAt
         }
         users {
-          items {
-            id
-            resourceId
-            userId
-            resource {
-              id
-              categoryId
-              userId
-              title
-              url
-              category {
-                id
-                name
-                createdAt
-                updatedAt
-              }
-              users {
-                nextToken
-              }
-              updatedAt
-              createdAt
-              ResourceType
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
-        updatedAt
         createdAt
-        ResourceType
+        updatedAt
       }
       user {
         id
@@ -341,82 +121,9 @@ export const onCreateResourceUser = /* GraphQL */ `
         progressRate
         resourcesCount
         posts {
-          items {
-            id
-            categoryId
-            userId
-            title
-            content
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         resources {
-          items {
-            id
-            resourceId
-            userId
-            resource {
-              id
-              categoryId
-              userId
-              title
-              url
-              category {
-                id
-                name
-                createdAt
-                updatedAt
-              }
-              users {
-                nextToken
-              }
-              updatedAt
-              createdAt
-              ResourceType
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         createdAt
@@ -446,53 +153,10 @@ export const onUpdateResourceUser = /* GraphQL */ `
           updatedAt
         }
         users {
-          items {
-            id
-            resourceId
-            userId
-            resource {
-              id
-              categoryId
-              userId
-              title
-              url
-              category {
-                id
-                name
-                createdAt
-                updatedAt
-              }
-              users {
-                nextToken
-              }
-              updatedAt
-              createdAt
-              ResourceType
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
-        updatedAt
         createdAt
-        ResourceType
+        updatedAt
       }
       user {
         id
@@ -502,82 +166,9 @@ export const onUpdateResourceUser = /* GraphQL */ `
         progressRate
         resourcesCount
         posts {
-          items {
-            id
-            categoryId
-            userId
-            title
-            content
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         resources {
-          items {
-            id
-            resourceId
-            userId
-            resource {
-              id
-              categoryId
-              userId
-              title
-              url
-              category {
-                id
-                name
-                createdAt
-                updatedAt
-              }
-              users {
-                nextToken
-              }
-              updatedAt
-              createdAt
-              ResourceType
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         createdAt
@@ -607,53 +198,10 @@ export const onDeleteResourceUser = /* GraphQL */ `
           updatedAt
         }
         users {
-          items {
-            id
-            resourceId
-            userId
-            resource {
-              id
-              categoryId
-              userId
-              title
-              url
-              category {
-                id
-                name
-                createdAt
-                updatedAt
-              }
-              users {
-                nextToken
-              }
-              updatedAt
-              createdAt
-              ResourceType
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
-        updatedAt
         createdAt
-        ResourceType
+        updatedAt
       }
       user {
         id
@@ -663,82 +211,9 @@ export const onDeleteResourceUser = /* GraphQL */ `
         progressRate
         resourcesCount
         posts {
-          items {
-            id
-            categoryId
-            userId
-            title
-            content
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         resources {
-          items {
-            id
-            resourceId
-            userId
-            resource {
-              id
-              categoryId
-              userId
-              title
-              url
-              category {
-                id
-                name
-                createdAt
-                updatedAt
-              }
-              users {
-                nextToken
-              }
-              updatedAt
-              createdAt
-              ResourceType
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         createdAt
@@ -765,44 +240,6 @@ export const onCreateUser = /* GraphQL */ `
           userId
           title
           content
-          category {
-            id
-            name
-            createdAt
-            updatedAt
-          }
-          user {
-            id
-            name
-            email
-            profileImagePath
-            progressRate
-            resourcesCount
-            posts {
-              items {
-                id
-                categoryId
-                userId
-                title
-                content
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            resources {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
         }
@@ -813,64 +250,6 @@ export const onCreateUser = /* GraphQL */ `
           id
           resourceId
           userId
-          resource {
-            id
-            categoryId
-            userId
-            title
-            url
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            users {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            updatedAt
-            createdAt
-            ResourceType
-          }
-          user {
-            id
-            name
-            email
-            profileImagePath
-            progressRate
-            resourcesCount
-            posts {
-              items {
-                id
-                categoryId
-                userId
-                title
-                content
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            resources {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
         }
@@ -897,44 +276,6 @@ export const onUpdateUser = /* GraphQL */ `
           userId
           title
           content
-          category {
-            id
-            name
-            createdAt
-            updatedAt
-          }
-          user {
-            id
-            name
-            email
-            profileImagePath
-            progressRate
-            resourcesCount
-            posts {
-              items {
-                id
-                categoryId
-                userId
-                title
-                content
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            resources {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
         }
@@ -945,64 +286,6 @@ export const onUpdateUser = /* GraphQL */ `
           id
           resourceId
           userId
-          resource {
-            id
-            categoryId
-            userId
-            title
-            url
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            users {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            updatedAt
-            createdAt
-            ResourceType
-          }
-          user {
-            id
-            name
-            email
-            profileImagePath
-            progressRate
-            resourcesCount
-            posts {
-              items {
-                id
-                categoryId
-                userId
-                title
-                content
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            resources {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
         }
@@ -1029,44 +312,6 @@ export const onDeleteUser = /* GraphQL */ `
           userId
           title
           content
-          category {
-            id
-            name
-            createdAt
-            updatedAt
-          }
-          user {
-            id
-            name
-            email
-            profileImagePath
-            progressRate
-            resourcesCount
-            posts {
-              items {
-                id
-                categoryId
-                userId
-                title
-                content
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            resources {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
         }
@@ -1077,64 +322,6 @@ export const onDeleteUser = /* GraphQL */ `
           id
           resourceId
           userId
-          resource {
-            id
-            categoryId
-            userId
-            title
-            url
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            users {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            updatedAt
-            createdAt
-            ResourceType
-          }
-          user {
-            id
-            name
-            email
-            profileImagePath
-            progressRate
-            resourcesCount
-            posts {
-              items {
-                id
-                categoryId
-                userId
-                title
-                content
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            resources {
-              items {
-                id
-                resourceId
-                userId
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
         }
@@ -1197,82 +384,9 @@ export const onCreatePost = /* GraphQL */ `
         progressRate
         resourcesCount
         posts {
-          items {
-            id
-            categoryId
-            userId
-            title
-            content
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         resources {
-          items {
-            id
-            resourceId
-            userId
-            resource {
-              id
-              categoryId
-              userId
-              title
-              url
-              category {
-                id
-                name
-                createdAt
-                updatedAt
-              }
-              users {
-                nextToken
-              }
-              updatedAt
-              createdAt
-              ResourceType
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         createdAt
@@ -1305,82 +419,9 @@ export const onUpdatePost = /* GraphQL */ `
         progressRate
         resourcesCount
         posts {
-          items {
-            id
-            categoryId
-            userId
-            title
-            content
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         resources {
-          items {
-            id
-            resourceId
-            userId
-            resource {
-              id
-              categoryId
-              userId
-              title
-              url
-              category {
-                id
-                name
-                createdAt
-                updatedAt
-              }
-              users {
-                nextToken
-              }
-              updatedAt
-              createdAt
-              ResourceType
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         createdAt
@@ -1413,82 +454,9 @@ export const onDeletePost = /* GraphQL */ `
         progressRate
         resourcesCount
         posts {
-          items {
-            id
-            categoryId
-            userId
-            title
-            content
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         resources {
-          items {
-            id
-            resourceId
-            userId
-            resource {
-              id
-              categoryId
-              userId
-              title
-              url
-              category {
-                id
-                name
-                createdAt
-                updatedAt
-              }
-              users {
-                nextToken
-              }
-              updatedAt
-              createdAt
-              ResourceType
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         createdAt
@@ -1520,82 +488,9 @@ export const onCreateFeed = /* GraphQL */ `
         progressRate
         resourcesCount
         posts {
-          items {
-            id
-            categoryId
-            userId
-            title
-            content
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         resources {
-          items {
-            id
-            resourceId
-            userId
-            resource {
-              id
-              categoryId
-              userId
-              title
-              url
-              category {
-                id
-                name
-                createdAt
-                updatedAt
-              }
-              users {
-                nextToken
-              }
-              updatedAt
-              createdAt
-              ResourceType
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         createdAt
@@ -1627,82 +522,9 @@ export const onUpdateFeed = /* GraphQL */ `
         progressRate
         resourcesCount
         posts {
-          items {
-            id
-            categoryId
-            userId
-            title
-            content
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         resources {
-          items {
-            id
-            resourceId
-            userId
-            resource {
-              id
-              categoryId
-              userId
-              title
-              url
-              category {
-                id
-                name
-                createdAt
-                updatedAt
-              }
-              users {
-                nextToken
-              }
-              updatedAt
-              createdAt
-              ResourceType
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         createdAt
@@ -1734,82 +556,9 @@ export const onDeleteFeed = /* GraphQL */ `
         progressRate
         resourcesCount
         posts {
-          items {
-            id
-            categoryId
-            userId
-            title
-            content
-            category {
-              id
-              name
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         resources {
-          items {
-            id
-            resourceId
-            userId
-            resource {
-              id
-              categoryId
-              userId
-              title
-              url
-              category {
-                id
-                name
-                createdAt
-                updatedAt
-              }
-              users {
-                nextToken
-              }
-              updatedAt
-              createdAt
-              ResourceType
-            }
-            user {
-              id
-              name
-              email
-              profileImagePath
-              progressRate
-              resourcesCount
-              posts {
-                nextToken
-              }
-              resources {
-                nextToken
-              }
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           nextToken
         }
         createdAt

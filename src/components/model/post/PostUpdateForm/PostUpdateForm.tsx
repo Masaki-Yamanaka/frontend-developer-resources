@@ -1,31 +1,23 @@
-import { useState } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { useCurrentUser } from '@/src/components/hooks/useCurrentUser'
 import { updatePostData } from '@/src/components/api/post'
-import { Category, UpdatePostInput, Post } from '@/src/API'
+import { UpdatePostInput } from '@/src/API'
+import { IPostFormInput, PostUpdateFormProps } from '@/src/types'
 
-export type PostCreateFormProps = {
-  post: Post
-  categories: Category[]
-  updateDisplayPosts: () => Promise<void>
-}
-
-// このコンポーネントは仮実装なのでReactHookFormに書き換える
-export const PostUpdateForm = ({ post, categories, updateDisplayPosts }: PostCreateFormProps) => {
-  const [title, setTitle] = useState<string>(post.title)
-  const [content, setContent] = useState<string>(post.content)
-  const [categoryId, setCategoryId] = useState<string>(post.category?.id || '')
+export const PostUpdateForm = ({ post, categories, updateDisplayPosts }: PostUpdateFormProps) => {
   const { currentUser } = useCurrentUser()
+  const { register, handleSubmit } = useForm<IPostFormInput>()
 
-  const handleClickSubmitButton = async () => {
+  const onSubmit: SubmitHandler<IPostFormInput> = async (data) => {
     if (currentUser && currentUser.getUser) {
-      const updatePostInput: UpdatePostInput = {
+      const input: UpdatePostInput = {
         id: post.id,
-        title: title,
-        content: content,
-        categoryId: categoryId,
+        title: data.title,
+        content: data.content,
+        categoryId: data.categoryId,
         userId: currentUser.getUser.id,
       }
-      await updatePostData(updatePostInput)
+      await updatePostData(input)
       await updateDisplayPosts()
     }
   }
@@ -33,19 +25,27 @@ export const PostUpdateForm = ({ post, categories, updateDisplayPosts }: PostCre
   return (
     <section>
       <h1>PostUpdateForm</h1>
-      <p>title</p>
-      <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} />
-      <p>content</p>
-      <input type='textarea' value={content} onChange={(e) => setContent(e.target.value)} />
-      <p>category</p>
-      <select name='category' value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
-        {categories.map((category) => (
-          <option key={category.id} value={category.id}>
-            {category.name}
-          </option>
-        ))}
-      </select>
-      <input type='submit' onClick={handleClickSubmitButton} />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label>title</label>
+          <input type='text' {...register('title')} defaultValue={post.title} />
+        </div>
+        <div>
+          <label>content</label>
+          <input type='textarea' {...register('content')} defaultValue={post.content} />
+        </div>
+        <div>
+          <label>category</label>
+          <select {...register('categoryId')} defaultValue={post.category?.id}>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <input type='submit' />
+      </form>
     </section>
   )
 }

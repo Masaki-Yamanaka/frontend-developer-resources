@@ -1,24 +1,20 @@
 import { Button } from '@/src/components/ui/Button'
 import { deletePostData } from '@/src/components/api/post'
 import { DeletePostInput } from '@/src/API'
-
-type PostDeleteButtonProps = {
-  postId: string
-  updateDisplayPosts: () => Promise<void>
-}
+import { PostDeleteButtonProps } from '@/src/types'
 
 export const PostDeleteButton = ({ postId, updateDisplayPosts }: PostDeleteButtonProps) => {
-  const handleClickDeleteButton = async (postId: string) => {
-    const deletePostInput: DeletePostInput = {
+  const clickDeleteButton = async (postId: string) => {
+    const input: DeletePostInput = {
       id: postId,
     }
-    await deletePostData(deletePostInput)
+    await deletePostData(input)
     await updateDisplayPosts()
   }
 
   return (
     <>
-      <Button onClick={() => handleClickDeleteButton(postId)}>削除</Button>
+      <Button onClick={() => clickDeleteButton(postId)}>削除</Button>
     </>
   )
 }
