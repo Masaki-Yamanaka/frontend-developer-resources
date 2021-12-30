@@ -8,7 +8,7 @@ import BaseModal from '@/src/components/ui/Modal/BaseModal'
 import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
 import Link from 'next/link'
 import { Checked } from '@/src/types/index'
-import { Resource, ModelSortDirection } from '@/src/API'
+import { Resource } from '@/src/API'
 import { CategoryType } from '@/src/types/index'
 import { useForm } from 'react-hook-form'
 import { useResource } from '@/src/components/model/resource'
@@ -29,11 +29,12 @@ const ResourcePage: NextPage = () => {
     getCategoryName,
     handleCheck,
     setEditData,
-    fetchResourcesSortResourcesByTitle,
-    fetchResourcesSortResourcesByCreatedAt,
+    changeSortQuery,
+    filterResourcesByCategory,
   } = useResource()
 
   const [modalType, setModalType] = useState<string>('')
+
   const { register } = useForm<Checked>()
   const openCreateModal = () => {
     openModal()
@@ -61,21 +62,27 @@ const ResourcePage: NextPage = () => {
               createCategory('javascript')
             }}
           >
-            カテゴリー一覧
+            カテゴリーでソートする
           </h2>
           <ul className={styles.categories}>
             {categories?.map((category: CategoryType) => (
-              <li key={category.id} style={{ marginLeft: 20 }}>
+              <li
+                key={category.id}
+                style={{ marginLeft: 20, cursor: 'pointer' }}
+                onClick={() => {
+                  filterResourcesByCategory(category.id)
+                }}
+              >
                 {category.name}
               </li>
             ))}
           </ul>
           <div className={styles.sort}>
-            <h2>ソート</h2>
-            <p onClick={() => fetchResourcesSortResourcesByCreatedAt(ModelSortDirection.DESC)}>新着順</p>
-            <p onClick={() => fetchResourcesSortResourcesByTitle(ModelSortDirection.DESC)}>タイトル:降順</p>
-            <p onClick={() => fetchResourcesSortResourcesByTitle(ModelSortDirection.ASC)}>タイトル:昇順</p>
-            {/* <BaseSelect label='ソート' selected={categoryId} change={handleChangeSelect} items={props.categories} /> */}
+            <select name='sortQuery' onChange={changeSortQuery}>
+              <option value='createdAtDESC'>新着順</option>
+              <option value='titleDESC'>タイトル:降順</option>
+              <option value='titleASC'>タイトル:昇順</option>
+            </select>
           </div>
           <div className={styles.create}>
             <Button onClick={openCreateModal}> リソース新規作作成</Button>

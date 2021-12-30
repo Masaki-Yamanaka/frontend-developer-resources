@@ -24,6 +24,7 @@ import {
   ResourceType,
   ModelSortDirection,
   Resource,
+  ModelResourceFilterInput,
 } from '@/src/API'
 
 import { getResource, listResourceSortByCreatedAt, listResourceSortByTitle } from '@/src/graphql/queries'
@@ -47,12 +48,16 @@ export const createResourceData = async (updateInput: CreateResourceInput) => {
  * 全リソースデータを日付降順で取得する
  */
 
-export const fetchResources = async (query: ModelSortDirection) => {
+export const fetchResources = async (
+  sortDirectionQuery: ModelSortDirection,
+  filterQuery: ModelResourceFilterInput | undefined
+) => {
   try {
     const res = (await API.graphql(
       graphqlOperation(listResourceSortByCreatedAt, {
         ResourceType: ResourceType.RESOURCE,
-        sortDirection: query,
+        sortDirection: sortDirectionQuery,
+        filter: filterQuery,
       })
     )) as {
       data: ListResourceSortByCreatedAtQuery
@@ -68,12 +73,16 @@ export const fetchResources = async (query: ModelSortDirection) => {
  * 全リソースデータをタイトル順で取得する
  */
 
-export const fetchResourcesSortByTitle = async (query: ModelSortDirection) => {
+export const fetchResourcesSortByTitle = async (
+  sortDirectionQuery: ModelSortDirection,
+  filterQuery: ModelResourceFilterInput | undefined
+) => {
   try {
     const res = (await API.graphql(
       graphqlOperation(listResourceSortByTitle, {
         ResourceType: ResourceType.RESOURCE,
-        sortDirection: query,
+        sortDirection: sortDirectionQuery,
+        filter: filterQuery,
       })
     )) as {
       data: ListResourceSortByTitleQuery
