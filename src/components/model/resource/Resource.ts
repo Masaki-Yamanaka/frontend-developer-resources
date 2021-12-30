@@ -6,14 +6,13 @@ import {
   createResourceUserData,
   deleteResourceUserData,
   createResourceData,
+  fetchResourcesSortByTitle,
 } from '@/src/components/api/resource'
 import { updateAuthUser } from '@/src/components/api/auth'
-
 import { useModal } from '@/src/components/hooks/useModal'
 import _ from 'lodash'
-
 import { AuthContext } from '@/src/components/model/auth'
-import { UpdateResourceInput, Resource } from '@/src/API'
+import { UpdateResourceInput, Resource, ResourceType, ModelSortDirection, ModelResourceFilterInput } from '@/src/API'
 import { CategoryType } from '@/src/types/index'
 import { useSpreadsheet } from '@/src/components/api/spreadsheet'
 
@@ -22,10 +21,10 @@ export const useResource = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [categories, setCategories] = useState<CategoryType[]>([])
   const [editItem, setEditItem] = useState<UpdateResourceInput>()
-
   const [resources, setResources] = useState<Resource[]>([])
   const { currentUser, updateCurrentUser } = useContext(AuthContext)
-
+  const [sortQuery, setSortQuery] = useState<string>('createdAtDESC')
+  const [filterQuery, setFilterQuery] = useState<ModelResourceFilterInput | undefined>(undefined)
   const createCategory = async (name: string) => {
     return await createCategoryData(name)
   }
@@ -48,8 +47,7 @@ export const useResource = () => {
           name: categoryItem.name,
         }))
         setCategories(makeCategoriesData)
-        const resourceData = await fetchResources()
-        setResources([...resourceData])
+        fetchResourcesWithSort(sortQuery, filterQuery)
       } catch (error) {
         console.log(error)
       } finally {
@@ -93,6 +91,7 @@ export const useResource = () => {
           userId: userId,
           title: fetchResource.title,
           url: fetchResource.url,
+          ResourceType: ResourceType.RESOURCE,
         }
         const response = await createResourceData(createResourceInput)
         resourcesArray.push(response?.data?.createResource as Resource)
@@ -109,7 +108,6 @@ export const useResource = () => {
     for await (const item of resource.users.items) {
       await deleteResourceUserData(item.id)
     }
-
     await deleteResourceData(resource.id)
     setResources(
       _.filter(resources, function (resourceItem) {
@@ -153,8 +151,7 @@ export const useResource = () => {
       await createResourceUserData(uid, resource.id)
       await updateUserResourceData('checkResources')
     }
-    const resourceData = await fetchResources()
-    setResources(resourceData)
+    fetchResourcesWithSort(sortQuery, filterQuery)
   }
 
   const isCurrentUserChecked = (resource: Resource): boolean => {
@@ -219,6 +216,32 @@ export const useResource = () => {
       console.error(error)
     }
   }
+  const changeSortQuery: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+    setSortQuery(event.target.value)
+    fetchResourcesWithSort(event.target.value, filterQuery)
+  }
+  const filterResourcesByCategory = (categoryId: string) => {
+    const newFilterQuery = { categoryId: { eq: categoryId } }
+    setFilterQuery(newFilterQuery)
+    fetchResourcesWithSort(sortQuery, newFilterQuery)
+  }
+  const fetchResourcesWithSort = async (sortQuery: string, newFilterQuery: ModelResourceFilterInput | undefined) => {
+    let response = null
+    switch (sortQuery) {
+      case 'createdAtDESC':
+        response = await fetchResources(ModelSortDirection.DESC, newFilterQuery)
+        break
+      case 'titleDESC':
+        response = await fetchResourcesSortByTitle(ModelSortDirection.DESC, newFilterQuery)
+        break
+      case 'titleASC':
+        response = await fetchResourcesSortByTitle(ModelSortDirection.ASC, newFilterQuery)
+        break
+      default:
+    }
+    if (!response) return
+    setResources([...response])
+  }
 
   return {
     categories,
@@ -236,5 +259,7 @@ export const useResource = () => {
     setEditData,
     updateUserResourceData,
     isLoading,
+    filterResourcesByCategory,
+    changeSortQuery,
   }
 }
