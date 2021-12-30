@@ -83,3 +83,8 @@ export type PostUpdateFormProps = {
   categories: Category[]
   updateDisplayPosts: () => Promise<void>
 }
+
+export type PostDeleteButtonProps = {
+  postId: string
+  updateDisplayPosts: () => Promise<void>
+}
