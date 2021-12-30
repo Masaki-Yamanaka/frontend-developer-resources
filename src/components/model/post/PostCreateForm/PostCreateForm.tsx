@@ -3,7 +3,6 @@ import { useCurrentUser } from '@/src/components/hooks/useCurrentUser'
 import { createPostData } from '@/src/components/api/post'
 import { CreatePostInput } from '@/src/API'
 import { PostCreateFormProps, IPostFormInput } from '@/src/types'
-import style from './PostCreateForm.module.scss'
 
 export const PostCreateForm = ({ categories, updateDisplayPosts }: PostCreateFormProps) => {
   const { currentUser } = useCurrentUser()
@@ -23,23 +22,29 @@ export const PostCreateForm = ({ categories, updateDisplayPosts }: PostCreateFor
   }
 
   return (
-    <>
+    <section>
       <h1>PostCreateForm</h1>
-      <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
-        <label>title</label>
-        <input type='text' {...register('title')} />
-        <label>content</label>
-        <input type='textarea' {...register('content')} />
-        <label>category</label>
-        <select {...register('categoryId')}>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <label>title</label>
+          <input type='text' {...register('title')} />
+        </div>
+        <div>
+          <label>content</label>
+          <input type='textarea' {...register('content')} />
+        </div>
+        <div>
+          <label>category</label>
+          <select {...register('categoryId')}>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <input type='submit' />
       </form>
-    </>
+    </section>
   )
 }

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { UpdateResourceInput, Category } from '@/src/API'
+import { UpdateResourceInput, Category, Post } from '@/src/API'
 
 export type User = {
   id: string
@@ -76,4 +76,10 @@ export type PostFormInput = 'title' | 'content' | 'categoryId'
 
 export type IPostFormInput = {
   [key in PostFormInput]: string
+}
+
+export type PostUpdateFormProps = {
+  post: Post
+  categories: Category[]
+  updateDisplayPosts: () => Promise<void>
 }
