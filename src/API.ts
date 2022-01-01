@@ -8,13 +8,24 @@ export type CreateResourceInput = {
   userId: string,
   title: string,
   url: string,
+  updatedAt?: string | null,
+  createdAt?: string | null,
+  ResourceType: ResourceType,
 };
+
+export enum ResourceType {
+  RESOURCE = "RESOURCE",
+}
+
 
 export type ModelResourceConditionInput = {
   categoryId?: ModelIDInput | null,
   userId?: ModelIDInput | null,
   title?: ModelStringInput | null,
   url?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  ResourceType?: ModelResourceTypeInput | null,
   and?: Array< ModelResourceConditionInput | null > | null,
   or?: Array< ModelResourceConditionInput | null > | null,
   not?: ModelResourceConditionInput | null,
@@ -76,6 +87,11 @@ export type ModelStringInput = {
   size?: ModelSizeInput | null,
 };
 
+export type ModelResourceTypeInput = {
+  eq?: ResourceType | null,
+  ne?: ResourceType | null,
+};
+
 export type Resource = {
   __typename: "Resource",
   id: string,
@@ -85,8 +101,9 @@ export type Resource = {
   url: string,
   category?: Category | null,
   users?: ModelResourceUserConnection | null,
+  updatedAt?: string | null,
   createdAt: string,
-  updatedAt: string,
+  ResourceType: ResourceType,
 };
 
 export type Category = {
@@ -153,6 +170,9 @@ export type UpdateResourceInput = {
   userId?: string | null,
   title?: string | null,
   url?: string | null,
+  updatedAt?: string | null,
+  createdAt?: string | null,
+  ResourceType?: ResourceType | null,
 };
 
 export type DeleteResourceInput = {
@@ -324,6 +344,9 @@ export type ModelResourceFilterInput = {
   userId?: ModelIDInput | null,
   title?: ModelStringInput | null,
   url?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  ResourceType?: ModelResourceTypeInput | null,
   and?: Array< ModelResourceFilterInput | null > | null,
   or?: Array< ModelResourceFilterInput | null > | null,
   not?: ModelResourceFilterInput | null,
@@ -394,6 +417,22 @@ export type ModelFeedConnection = {
   nextToken?: string | null,
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type CreateResourceMutationVariables = {
   input: CreateResourceInput,
   condition?: ModelResourceConditionInput | null,
@@ -426,8 +465,9 @@ export type CreateResourceMutation = {
       } >,
       nextToken?: string | null,
     } | null,
+    updatedAt?: string | null,
     createdAt: string,
-    updatedAt: string,
+    ResourceType: ResourceType,
   } | null,
 };
 
@@ -463,8 +503,9 @@ export type UpdateResourceMutation = {
       } >,
       nextToken?: string | null,
     } | null,
+    updatedAt?: string | null,
     createdAt: string,
-    updatedAt: string,
+    ResourceType: ResourceType,
   } | null,
 };
 
@@ -500,8 +541,9 @@ export type DeleteResourceMutation = {
       } >,
       nextToken?: string | null,
     } | null,
+    updatedAt?: string | null,
     createdAt: string,
-    updatedAt: string,
+    ResourceType: ResourceType,
   } | null,
 };
 
@@ -534,8 +576,9 @@ export type CreateResourceUserMutation = {
         __typename: "ModelResourceUserConnection",
         nextToken?: string | null,
       } | null,
+      updatedAt?: string | null,
       createdAt: string,
-      updatedAt: string,
+      ResourceType: ResourceType,
     },
     user:  {
       __typename: "User",
@@ -590,8 +633,9 @@ export type UpdateResourceUserMutation = {
         __typename: "ModelResourceUserConnection",
         nextToken?: string | null,
       } | null,
+      updatedAt?: string | null,
       createdAt: string,
-      updatedAt: string,
+      ResourceType: ResourceType,
     },
     user:  {
       __typename: "User",
@@ -646,8 +690,9 @@ export type DeleteResourceUserMutation = {
         __typename: "ModelResourceUserConnection",
         nextToken?: string | null,
       } | null,
+      updatedAt?: string | null,
       createdAt: string,
-      updatedAt: string,
+      ResourceType: ResourceType,
     },
     user:  {
       __typename: "User",
@@ -1145,8 +1190,9 @@ export type GetResourceQuery = {
       } >,
       nextToken?: string | null,
     } | null,
+    updatedAt?: string | null,
     createdAt: string,
-    updatedAt: string,
+    ResourceType: ResourceType,
   } | null,
 };
 
@@ -1177,8 +1223,9 @@ export type ListResourcesQuery = {
         __typename: "ModelResourceUserConnection",
         nextToken?: string | null,
       } | null,
+      updatedAt?: string | null,
       createdAt: string,
-      updatedAt: string,
+      ResourceType: ResourceType,
     } >,
     nextToken?: string | null,
   } | null,
@@ -1460,6 +1507,82 @@ export type ListFeedsQuery = {
   } | null,
 };
 
+export type ListResourceSortByCreatedAtQueryVariables = {
+  ResourceType?: ResourceType | null,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelResourceFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListResourceSortByCreatedAtQuery = {
+  listResourceSortByCreatedAt?:  {
+    __typename: "ModelResourceConnection",
+    items:  Array< {
+      __typename: "Resource",
+      id: string,
+      categoryId: string,
+      userId: string,
+      title: string,
+      url: string,
+      category?:  {
+        __typename: "Category",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      users?:  {
+        __typename: "ModelResourceUserConnection",
+        nextToken?: string | null,
+      } | null,
+      updatedAt?: string | null,
+      createdAt: string,
+      ResourceType: ResourceType,
+    } >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListResourceSortByTitleQueryVariables = {
+  ResourceType?: ResourceType | null,
+  title?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelResourceFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListResourceSortByTitleQuery = {
+  listResourceSortByTitle?:  {
+    __typename: "ModelResourceConnection",
+    items:  Array< {
+      __typename: "Resource",
+      id: string,
+      categoryId: string,
+      userId: string,
+      title: string,
+      url: string,
+      category?:  {
+        __typename: "Category",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      users?:  {
+        __typename: "ModelResourceUserConnection",
+        nextToken?: string | null,
+      } | null,
+      updatedAt?: string | null,
+      createdAt: string,
+      ResourceType: ResourceType,
+    } >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type OnCreateResourceSubscription = {
   onCreateResource?:  {
     __typename: "Resource",
@@ -1487,8 +1610,9 @@ export type OnCreateResourceSubscription = {
       } >,
       nextToken?: string | null,
     } | null,
+    updatedAt?: string | null,
     createdAt: string,
-    updatedAt: string,
+    ResourceType: ResourceType,
   } | null,
 };
 
@@ -1519,8 +1643,9 @@ export type OnUpdateResourceSubscription = {
       } >,
       nextToken?: string | null,
     } | null,
+    updatedAt?: string | null,
     createdAt: string,
-    updatedAt: string,
+    ResourceType: ResourceType,
   } | null,
 };
 
@@ -1551,8 +1676,9 @@ export type OnDeleteResourceSubscription = {
       } >,
       nextToken?: string | null,
     } | null,
+    updatedAt?: string | null,
     createdAt: string,
-    updatedAt: string,
+    ResourceType: ResourceType,
   } | null,
 };
 
@@ -1580,8 +1706,9 @@ export type OnCreateResourceUserSubscription = {
         __typename: "ModelResourceUserConnection",
         nextToken?: string | null,
       } | null,
+      updatedAt?: string | null,
       createdAt: string,
-      updatedAt: string,
+      ResourceType: ResourceType,
     },
     user:  {
       __typename: "User",
@@ -1631,8 +1758,9 @@ export type OnUpdateResourceUserSubscription = {
         __typename: "ModelResourceUserConnection",
         nextToken?: string | null,
       } | null,
+      updatedAt?: string | null,
       createdAt: string,
-      updatedAt: string,
+      ResourceType: ResourceType,
     },
     user:  {
       __typename: "User",
@@ -1682,8 +1810,9 @@ export type OnDeleteResourceUserSubscription = {
         __typename: "ModelResourceUserConnection",
         nextToken?: string | null,
       } | null,
+      updatedAt?: string | null,
       createdAt: string,
-      updatedAt: string,
+      ResourceType: ResourceType,
     },
     user:  {
       __typename: "User",

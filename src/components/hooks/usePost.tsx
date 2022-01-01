@@ -27,5 +27,5 @@ export const usePost = () => {
     })()
   }, [])
 
-  return { posts, categories, updateDisplayPosts }
+  return { posts, setPosts, categories, updateDisplayPosts }
 }

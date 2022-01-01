@@ -26,8 +26,9 @@ export const onCreateResource = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
       updatedAt
+      createdAt
+      ResourceType
     }
   }
 `;
@@ -55,8 +56,9 @@ export const onUpdateResource = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
       updatedAt
+      createdAt
+      ResourceType
     }
   }
 `;
@@ -84,8 +86,9 @@ export const onDeleteResource = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
       updatedAt
+      createdAt
+      ResourceType
     }
   }
 `;
@@ -110,8 +113,9 @@ export const onCreateResourceUser = /* GraphQL */ `
         users {
           nextToken
         }
-        createdAt
         updatedAt
+        createdAt
+        ResourceType
       }
       user {
         id
@@ -155,8 +159,9 @@ export const onUpdateResourceUser = /* GraphQL */ `
         users {
           nextToken
         }
-        createdAt
         updatedAt
+        createdAt
+        ResourceType
       }
       user {
         id
@@ -200,8 +205,9 @@ export const onDeleteResourceUser = /* GraphQL */ `
         users {
           nextToken
         }
-        createdAt
         updatedAt
+        createdAt
+        ResourceType
       }
       user {
         id
