@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, Dispatch, SetStateAction } from 'react'
 import { UpdateResourceInput, Category, Post } from '@/src/API'
 
 export type User = {
@@ -87,4 +87,9 @@ export type PostUpdateFormProps = {
 export type PostDeleteButtonProps = {
   postId: string
   updateDisplayPosts: () => Promise<void>
+}
+
+export type PostFilterFormProps = {
+  categories: Category[]
+  setPosts: Dispatch<SetStateAction<Post[]>>
 }

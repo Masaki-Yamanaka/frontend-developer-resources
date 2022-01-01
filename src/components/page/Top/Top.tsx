@@ -1,4 +1,5 @@
 import style from './Top.module.scss'
+import { PostFilterForm } from '@/src/components/model/post/PostFilterForm'
 import { PostCard } from '@/src/components/model/post/PostCard'
 import { PostCreateForm } from '@/src/components/model/post/PostCreateForm'
 import { PostUpdateForm } from '@/src/components/model/post/PostUpdateForm'
@@ -6,11 +7,12 @@ import { PostDeleteButton } from '@/src/components/model/post/PostDeleteButton'
 import { usePost } from '@/src/components/hooks/usePost'
 
 export const Top = () => {
-  const { categories, posts, updateDisplayPosts } = usePost()
+  const { categories, posts, setPosts, updateDisplayPosts } = usePost()
   return (
     <>
       <article className={style.container}>
         <section className={style.postContainer}>
+          <PostFilterForm categories={categories} setPosts={setPosts} />
           <PostCreateForm categories={categories} updateDisplayPosts={updateDisplayPosts} />
           {posts.map((post) => (
             <div key={post.id} className={style.postCard}>

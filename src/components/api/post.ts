@@ -4,9 +4,15 @@ import { createPost, updatePost, deletePost } from '@/src/graphql/mutations'
 import { GraphQLResult } from '@aws-amplify/api'
 import { ListPostsQuery, Post, CreatePostInput, UpdatePostInput, DeletePostInput } from '@/src/API'
 
-export const fetchPosts = async () => {
+export const fetchPosts = async (categoryId?: string) => {
+  const filter = {
+    categoryId: {
+      'eq': categoryId
+    }
+  }
+
   try {
-    const res = (await API.graphql(graphqlOperation(listPosts))) as GraphQLResult<ListPostsQuery>
+    const res = (await API.graphql(graphqlOperation(listPosts, categoryId && { filter: filter }))) as GraphQLResult<ListPostsQuery>
     return res.data?.listPosts?.items as Post[]
   } catch (error) {
     console.error(error)
