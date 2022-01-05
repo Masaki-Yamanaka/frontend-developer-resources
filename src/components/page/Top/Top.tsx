@@ -17,7 +17,9 @@ export const Top = () => {
         <section className={style.postContainer}>
           <h1>モーダル</h1>
           <button onClick={openModal}>ボタン</button>
-          <Modal isOpen={isOpen} closeModal={closeModal} />
+          <Modal isOpen={isOpen} closeModal={closeModal}>
+            test
+          </Modal>
           <PostFilterForm categories={categories} setPosts={setPosts} />
           <PostCreateForm categories={categories} updateDisplayPosts={updateDisplayPosts} />
           {posts.map((post) => (

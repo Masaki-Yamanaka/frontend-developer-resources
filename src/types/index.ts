@@ -16,12 +16,14 @@ export type User = {
 export type ButtonProps = {
   onClick: () => void | Promise<void>
   children: ReactNode
+  className?: string
 }
 
 export type PageLinkProps = {
   href: string
   children: ReactNode
 }
+
 export type Resource = {
   id: string
   categoryId: string
