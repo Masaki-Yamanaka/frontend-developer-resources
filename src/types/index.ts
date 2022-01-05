@@ -95,3 +95,9 @@ export type PostFilterFormProps = {
   categories: Category[]
   setPosts: Dispatch<SetStateAction<Post[]>>
 }
+
+export type ModalProps = {
+  isOpen: boolean
+  closeModal: () => void
+  children: ReactNode
+}

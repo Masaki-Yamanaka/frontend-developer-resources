@@ -1,14 +1,8 @@
-import { ReactNode } from 'react'
 import { IconContext } from 'react-icons'
 import { AiOutlineClose } from 'react-icons/Ai'
 import { Button } from '@/src/components/ui/Button'
+import { ModalProps } from '@/src/types'
 import styles from './Modal.module.scss'
-
-type ModalProps = {
-  isOpen: boolean
-  closeModal: () => void
-  children: ReactNode
-}
 
 export const Modal = ({ isOpen, closeModal, children }: ModalProps) => {
   if (isOpen) {
