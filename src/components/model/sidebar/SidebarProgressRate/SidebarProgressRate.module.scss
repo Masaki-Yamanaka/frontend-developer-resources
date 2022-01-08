@@ -23,3 +23,39 @@
 .number {
   font-size: 24px;
 }
+
+.detail {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 180px;
+  margin: 16px auto 16px auto;
+  background-color: rgb(255, 255, 255, 0.3);
+  border: 1px solid rgb(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+.incomplete {
+  width: 60px;
+  padding-bottom: 4px;
+  border-right: 2px solid rgb(255, 255, 255, 0.5);
+}
+
+.complete {
+  width: 60px;
+  padding-bottom: 4px;
+}
+
+.continuation {
+  width: 60px;
+  padding-bottom: 4px;
+  border-left: 2px solid rgb(255, 255, 255, 0.5);
+}
+
+.count {
+  font-size: 24px;
+}
+
+.letter {
+  font-size: 12px;
+}

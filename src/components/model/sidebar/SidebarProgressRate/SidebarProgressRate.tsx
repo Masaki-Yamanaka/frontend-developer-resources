@@ -13,6 +13,20 @@ export const SidebarProgressRate = ({ currentUser }: { currentUser: GetUserQuery
             <span className={styles.number}>{currentUser.progressRate}</span>%
           </div>
         </div>
+        <div className={styles.detail}>
+          <div className={styles.incomplete}>
+            <p className={styles.count}>40</p>
+            <p className={styles.letter}>未完了</p>
+          </div>
+          <div className={styles.complete}>
+            <p className={styles.count}>40</p>
+            <p className={styles.letter}>完了</p>
+          </div>
+          <div className={styles.continuation}>
+            <p className={styles.count}>40</p>
+            <p className={styles.letter}>継続日数</p>
+          </div>
+        </div>
       </section>
     )
   }
