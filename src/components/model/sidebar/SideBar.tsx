@@ -1,9 +1,9 @@
 import { ReactNode } from 'react'
 import Auth from '@aws-amplify/auth'
 import styles from './SideBar.module.scss'
+import { SidebarUserProfile } from './SidebarUserProfile'
 import { PageLink } from '@/src/components/ui/PageLink'
 import { Button } from '@/src/components/ui/Button'
-import { NextImage } from '@/src/components/ui/Image'
 import { useCurrentUser } from '@/src/components/hooks/useCurrentUser'
 
 export const SideBar = ({ children }: { children: ReactNode }) => {
@@ -12,12 +12,7 @@ export const SideBar = ({ children }: { children: ReactNode }) => {
     <>
       <div className={styles.container}>
         <section className={styles.sidebar}>
-          {currentUser?.getUser && (
-            <div className={styles.userProfile}>
-              <NextImage className={styles.userAvatar} src={currentUser.getUser.profileImagePath} width={48} height={48} alt='user_avatar' />
-              <p className={styles.userName}>{currentUser.getUser.name}</p>
-            </div>
-          )}
+          <SidebarUserProfile currentUser={currentUser?.getUser} />
           <div style={{ padding: 20, textAlign: 'center' }}>
             <p>進捗率: {currentUser?.getUser?.progressRate}%</p>
             <p>完了済みタスク: {currentUser?.getUser?.resourcesCount}個</p>

@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: rgb(255, 255, 255, 0.3);
+  border: 1px solid rgb(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.name {
+  margin-left: 10px;
+}
