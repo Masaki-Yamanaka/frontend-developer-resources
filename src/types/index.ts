@@ -16,12 +16,14 @@ export type User = {
 export type ButtonProps = {
   onClick: () => void | Promise<void>
   children: ReactNode
+  className?: string
 }
 
 export type PageLinkProps = {
   href: string
   children: ReactNode
 }
+
 export type Resource = {
   id: string
   categoryId: string
@@ -92,4 +94,10 @@ export type PostDeleteButtonProps = {
 export type PostFilterFormProps = {
   categories: Category[]
   setPosts: Dispatch<SetStateAction<Post[]>>
+}
+
+export type ModalProps = {
+  isOpen: boolean
+  closeModal: () => void
+  children: ReactNode
 }
