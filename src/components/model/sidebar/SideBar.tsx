@@ -1,19 +1,18 @@
-import { ReactNode, useContext } from 'react'
+import { ReactNode } from 'react'
 import Auth from '@aws-amplify/auth'
 import styles from './SideBar.module.scss'
+import { SidebarUserProfile } from './SidebarUserProfile'
 import { PageLink } from '@/src/components/ui/PageLink'
 import { Button } from '@/src/components/ui/Button'
-import { AuthContext } from '@/src/components/model/auth'
+import { useCurrentUser } from '@/src/components/hooks/useCurrentUser'
 
 export const SideBar = ({ children }: { children: ReactNode }) => {
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser } = useCurrentUser()
   return (
     <>
       <div className={styles.container}>
         <section className={styles.sidebar}>
-          <div style={{ padding: 20, textAlign: 'center' }}>
-            <p>{currentUser?.getUser?.name}</p>
-          </div>
+          <SidebarUserProfile currentUser={currentUser?.getUser} />
           <div style={{ padding: 20, textAlign: 'center' }}>
             <p>進捗率: {currentUser?.getUser?.progressRate}%</p>
             <p>完了済みタスク: {currentUser?.getUser?.resourcesCount}個</p>

@@ -63,6 +63,7 @@ export type ResourceFromSpreadsheet = {
 }
 
 export type NextImageProps = {
+  className?: string
   src: string
   alt: string
   width: number

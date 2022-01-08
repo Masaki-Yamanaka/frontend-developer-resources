@@ -1,5 +1,5 @@
 import { Top } from './Top'
-import { SideBar } from '@/src/components/ui/SideBar'
+import { SideBar } from '@/src/components/model/sidebar'
 
 export const TopPage = () => (
   <>
