@@ -13,8 +13,26 @@
 .sidebar {
   flex-shrink: 0;
   width: 250px;
+  padding: 16px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 16px 0 0 16px;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: rgb(255, 255, 255, 0.3);
+  border: 1px solid rgb(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+.userAvatar {
+  border-radius: 50%;
+}
+
+.userName {
+  margin-left: 10px;
 }
 
 .linkContainer {
