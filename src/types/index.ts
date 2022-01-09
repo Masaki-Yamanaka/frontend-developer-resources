@@ -20,6 +20,7 @@ export type ButtonProps = {
 }
 
 export type PageLinkProps = {
+  className?: string
   href: string
   children: ReactNode
 }
