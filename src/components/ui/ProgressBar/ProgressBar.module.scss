@@ -1,0 +1,16 @@
+@use "@/styles/variables" as *;
+
+.bar {
+  position: relative;
+  width: 100%;
+  height: 5px;
+  background-color: grey;
+  border-radius: 5px;
+}
+
+.inner {
+  position: absolute;
+  height: 5px;
+  background: $base-gradation;
+  border-radius: 5px;
+}
