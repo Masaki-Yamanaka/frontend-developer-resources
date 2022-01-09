@@ -28,7 +28,8 @@ export const SidebarProgressRate = ({ currentUser }: { currentUser: GetUserQuery
             <p className={styles.letter}>継続日数</p>
           </div>
         </div>
-        <SidebarProgressRanking />
+        {/* TODO: users={[currentUser]}は現在仮の値。進捗率ランキング３位までのユーザーを配列として渡す */}
+        <SidebarProgressRanking users={[currentUser]} />
       </section>
     )
   }
