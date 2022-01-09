@@ -1,4 +1,5 @@
 import { ProgressCircle } from '@/src/components/ui/ProgressCircle'
+import { SidebarProgressRanking } from '@/src/components/model/sidebar/SidebarProgressRanking'
 import styles from './SidebarProgressRate.module.scss'
 import { GetUserQuery } from '@/src/API'
 
@@ -27,6 +28,7 @@ export const SidebarProgressRate = ({ currentUser }: { currentUser: GetUserQuery
             <p className={styles.letter}>継続日数</p>
           </div>
         </div>
+        <SidebarProgressRanking />
       </section>
     )
   }
