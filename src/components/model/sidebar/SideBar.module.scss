@@ -1,3 +1,5 @@
+@use "@/styles/variables" as *;
+
 .container {
   display: flex;
   margin: 16px;
@@ -11,6 +13,9 @@
 }
 
 .sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   flex-shrink: 0;
   width: 280px;
   padding: 16px;
@@ -38,9 +43,29 @@
 .linkContainer {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 }
 
 .main {
   width: 100%;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  &:hover {
+    background: $base-gradation;
+    color: white;
+  }
+}
+
+.linkName {
+  margin-left: 10px;
+}
+
+.isActive {
+  background: $base-gradation;
+  color: white;
 }
