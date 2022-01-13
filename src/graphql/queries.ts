@@ -21,6 +21,64 @@ export const getResource = /* GraphQL */ `
           id
           resourceId
           userId
+          resource {
+            id
+            categoryId
+            userId
+            title
+            url
+            category {
+              id
+              name
+              createdAt
+              updatedAt
+            }
+            users {
+              items {
+                id
+                resourceId
+                userId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            updatedAt
+            createdAt
+            ResourceType
+          }
+          user {
+            id
+            name
+            email
+            profileImagePath
+            progressRate
+            resourcesCount
+            posts {
+              items {
+                id
+                categoryId
+                userId
+                title
+                content
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            resources {
+              items {
+                id
+                resourceId
+                userId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -52,6 +110,48 @@ export const listResources = /* GraphQL */ `
           updatedAt
         }
         users {
+          items {
+            id
+            resourceId
+            userId
+            resource {
+              id
+              categoryId
+              userId
+              title
+              url
+              category {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              users {
+                nextToken
+              }
+              updatedAt
+              createdAt
+              ResourceType
+            }
+            user {
+              id
+              name
+              email
+              profileImagePath
+              progressRate
+              resourcesCount
+              posts {
+                nextToken
+              }
+              resources {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         updatedAt
@@ -78,6 +178,44 @@ export const getUser = /* GraphQL */ `
           userId
           title
           content
+          category {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          user {
+            id
+            name
+            email
+            profileImagePath
+            progressRate
+            resourcesCount
+            posts {
+              items {
+                id
+                categoryId
+                userId
+                title
+                content
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            resources {
+              items {
+                id
+                resourceId
+                userId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -88,6 +226,64 @@ export const getUser = /* GraphQL */ `
           id
           resourceId
           userId
+          resource {
+            id
+            categoryId
+            userId
+            title
+            url
+            category {
+              id
+              name
+              createdAt
+              updatedAt
+            }
+            users {
+              items {
+                id
+                resourceId
+                userId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            updatedAt
+            createdAt
+            ResourceType
+          }
+          user {
+            id
+            name
+            email
+            profileImagePath
+            progressRate
+            resourcesCount
+            posts {
+              items {
+                id
+                categoryId
+                userId
+                title
+                content
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            resources {
+              items {
+                id
+                resourceId
+                userId
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -113,9 +309,82 @@ export const listUsers = /* GraphQL */ `
         progressRate
         resourcesCount
         posts {
+          items {
+            id
+            categoryId
+            userId
+            title
+            content
+            category {
+              id
+              name
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              name
+              email
+              profileImagePath
+              progressRate
+              resourcesCount
+              posts {
+                nextToken
+              }
+              resources {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         resources {
+          items {
+            id
+            resourceId
+            userId
+            resource {
+              id
+              categoryId
+              userId
+              title
+              url
+              category {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              users {
+                nextToken
+              }
+              updatedAt
+              createdAt
+              ResourceType
+            }
+            user {
+              id
+              name
+              email
+              profileImagePath
+              progressRate
+              resourcesCount
+              posts {
+                nextToken
+              }
+              resources {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -174,9 +443,82 @@ export const getPost = /* GraphQL */ `
         progressRate
         resourcesCount
         posts {
+          items {
+            id
+            categoryId
+            userId
+            title
+            content
+            category {
+              id
+              name
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              name
+              email
+              profileImagePath
+              progressRate
+              resourcesCount
+              posts {
+                nextToken
+              }
+              resources {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         resources {
+          items {
+            id
+            resourceId
+            userId
+            resource {
+              id
+              categoryId
+              userId
+              title
+              url
+              category {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              users {
+                nextToken
+              }
+              updatedAt
+              createdAt
+              ResourceType
+            }
+            user {
+              id
+              name
+              email
+              profileImagePath
+              progressRate
+              resourcesCount
+              posts {
+                nextToken
+              }
+              resources {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -213,6 +555,64 @@ export const listPosts = /* GraphQL */ `
           profileImagePath
           progressRate
           resourcesCount
+          posts {
+            items {
+              id
+              categoryId
+              userId
+              title
+              content
+              category {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              user {
+                id
+                name
+                email
+                profileImagePath
+                progressRate
+                resourcesCount
+                createdAt
+                updatedAt
+              }
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          resources {
+            items {
+              id
+              resourceId
+              userId
+              resource {
+                id
+                categoryId
+                userId
+                title
+                url
+                updatedAt
+                createdAt
+                ResourceType
+              }
+              user {
+                id
+                name
+                email
+                profileImagePath
+                progressRate
+                resourcesCount
+                createdAt
+                updatedAt
+              }
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -244,9 +644,82 @@ export const getFeed = /* GraphQL */ `
         progressRate
         resourcesCount
         posts {
+          items {
+            id
+            categoryId
+            userId
+            title
+            content
+            category {
+              id
+              name
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              name
+              email
+              profileImagePath
+              progressRate
+              resourcesCount
+              posts {
+                nextToken
+              }
+              resources {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         resources {
+          items {
+            id
+            resourceId
+            userId
+            resource {
+              id
+              categoryId
+              userId
+              title
+              url
+              category {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              users {
+                nextToken
+              }
+              updatedAt
+              createdAt
+              ResourceType
+            }
+            user {
+              id
+              name
+              email
+              profileImagePath
+              progressRate
+              resourcesCount
+              posts {
+                nextToken
+              }
+              resources {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -282,6 +755,64 @@ export const listFeeds = /* GraphQL */ `
           profileImagePath
           progressRate
           resourcesCount
+          posts {
+            items {
+              id
+              categoryId
+              userId
+              title
+              content
+              category {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              user {
+                id
+                name
+                email
+                profileImagePath
+                progressRate
+                resourcesCount
+                createdAt
+                updatedAt
+              }
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          resources {
+            items {
+              id
+              resourceId
+              userId
+              resource {
+                id
+                categoryId
+                userId
+                title
+                url
+                updatedAt
+                createdAt
+                ResourceType
+              }
+              user {
+                id
+                name
+                email
+                profileImagePath
+                progressRate
+                resourcesCount
+                createdAt
+                updatedAt
+              }
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -322,6 +853,48 @@ export const listResourceSortByCreatedAt = /* GraphQL */ `
           updatedAt
         }
         users {
+          items {
+            id
+            resourceId
+            userId
+            resource {
+              id
+              categoryId
+              userId
+              title
+              url
+              category {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              users {
+                nextToken
+              }
+              updatedAt
+              createdAt
+              ResourceType
+            }
+            user {
+              id
+              name
+              email
+              profileImagePath
+              progressRate
+              resourcesCount
+              posts {
+                nextToken
+              }
+              resources {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         updatedAt
@@ -362,6 +935,48 @@ export const listResourceSortByTitle = /* GraphQL */ `
           updatedAt
         }
         users {
+          items {
+            id
+            resourceId
+            userId
+            resource {
+              id
+              categoryId
+              userId
+              title
+              url
+              category {
+                id
+                name
+                createdAt
+                updatedAt
+              }
+              users {
+                nextToken
+              }
+              updatedAt
+              createdAt
+              ResourceType
+            }
+            user {
+              id
+              name
+              email
+              profileImagePath
+              progressRate
+              resourcesCount
+              posts {
+                nextToken
+              }
+              resources {
+                nextToken
+              }
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         updatedAt
