@@ -2,6 +2,8 @@ import '@/styles/globals.scss'
 import type { AppProps } from 'next/app'
 import Amplify from 'aws-amplify'
 import { AuthProvider } from '@/src/components/model/auth'
+import { ResourceCountProvider } from '@/src/components/model/resource/ResourceCount'
+
 import config from '../aws-exports'
 
 Amplify.configure(config)
@@ -18,7 +20,9 @@ if (typeof window !== 'undefined') {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
-      <Component {...pageProps} />
+      <ResourceCountProvider>
+        <Component {...pageProps} />
+      </ResourceCountProvider>
     </AuthProvider>
   )
 }

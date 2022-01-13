@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useCallback } from 'react'
 import { createCategoryData, fetchCategories } from '@/src/components/api/category'
 import {
   fetchResources,
@@ -15,6 +15,8 @@ import { AuthContext } from '@/src/components/model/auth'
 import { UpdateResourceInput, Resource, ResourceType, ModelSortDirection, ModelResourceFilterInput } from '@/src/API'
 import { CategoryType } from '@/src/types/index'
 import { useSpreadsheet } from '@/src/components/api/spreadsheet'
+import { useCurrentUser } from '@/src/components/hooks/useCurrentUser'
+import { ResourceCountContext } from '@/src/components/model/resource/ResourceCount'
 
 export const useResource = () => {
   const { isOpen, openModal } = useModal()
@@ -22,11 +24,14 @@ export const useResource = () => {
   const [categories, setCategories] = useState<CategoryType[]>([])
   const [editItem, setEditItem] = useState<UpdateResourceInput>()
   const [resources, setResources] = useState<Resource[]>([])
-  const { currentUser, updateCurrentUser } = useContext(AuthContext)
+  const { updateCurrentUser } = useContext(AuthContext)
+  const { updateResourceCount, allResourceCount } = useContext(ResourceCountContext)
+
+  const { currentUser } = useCurrentUser()
   const [sortQuery, setSortQuery] = useState<string>('createdAtDESC')
   const [filterQuery, setFilterQuery] = useState<ModelResourceFilterInput | undefined>(undefined)
 
-  const [allResourceCount, setAllResourceCount] = useState<number>(0)
+  
 
   const createCategory = async (name: string) => {
     return await createCategoryData(name)
@@ -51,9 +56,7 @@ export const useResource = () => {
         }))
         setCategories(makeCategoriesData)
         fetchResourcesWithSort(sortQuery, filterQuery)
-        if (sortQuery === 'createdAtDESC' && !filterQuery) {
-          setAllResourceCount(resources.length)
-        }
+        handleSetAllResourceCount()
       } catch (error) {
         console.log(error)
       } finally {
@@ -61,6 +64,23 @@ export const useResource = () => {
       }
     })()
   }, [])
+
+  // NOTE: リロードしたときにcurrentUserがundefinedになるかつresources.lengthが一時的に0になってしまうので、useEffectでcurrentUserがundefinedの時は、ローディングを表示するようにしている。
+  // currentUserの値を再取得できたときに、allResourceCountの値を更新するようにしている
+  const handleSetAllResourceCount = useCallback((): void => {
+    if (sortQuery === 'createdAtDESC' && !filterQuery) {
+      updateResourceCount(resources.length)
+    }
+  }, [filterQuery, sortQuery, resources, updateResourceCount])
+
+  useEffect(() => {
+    if (!currentUser) {
+      return setIsLoading(true)
+    } else {
+      setIsLoading(false)
+      handleSetAllResourceCount()
+    }
+  }, [currentUser, handleSetAllResourceCount])
 
   const createInitializeCategory = async () => {
     try {
@@ -167,7 +187,6 @@ export const useResource = () => {
     if (currentUser?.getUser) {
       const uid = currentUser.getUser.id
       if (!resource.users) return false
-      console.log(resource.users)
       return resource.users.items.some((item) => item.userId === uid)
     }
     return false
@@ -188,6 +207,7 @@ export const useResource = () => {
     type: 'checkResources' | 'unCheckResources' | 'deleteResources' | 'addResources'
   ) => {
     if (!currentUser?.getUser) return
+    if (!allResourceCount) return
     //NOTE:進捗率=(ユーザーの完了済みリソース数)/(全リソース数)
     let newResourcesCount = currentUser.getUser.resourcesCount
     switch (type) {
@@ -198,11 +218,11 @@ export const useResource = () => {
         newResourcesCount = currentUser.getUser.resourcesCount - 1
         break
       case 'addResources':
-        setAllResourceCount(allResourceCount + 1)
+        updateResourceCount(allResourceCount + 1)
 
         break
       case 'deleteResources':
-        setAllResourceCount(allResourceCount - 1)
+        updateResourceCount(allResourceCount - 1)
         break
 
       default:
@@ -270,6 +290,6 @@ export const useResource = () => {
     isLoading,
     filterResourcesByCategory,
     changeSortQuery,
-    isChecked
+    isChecked,
   }
 }

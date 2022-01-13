@@ -3,7 +3,13 @@ import { SidebarProgressRanking } from '@/src/components/model/sidebar/SidebarPr
 import styles from './SidebarProgressRate.module.scss'
 import { GetUserQuery } from '@/src/API'
 
-export const SidebarProgressRate = ({ currentUser }: { currentUser: GetUserQuery['getUser'] }) => {
+export const SidebarProgressRate = ({
+  currentUser,
+  allResourceCount,
+}: {
+  currentUser: GetUserQuery['getUser']
+  allResourceCount: number
+}) => {
   if (currentUser) {
     return (
       <section className={styles.container}>
@@ -16,11 +22,11 @@ export const SidebarProgressRate = ({ currentUser }: { currentUser: GetUserQuery
         </div>
         <div className={styles.detail}>
           <div className={styles.incomplete}>
-            <p className={styles.count}>40</p>
+            <p className={styles.count}>{allResourceCount - currentUser.resourcesCount}</p>
             <p className={styles.letter}>未完了</p>
           </div>
           <div className={styles.complete}>
-            <p className={styles.count}>40</p>
+            <p className={styles.count}>{currentUser.resourcesCount}</p>
             <p className={styles.letter}>完了</p>
           </div>
           <div className={styles.continuation}>
