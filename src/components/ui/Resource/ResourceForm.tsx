@@ -6,11 +6,13 @@ import { useForm } from 'react-hook-form'
 import { ResourceFormType } from '@/src/types/index'
 import { useResourceForm } from '@/src/components/model/resource'
 
-
 export default function ResourceForm(props: ResourceFormType) {
-  const { register, handleSubmit, errors } = useForm<CreateResourceInput>()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateResourceInput>()
   const { handleCreateResource, categoryId, handleChangeSelect, handleUpdateResource } = useResourceForm(props)
-
   return (
     <>
       {/* TODO:後でインプットのコンポーネントを分離する */}
@@ -21,33 +23,28 @@ export default function ResourceForm(props: ResourceFormType) {
         <legend>タイトル</legend>
         {props.defaultData ? (
           <input
-            name='title'
+            type='text'
             defaultValue={props.defaultData.title ? props.defaultData.title : ''}
-            ref={register({ required: true })}
+            {...register('title', { required: true })}
           />
         ) : (
-          <input name='title' ref={register({ required: true })} />
+          <input type='text' {...register('title', { required: true })} />
         )}
-        {errors.title && 'タイトルは必須です。'}
+        {errors.title && <p>タイトルは必須です</p>}
+
         <legend>URL</legend>
         {props.defaultData ? (
           <input
-            name='url'
             defaultValue={props.defaultData.url ? props.defaultData.url : ''}
-            ref={register({ required: true })}
+            {...register('url', { required: true })}
           />
         ) : (
-          <input name='url' ref={register({ required: true })} />
+          <input {...register('url', { required: true })} />
         )}
-        {errors.url && 'URLは必須です。'}
+        {errors.url && <p>URLは必須です。</p>}
         {/*TODO:新規カテゴリーの追加ができないので、おそらくselectBoxやめると思う */}
         <BaseSelect label='カテゴリー' selected={categoryId} change={handleChangeSelect} items={props.categories} />
-        <input
-          name='ResourceType'
-          defaultValue={ResourceType.RESOURCE}
-          ref={register({ required: true })}
-          style={{ display: 'none' }}
-        />
+        <input defaultValue={ResourceType.RESOURCE} {...register('ResourceType')} style={{ display: 'none' }} />
         <input type='submit' className={styles.button} value='保存' />
       </form>
     </>

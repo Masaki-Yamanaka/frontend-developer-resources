@@ -106,8 +106,7 @@ const ResourcePage: NextPage = () => {
                   <form className={styles.form}>
                     <input
                       type='checkbox'
-                      name='checked'
-                      ref={register}
+                      {...register('checked')}
                       checked={isCurrentUserChecked(resource)}
                       onChange={() => {
                         handleCheck(resource)

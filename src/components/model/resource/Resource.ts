@@ -142,6 +142,7 @@ export const useResource = () => {
     const uid = currentUser?.getUser?.id as string
     if (isCurrentUserChecked(resource)) {
       // チェックをはずす
+
       const resourceUser = resource.users.items.find((item) => item.userId === uid)
       if (!resourceUser) return
       await deleteResourceUserData(resourceUser.id)
