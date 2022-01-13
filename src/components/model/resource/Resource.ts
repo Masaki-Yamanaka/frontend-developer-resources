@@ -25,6 +25,9 @@ export const useResource = () => {
   const { currentUser, updateCurrentUser } = useContext(AuthContext)
   const [sortQuery, setSortQuery] = useState<string>('createdAtDESC')
   const [filterQuery, setFilterQuery] = useState<ModelResourceFilterInput | undefined>(undefined)
+
+  const [allResourceCount, setAllResourceCount] = useState<number>(0)
+
   const createCategory = async (name: string) => {
     return await createCategoryData(name)
   }
@@ -48,6 +51,9 @@ export const useResource = () => {
         }))
         setCategories(makeCategoriesData)
         fetchResourcesWithSort(sortQuery, filterQuery)
+        if (sortQuery === 'createdAtDESC' && !filterQuery) {
+          setAllResourceCount(resources.length)
+        }
       } catch (error) {
         console.log(error)
       } finally {
@@ -135,6 +141,7 @@ export const useResource = () => {
       return category.name === categoryName
     })?.id
   }
+  const [isChecked, setIsChecked] = useState<boolean>(false)
 
   // TODO:後でエラーハンドリング追加する(createResourceUserDataがエラーだった時にupdateUserResourceDataが作動しないようにハンドリングしたい)
   const handleCheck = async (resource: Resource) => {
@@ -152,6 +159,7 @@ export const useResource = () => {
       await createResourceUserData(uid, resource.id)
       await updateUserResourceData('checkResources')
     }
+    setIsChecked(!isChecked)
     fetchResourcesWithSort(sortQuery, filterQuery)
   }
 
@@ -159,6 +167,7 @@ export const useResource = () => {
     if (currentUser?.getUser) {
       const uid = currentUser.getUser.id
       if (!resource.users) return false
+      console.log(resource.users)
       return resource.users.items.some((item) => item.userId === uid)
     }
     return false
@@ -181,7 +190,6 @@ export const useResource = () => {
     if (!currentUser?.getUser) return
     //NOTE:進捗率=(ユーザーの完了済みリソース数)/(全リソース数)
     let newResourcesCount = currentUser.getUser.resourcesCount
-    let allResourcesCount = resources.length
     switch (type) {
       case 'checkResources':
         newResourcesCount = currentUser.getUser.resourcesCount + 1
@@ -190,17 +198,17 @@ export const useResource = () => {
         newResourcesCount = currentUser.getUser.resourcesCount - 1
         break
       case 'addResources':
-        allResourcesCount = resources.length + 1
+        setAllResourceCount(allResourceCount + 1)
 
         break
       case 'deleteResources':
-        allResourcesCount = resources.length - 1
+        setAllResourceCount(allResourceCount - 1)
         break
 
       default:
         null
     }
-    const newProgressRate: number = Math.round((newResourcesCount / allResourcesCount) * 100)
+    const newProgressRate: number = Math.round((newResourcesCount / allResourceCount) * 100)
     const userInfo = { ...currentUser?.getUser, resourcesCount: newResourcesCount, progressRate: newProgressRate }
     const updateUserInput = {
       id: currentUser.getUser.id,
@@ -262,5 +270,6 @@ export const useResource = () => {
     isLoading,
     filterResourcesByCategory,
     changeSortQuery,
+    isChecked
   }
 }
