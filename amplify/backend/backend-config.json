@@ -46,7 +46,16 @@
               "userPoolId": "authfrontenddeveloperresd62a6bab"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "API_KEY",
+              "apiKeyConfig": {
+                "apiKeyExpirationDays": 365,
+                "apiKeyExpirationDate": "2023-01-13T14:46:58.552Z",
+                "description": "Public API"
+              }
+            }
+          ]
         }
       }
     }

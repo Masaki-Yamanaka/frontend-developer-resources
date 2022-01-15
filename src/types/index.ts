@@ -14,7 +14,7 @@ export type User = {
 }
 
 export type ButtonProps = {
-  onClick: () => void | Promise<void>
+  onClick: (event: React.MouseEvent<HTMLInputElement>) => void
   children: ReactNode
   className?: string
 }
