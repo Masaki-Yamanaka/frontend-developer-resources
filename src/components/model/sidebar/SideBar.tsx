@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useEffect } from 'react'
+import { ReactNode, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Auth from '@aws-amplify/auth'
 import { IconContext } from 'react-icons'
