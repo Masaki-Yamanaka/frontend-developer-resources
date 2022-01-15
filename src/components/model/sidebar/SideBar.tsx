@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Auth from '@aws-amplify/auth'
 import { IconContext } from 'react-icons'
@@ -10,17 +10,21 @@ import { SidebarProgressRate } from './SidebarProgressRate'
 import { PageLink } from '@/src/components/ui/PageLink'
 import { Button } from '@/src/components/ui/Button'
 import { useCurrentUser } from '@/src/components/hooks/useCurrentUser'
-
+import { ResourceCountContext } from '@/src/components/model/resource/ResourceCount'
 export const SideBar = ({ children }: { children: ReactNode }) => {
   const router = useRouter()
   const location = router.pathname
   const { currentUser } = useCurrentUser()
+  const { allResourceCount } = useContext(ResourceCountContext)
   return (
     <>
       <div className={styles.container}>
         <section className={styles.sidebar}>
           <SidebarUserProfile currentUser={currentUser?.getUser} />
-          <SidebarProgressRate currentUser={currentUser?.getUser} />
+          <SidebarProgressRate
+            currentUser={currentUser?.getUser}
+            allResourceCount={allResourceCount ? allResourceCount : 0}
+          />
           <div className={styles.linkContainer}>
             <IconContext.Provider value={{ size: '24px' }}>
               <PageLink className={`${styles.link} ${location === '/' ? styles.isActive : ''}`} href='/'>

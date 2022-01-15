@@ -1,4 +1,4 @@
-@use "@/styles/variables" as *;
+@use '@/styles/variables' as *;
 /* Generic Layer */
 
 * {
@@ -7,6 +7,7 @@
 
 body {
   background: $base-gradation;
+  font-family: $font-family;
 }
 
 html,

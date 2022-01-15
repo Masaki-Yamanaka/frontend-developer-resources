@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useCallback } from 'react'
 import { createCategoryData, fetchCategories } from '@/src/components/api/category'
 import {
   fetchResources,
@@ -15,6 +15,8 @@ import { AuthContext } from '@/src/components/model/auth'
 import { UpdateResourceInput, Resource, ResourceType, ModelSortDirection, ModelResourceFilterInput } from '@/src/API'
 import { CategoryType } from '@/src/types/index'
 import { useSpreadsheet } from '@/src/components/api/spreadsheet'
+import { useCurrentUser } from '@/src/components/hooks/useCurrentUser'
+import { ResourceCountContext } from '@/src/components/model/resource/ResourceCount'
 
 export const useResource = () => {
   const { isOpen, openModal } = useModal()
@@ -22,9 +24,15 @@ export const useResource = () => {
   const [categories, setCategories] = useState<CategoryType[]>([])
   const [editItem, setEditItem] = useState<UpdateResourceInput>()
   const [resources, setResources] = useState<Resource[]>([])
-  const { currentUser, updateCurrentUser } = useContext(AuthContext)
+  const { updateCurrentUser } = useContext(AuthContext)
+  const { updateResourceCount, allResourceCount } = useContext(ResourceCountContext)
+
+  const { currentUser } = useCurrentUser()
   const [sortQuery, setSortQuery] = useState<string>('createdAtDESC')
   const [filterQuery, setFilterQuery] = useState<ModelResourceFilterInput | undefined>(undefined)
+
+  
+
   const createCategory = async (name: string) => {
     return await createCategoryData(name)
   }
@@ -48,6 +56,7 @@ export const useResource = () => {
         }))
         setCategories(makeCategoriesData)
         fetchResourcesWithSort(sortQuery, filterQuery)
+        handleSetAllResourceCount()
       } catch (error) {
         console.log(error)
       } finally {
@@ -55,6 +64,23 @@ export const useResource = () => {
       }
     })()
   }, [])
+
+  // NOTE: リロードしたときにcurrentUserがundefinedになるかつresources.lengthが一時的に0になってしまうので、useEffectでcurrentUserがundefinedの時は、ローディングを表示するようにしている。
+  // currentUserの値を再取得できたときに、allResourceCountの値を更新するようにしている
+  const handleSetAllResourceCount = useCallback((): void => {
+    if (sortQuery === 'createdAtDESC' && !filterQuery) {
+      updateResourceCount(resources.length)
+    }
+  }, [filterQuery, sortQuery, resources, updateResourceCount])
+
+  useEffect(() => {
+    if (!currentUser) {
+      return setIsLoading(true)
+    } else {
+      setIsLoading(false)
+      handleSetAllResourceCount()
+    }
+  }, [currentUser, handleSetAllResourceCount])
 
   const createInitializeCategory = async () => {
     try {
@@ -135,6 +161,7 @@ export const useResource = () => {
       return category.name === categoryName
     })?.id
   }
+  const [isChecked, setIsChecked] = useState<boolean>(false)
 
   // TODO:後でエラーハンドリング追加する(createResourceUserDataがエラーだった時にupdateUserResourceDataが作動しないようにハンドリングしたい)
   const handleCheck = async (resource: Resource) => {
@@ -152,6 +179,7 @@ export const useResource = () => {
       await createResourceUserData(uid, resource.id)
       await updateUserResourceData('checkResources')
     }
+    setIsChecked(!isChecked)
     fetchResourcesWithSort(sortQuery, filterQuery)
   }
 
@@ -179,9 +207,9 @@ export const useResource = () => {
     type: 'checkResources' | 'unCheckResources' | 'deleteResources' | 'addResources'
   ) => {
     if (!currentUser?.getUser) return
+    if (!allResourceCount) return
     //NOTE:進捗率=(ユーザーの完了済みリソース数)/(全リソース数)
     let newResourcesCount = currentUser.getUser.resourcesCount
-    let allResourcesCount = resources.length
     switch (type) {
       case 'checkResources':
         newResourcesCount = currentUser.getUser.resourcesCount + 1
@@ -190,17 +218,17 @@ export const useResource = () => {
         newResourcesCount = currentUser.getUser.resourcesCount - 1
         break
       case 'addResources':
-        allResourcesCount = resources.length + 1
+        updateResourceCount(allResourceCount + 1)
 
         break
       case 'deleteResources':
-        allResourcesCount = resources.length - 1
+        updateResourceCount(allResourceCount - 1)
         break
 
       default:
         null
     }
-    const newProgressRate: number = Math.round((newResourcesCount / allResourcesCount) * 100)
+    const newProgressRate: number = Math.round((newResourcesCount / allResourceCount) * 100)
     const userInfo = { ...currentUser?.getUser, resourcesCount: newResourcesCount, progressRate: newProgressRate }
     const updateUserInput = {
       id: currentUser.getUser.id,
@@ -262,5 +290,6 @@ export const useResource = () => {
     isLoading,
     filterResourcesByCategory,
     changeSortQuery,
+    isChecked,
   }
 }

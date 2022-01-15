@@ -1,4 +1,7 @@
+@use '@/styles/variables' as *;
 .button {
   display: block;
-  padding: 10px;
+  cursor: pointer;
 }
+
+

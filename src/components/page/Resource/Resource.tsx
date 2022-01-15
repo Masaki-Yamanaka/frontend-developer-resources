@@ -7,10 +7,8 @@ import ResourceForm from '@/src/components/ui/Resource/ResourceForm'
 import BaseModal from '@/src/components/ui/Modal/BaseModal'
 import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
 import Link from 'next/link'
-import { Checked } from '@/src/types/index'
 import { Resource } from '@/src/API'
 import { CategoryType } from '@/src/types/index'
-import { useForm } from 'react-hook-form'
 import { useResource } from '@/src/components/model/resource'
 import { Button } from '../../ui/Button'
 
@@ -34,8 +32,6 @@ const ResourcePage: NextPage = () => {
   } = useResource()
 
   const [modalType, setModalType] = useState<string>('')
-
-  const { register } = useForm<Checked>()
   const openCreateModal = () => {
     openModal()
     setModalType('create')
@@ -106,7 +102,6 @@ const ResourcePage: NextPage = () => {
                   <form className={styles.form}>
                     <input
                       type='checkbox'
-                      {...register('checked')}
                       checked={isCurrentUserChecked(resource)}
                       onChange={() => {
                         handleCheck(resource)
