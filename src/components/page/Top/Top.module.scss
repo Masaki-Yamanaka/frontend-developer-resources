@@ -1,5 +1,7 @@
 .container {
   display: flex;
+  height: calc(100% - 70px);
+  overflow-y: scroll;
 }
 
 .postContainer {
