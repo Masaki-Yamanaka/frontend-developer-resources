@@ -1,0 +1,26 @@
+@use '@/styles/variables' as *;
+.container {
+  display: flex;
+  height: 70px;
+  border-bottom: 1px solid $white;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 8px 40px;
+}
+.notification {
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  background-color: $white-40;
+  width: 120px;
+  height: 40px;
+  border: 1px solid $white;
+  border-radius: 20px;
+  color: white;
+  vertical-align: center;
+  
+}
