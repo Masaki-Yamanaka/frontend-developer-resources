@@ -10,3 +10,8 @@ $base-gradation: linear-gradient(
 );
 $white: #fff;
 $white-40: rgba(255, 255, 255, 0.4);
+
+
+/* グローバルに使用するフォントファミリーを設定 */
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap');
+$font-family: 'Zen Kaku Gothic New', sans-serif;
