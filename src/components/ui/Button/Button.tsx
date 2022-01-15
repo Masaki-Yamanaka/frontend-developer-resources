@@ -1,11 +1,5 @@
-import { ButtonProps } from '@/src/types'
-
-export const Button = ({ onClick, children, className }: ButtonProps) => {
-  return (
-    <button className={className} onClick={onClick}>
-      {children}
-    </button>
-  )
-}
+export const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = props => {
+  return <button {...props} />;
+};
 
 export default Button
