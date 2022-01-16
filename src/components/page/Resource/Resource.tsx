@@ -8,10 +8,9 @@ import ResourceForm from '@/src/components/ui/Resource/ResourceForm'
 import { ResourceTable } from '@/src/components/model/resource/ResourceTable/ResourceTable'
 
 import BaseModal from '@/src/components/ui/Modal/BaseModal'
-import { CategoryType } from '@/src/types/index'
 import { useResource } from '@/src/components/model/resource'
 import { BaseSelect } from '@/src/components/ui/Select'
-import { sortItems } from '@/src/components/utils/useSort'
+import { sortItems, filtersItemByCategory } from '@/src/components/utils/useSelectItems'
 import { SelectChangeEvent } from '@mui/material/Select'
 
 const ResourcePage: NextPage = () => {
@@ -41,36 +40,26 @@ const ResourcePage: NextPage = () => {
           <title>Resource</title>
           <meta name='description' content='Resource' />
         </Head>
-
-        {isLoading ? <p>Loading.........</p> : null}
-        <BaseSelect
-          handleChange={(event: SelectChangeEvent) => changeSortQuery(event)}
-          items={sortItems}
-          defaultValue={sortItems[0]}
-        />
-        <ResourceTable openCreateModal={() => openCreateModal()} resources={resources} />
-        <div className={styles.head}>
-          <h2
-            onClick={() => {
-              createCategory('javascript')
-            }}
-          >
-            カテゴリーでソートする
-          </h2>
-          <ul className={styles.categories}>
-            {categories?.map((category: CategoryType) => (
-              <li
-                key={category.id}
-                style={{ marginLeft: 20, cursor: 'pointer' }}
-                onClick={() => {
-                  filterResourcesByCategory(category.id)
-                }}
-              >
-                {category.name}
-              </li>
-            ))}
-          </ul>
+        <div className={styles.selectBoxes}>
+          <div className={styles.selectBox}>
+            <BaseSelect
+              handleChange={(event: SelectChangeEvent) => changeSortQuery(event)}
+              items={sortItems}
+            />
+          </div>
+          <div className={`${styles.selectBox} ${styles.ml8}`}>
+            <BaseSelect
+              handleChange={(event) => filterResourcesByCategory(event.target.value)}
+              items={filtersItemByCategory(categories)}
+            />
+          </div>
         </div>
+        {/* <BaseSelect
+          handleChange={(event) => filterResourcesByCheck(event.target.value)}
+          items={filtersItemByChecked}
+        /> */}
+        {isLoading ? <p>Loading.........</p> : null}
+        <ResourceTable openCreateModal={() => openCreateModal()} resources={resources} />
       </div>
       <BaseModal
         title={modalType === 'create' ? 'リソースを新規作成する' : 'リソースを編集する'}

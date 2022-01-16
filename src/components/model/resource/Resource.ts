@@ -262,9 +262,21 @@ export const useResource = () => {
     fetchResourcesWithSort(event.target.value, filterQuery)
   }
   const filterResourcesByCategory = (categoryId: string) => {
+    setIsLoading(true)
+    if (!categoryId) {
+      return fetchResourcesWithSort(sortQuery, undefined)
+    }
     const newFilterQuery = { categoryId: { eq: categoryId } }
     setFilterQuery(newFilterQuery)
-    fetchResourcesWithSort(sortQuery, newFilterQuery)
+    try {
+      setIsLoading(true)
+      fetchResourcesWithSort(sortQuery, newFilterQuery)
+    } catch (error) {
+      console.error(error)
+      throw error
+    } finally {
+      setIsLoading(false)
+    }
   }
   const fetchResourcesWithSort = async (
     sortQuery: string,

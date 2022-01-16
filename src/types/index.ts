@@ -107,5 +107,4 @@ export type selectItem = {
 export type selectProps = {
   handleChange: (event: SelectChangeEvent) => void
   items: selectItem[]
-  defaultValue: selectItem
 }
