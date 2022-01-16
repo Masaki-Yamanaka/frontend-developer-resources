@@ -1,5 +1,6 @@
 import { ReactNode, Dispatch, SetStateAction } from 'react'
 import { UpdateResourceInput, Category, Post, Resource } from '@/src/API'
+import { SelectChangeEvent } from '@mui/material/Select'
 
 export type User = {
   id: string
@@ -97,4 +98,14 @@ export type ModalProps = {
 export type ResourceTableProps = {
   openCreateModal: () => void
   resources: Resource[]
+}
+
+export type selectItem = {
+  value: string
+  label: string
+}
+export type selectProps = {
+  handleChange: (event: SelectChangeEvent) => void
+  items: selectItem[]
+  defaultValue: selectItem
 }

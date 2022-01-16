@@ -1,7 +1,7 @@
 import styles from './ResourceForm.module.scss'
 import * as React from 'react'
 import { CreateResourceInput, ResourceType } from '@/src/API'
-import BaseSelect from '@/src/components/ui/Input/BaseSelect'
+import BaseSelect from '@/src/components/ui/Select/Select'
 import { useForm } from 'react-hook-form'
 import { ResourceFormType } from '@/src/types/index'
 import { useResourceForm } from '@/src/components/model/resource'

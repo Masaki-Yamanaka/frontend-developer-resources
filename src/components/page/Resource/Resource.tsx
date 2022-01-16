@@ -10,6 +10,10 @@ import { ResourceTable } from '@/src/components/model/resource/ResourceTable/Res
 import BaseModal from '@/src/components/ui/Modal/BaseModal'
 import { CategoryType } from '@/src/types/index'
 import { useResource } from '@/src/components/model/resource'
+import { BaseSelect } from '@/src/components/ui/Select'
+import { sortItems } from '@/src/components/utils/useSort'
+import { SelectChangeEvent } from '@mui/material/Select'
+
 const ResourcePage: NextPage = () => {
   const { isOpen, openModal, closeModal } = useModal()
   const {
@@ -39,6 +43,11 @@ const ResourcePage: NextPage = () => {
         </Head>
 
         {isLoading ? <p>Loading.........</p> : null}
+        <BaseSelect
+          handleChange={(event: SelectChangeEvent) => changeSortQuery(event)}
+          items={sortItems}
+          defaultValue={sortItems[0]}
+        />
         <ResourceTable openCreateModal={() => openCreateModal()} resources={resources} />
         <div className={styles.head}>
           <h2
@@ -61,13 +70,6 @@ const ResourcePage: NextPage = () => {
               </li>
             ))}
           </ul>
-          <div className={styles.sort}>
-            <select name='sortQuery' onChange={changeSortQuery}>
-              <option value='createdAtDESC'>新着順</option>
-              <option value='titleDESC'>タイトル:降順</option>
-              <option value='titleASC'>タイトル:昇順</option>
-            </select>
-          </div>
         </div>
       </div>
       <BaseModal

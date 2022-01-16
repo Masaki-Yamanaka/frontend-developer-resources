@@ -12,11 +12,18 @@ import { updateAuthUser } from '@/src/components/api/auth'
 import { useModal } from '@/src/components/hooks/useModal'
 import _ from 'lodash'
 import { AuthContext } from '@/src/components/model/auth'
-import { UpdateResourceInput, Resource, ResourceType, ModelSortDirection, ModelResourceFilterInput } from '@/src/API'
+import {
+  UpdateResourceInput,
+  Resource,
+  ResourceType,
+  ModelSortDirection,
+  ModelResourceFilterInput,
+} from '@/src/API'
 import { CategoryType } from '@/src/types/index'
 import { useSpreadsheet } from '@/src/components/api/spreadsheet'
 import { useCurrentUser } from '@/src/components/hooks/useCurrentUser'
 import { ResourceCountContext } from '@/src/components/model/resource/ResourceCount'
+import { SelectChangeEvent } from '@mui/material/Select'
 
 export const useResource = () => {
   const { isOpen, openModal } = useModal()
@@ -30,8 +37,6 @@ export const useResource = () => {
   const { currentUser } = useCurrentUser()
   const [sortQuery, setSortQuery] = useState<string>('createdAtDESC')
   const [filterQuery, setFilterQuery] = useState<ModelResourceFilterInput | undefined>(undefined)
-
-  
 
   const createCategory = async (name: string) => {
     return await createCategoryData(name)
@@ -91,7 +96,10 @@ export const useResource = () => {
         try {
           const res = await createCategory(fetchCategory)
           if (!res?.data?.createCategory?.id || !res?.data?.createCategory.name) return
-          categoriesArray.push({ id: res?.data?.createCategory.id, name: res?.data?.createCategory.name })
+          categoriesArray.push({
+            id: res?.data?.createCategory.id,
+            name: res?.data?.createCategory.name,
+          })
         } catch (error) {
           console.error(error)
         }
@@ -229,7 +237,11 @@ export const useResource = () => {
         null
     }
     const newProgressRate: number = Math.round((newResourcesCount / allResourceCount) * 100)
-    const userInfo = { ...currentUser?.getUser, resourcesCount: newResourcesCount, progressRate: newProgressRate }
+    const userInfo = {
+      ...currentUser?.getUser,
+      resourcesCount: newResourcesCount,
+      progressRate: newProgressRate,
+    }
     const updateUserInput = {
       id: currentUser.getUser.id,
       name: currentUser.getUser.name,
@@ -245,7 +257,7 @@ export const useResource = () => {
       console.error(error)
     }
   }
-  const changeSortQuery: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+  const changeSortQuery = (event: SelectChangeEvent) => {
     setSortQuery(event.target.value)
     fetchResourcesWithSort(event.target.value, filterQuery)
   }
@@ -254,7 +266,10 @@ export const useResource = () => {
     setFilterQuery(newFilterQuery)
     fetchResourcesWithSort(sortQuery, newFilterQuery)
   }
-  const fetchResourcesWithSort = async (sortQuery: string, newFilterQuery: ModelResourceFilterInput | undefined) => {
+  const fetchResourcesWithSort = async (
+    sortQuery: string,
+    newFilterQuery: ModelResourceFilterInput | undefined
+  ) => {
     let response = null
     switch (sortQuery) {
       case 'createdAtDESC':
