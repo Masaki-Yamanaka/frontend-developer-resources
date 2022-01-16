@@ -1,0 +1,46 @@
+@use '@/styles/variables' as *;
+// マテリアルUIのセレクトボックスstyleをカスタマイズしています
+// https://mui.com/api/select/
+
+.MuiSelect-select {
+  padding: 0 !important;
+  border-color: $white !important;
+}
+.MuiOutlinedInput-root {
+  border-color: $white !important;
+  height: 40px;
+  background-color: $white-40;
+  color: $navy;
+  font-family: $font-family !important;
+  font-size: 12px;
+  padding-left: 12px;
+  border-radius: 8px;
+  transition: all 150ms ease-in-out;
+  &:hover {
+    box-shadow: 0 0 10px 0 $white-40 inset, 0 0 10px 4px $white-40;
+  }
+}
+.MuiSelect-icon {
+  color: $navy;
+}
+.MuiMenuItem-root {
+  font-size: 12px !important;
+  font-weight: 300 !important;
+  &:hover {
+    background-color: $pink-40 !important;
+  }
+}
+.Mui-selected {
+  background-color: transparent !important;
+}
+
+.MuiPaper-root {
+  box-shadow: 0px 3px 6px $purple;
+  font-family: $font-family !important;
+  top: 140px !important;
+  font-weight: lighter;
+  color: $navy;
+}
+.MuiOutlinedInput-notchedOutline {
+  border: 1px solid $white !important;
+}
