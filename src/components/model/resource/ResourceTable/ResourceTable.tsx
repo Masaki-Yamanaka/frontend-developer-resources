@@ -4,7 +4,10 @@ import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
 import Link from 'next/link'
 import { Resource } from '@/src/API'
 import { useResource } from '@/src/components/model/resource'
-export const ResourceTable = () => {
+import { AiOutlinePlus, AiOutlineMore } from 'react-icons/Ai'
+import { ResourceTableProps } from '@/src/types'
+
+export const ResourceTable = ({ openCreateModal }: ResourceTableProps) => {
   const { openModal } = useModal()
   const { resources, isCurrentUserChecked, deleteResource, updateResource, getCategoryName, handleCheck } =
     useResource()
@@ -13,13 +16,15 @@ export const ResourceTable = () => {
     updateResource(resource)
     openModal()
   }
+
   return (
     <table className={styles.table}>
       <tbody>
-        <tr className={styles.tr}>
-          <th className={styles.th}>Check</th>
-          <th className={styles.th}>カテゴリー</th>
-          <th className={styles.th}>タイトル</th>
+        <tr className={styles.header}>
+          <th className={styles.th}>CHECK</th>
+          <th className={styles.th}>TITLE</th>
+          <th className={styles.th}>CATEGORY</th>
+          <th className={styles.th}></th>
         </tr>
         {resources.map((resource: Resource) => (
           <tr className={styles.tr} key={resource.id}>
@@ -34,12 +39,24 @@ export const ResourceTable = () => {
                 />
               </form>
             </td>
+
+            <td className={styles.td}>{resource.title}</td>
+
             <td className={styles.td}>{getCategoryName(resource.categoryId)}</td>
-            <Link href={resource.url} passHref>
-              <td className={styles.td}>{resource.title}</td>
-            </Link>
+            <td className={`${styles.td} ${styles.icon}`}>
+              <AiOutlineMore size={30} />
+            </td>
           </tr>
         ))}
+        <tr className={`${styles.tr} ${styles.footer}`} onClick={openCreateModal}>
+          <th className={`${styles.th} ${styles.add}`}>
+            <AiOutlinePlus size={30} />
+            <div className={styles.new}>NEW</div>
+          </th>
+          <th className={styles.th}></th>
+          <th className={styles.th}></th>
+          <th className={styles.th}></th>
+        </tr>
       </tbody>
     </table>
     // <table className={styles.table}>

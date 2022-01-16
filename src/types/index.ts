@@ -103,3 +103,7 @@ export type ModalProps = {
   closeModal: () => void
   children: ReactNode
 }
+
+export type ResourceTableProps = {
+  openCreateModal: () => void
+}

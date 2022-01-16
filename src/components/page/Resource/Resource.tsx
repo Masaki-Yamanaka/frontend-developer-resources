@@ -37,11 +37,10 @@ const ResourcePage: NextPage = () => {
         <Head>
           <title>Resource</title>
           <meta name='description' content='Resource' />
-          <link rel='icon' href='/favicon.ico' />
         </Head>
 
         {isLoading ? <p>Loading.........</p> : null}
-
+        <ResourceTable openCreateModal={() => openCreateModal()} />
         <div className={styles.head}>
           <h2
             onClick={() => {
@@ -70,11 +69,7 @@ const ResourcePage: NextPage = () => {
               <option value='titleASC'>タイトル:昇順</option>
             </select>
           </div>
-          <div className={styles.create}>
-            <Button onClick={openCreateModal}> リソース新規作作成</Button>
-          </div>
         </div>
-        <ResourceTable />
       </div>
       <BaseModal
         title={modalType === 'create' ? 'リソースを新規作成する' : 'リソースを編集する'}
