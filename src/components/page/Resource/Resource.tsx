@@ -12,6 +12,7 @@ import { useResource } from '@/src/components/model/resource'
 import { BaseSelect } from '@/src/components/ui/Select'
 import { sortItems, filtersItemByCategory } from '@/src/components/utils/useSelectItems'
 import { SelectChangeEvent } from '@mui/material/Select'
+import { ResourceCard } from '@/src/components/model/resource/ResourceCard'
 
 const ResourcePage: NextPage = () => {
   const { isOpen, openModal, closeModal } = useModal()
@@ -40,6 +41,7 @@ const ResourcePage: NextPage = () => {
           <title>Resource</title>
           <meta name='description' content='Resource' />
         </Head>
+        <ResourceCard />
         <div className={styles.selectBoxes}>
           <div className={styles.selectBox}>
             <BaseSelect
@@ -54,6 +56,7 @@ const ResourcePage: NextPage = () => {
             />
           </div>
         </div>
+
         {/* <BaseSelect
           handleChange={(event) => filterResourcesByCheck(event.target.value)}
           items={filtersItemByChecked}

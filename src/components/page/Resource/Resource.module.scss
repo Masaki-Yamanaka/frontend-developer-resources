@@ -2,12 +2,15 @@
   padding: 20px;
   height: calc(100% - 70px);
   overflow-y: scroll;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .selectBoxes {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
+  margin-top: 30px;
 }
 .selectBox {
   width: 100%;
