@@ -1,5 +1,5 @@
 import { ReactNode, Dispatch, SetStateAction } from 'react'
-import { UpdateResourceInput, Category, Post } from '@/src/API'
+import { UpdateResourceInput, Category, Post, Resource } from '@/src/API'
 
 export type User = {
   id: string
@@ -23,16 +23,6 @@ export type PageLinkProps = {
   className?: string
   href: string
   children: ReactNode
-}
-
-export type Resource = {
-  id: string
-  categoryId: string
-  userId: string
-  title: string
-  url: string
-  createdAt: string
-  updatedAt: string
 }
 export type CategoryType = {
   id: string
@@ -106,4 +96,5 @@ export type ModalProps = {
 
 export type ResourceTableProps = {
   openCreateModal: () => void
+  resources: Resource[]
 }

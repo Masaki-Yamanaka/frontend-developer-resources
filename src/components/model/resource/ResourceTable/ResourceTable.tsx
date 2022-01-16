@@ -1,15 +1,16 @@
 import styles from './ResourceTable.module.scss'
 import { useModal } from '@/src/components/hooks/useModal'
-import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
-import Link from 'next/link'
+// import { formatDateToSlashWithTime } from '@/src/components/utils/useFormatData'
+// import Link from 'next/link'
 import { Resource } from '@/src/API'
 import { useResource } from '@/src/components/model/resource'
-import { AiOutlinePlus, AiOutlineMore } from 'react-icons/Ai'
+import { AiOutlinePlus, AiOutlineMore, AiFillCheckCircle } from 'react-icons/Ai'
 import { ResourceTableProps } from '@/src/types'
+import { Checkbox } from '@/src/components/ui/Checkbox'
 
-export const ResourceTable = ({ openCreateModal }: ResourceTableProps) => {
+export const ResourceTable = ({ openCreateModal, resources }: ResourceTableProps) => {
   const { openModal } = useModal()
-  const { resources, isCurrentUserChecked, deleteResource, updateResource, getCategoryName, handleCheck } =
+  const { isCurrentUserChecked, deleteResource, updateResource, getCategoryName, handleCheck } =
     useResource()
 
   const openEditModal = (resource: Resource) => {
@@ -21,7 +22,12 @@ export const ResourceTable = ({ openCreateModal }: ResourceTableProps) => {
     <table className={styles.table}>
       <tbody>
         <tr className={styles.header}>
-          <th className={styles.th}>CHECK</th>
+          <th className={`${styles.th} ${styles.flex}`}>
+            <div className={styles.checkCircle}>
+              <AiFillCheckCircle size={20} />
+            </div>
+            CHECK
+          </th>
           <th className={styles.th}>TITLE</th>
           <th className={styles.th}>CATEGORY</th>
           <th className={styles.th}></th>
@@ -29,15 +35,11 @@ export const ResourceTable = ({ openCreateModal }: ResourceTableProps) => {
         {resources.map((resource: Resource) => (
           <tr className={styles.tr} key={resource.id}>
             <td className={styles.td}>
-              <form className={styles.form}>
-                <input
-                  type='checkbox'
-                  checked={isCurrentUserChecked(resource)}
-                  onChange={() => {
-                    handleCheck(resource)
-                  }}
-                />
-              </form>
+              <Checkbox
+                checked={isCurrentUserChecked(resource)}
+                handleCheck={() => handleCheck(resource)}
+                resource={resource}
+              />
             </td>
 
             <td className={styles.td}>{resource.title}</td>

@@ -10,8 +10,6 @@ import { ResourceTable } from '@/src/components/model/resource/ResourceTable/Res
 import BaseModal from '@/src/components/ui/Modal/BaseModal'
 import { CategoryType } from '@/src/types/index'
 import { useResource } from '@/src/components/model/resource'
-import { Button } from '../../ui/Button'
-
 const ResourcePage: NextPage = () => {
   const { isOpen, openModal, closeModal } = useModal()
   const {
@@ -23,6 +21,7 @@ const ResourcePage: NextPage = () => {
     setEditData,
     changeSortQuery,
     filterResourcesByCategory,
+    resources,
   } = useResource()
 
   const [modalType, setModalType] = useState<string>('')
@@ -40,7 +39,7 @@ const ResourcePage: NextPage = () => {
         </Head>
 
         {isLoading ? <p>Loading.........</p> : null}
-        <ResourceTable openCreateModal={() => openCreateModal()} />
+        <ResourceTable openCreateModal={() => openCreateModal()} resources={resources} />
         <div className={styles.head}>
           <h2
             onClick={() => {
