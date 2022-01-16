@@ -1,12 +1,14 @@
 /*
   color
 */
-
-$base-gradation:
-  linear-gradient(135deg, rgba(213, 179, 255, 0.8), rgba(78, 222, 241, 0.8)),
+$base-gradation: linear-gradient(135deg, rgba(213, 179, 255, 0.8), rgba(78, 222, 241, 0.8)),
   linear-gradient(45deg, rgba(129, 230, 215, 0.8), rgba(174, 189, 252, 0.8));
 $white: #fff;
 $white-40: rgba(255, 255, 255, 0.4);
+$navy-30: rgba(103, 113, 154, 0.3);
+$navy: #67719a;
+$purple: #aebdfc;
+$pink: #d5b3ff;
 
 /* グローバルに使用するフォントファミリーを設定 */
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap');

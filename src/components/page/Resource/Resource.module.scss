@@ -4,28 +4,28 @@
   overflow-y: scroll;
 }
 
-.table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 20px;
-}
+// .table {
+//   border-collapse: collapse;
+//   border-spacing: 0;
+//   width: 80%;
+//   margin: 0 auto;
+//   margin-top: 20px;
+// }
 
-.tr {
-  border-bottom: solid 1px #eee;
-  cursor: pointer;
-  &:hover {
-    background-color: #d4f0fd;
-  }
-}
-.th,
-.td {
-  text-align: center;
-  margin: auto;
-  padding: 8px 0;
-  vertical-align: middle;
-}
+// .tr {
+//   border-bottom: solid 1px #eee;
+//   cursor: pointer;
+//   &:hover {
+//     background-color: #d4f0fd;
+//   }
+// }
+// .th,
+// .td {
+//   text-align: center;
+//   margin: auto;
+//   padding: 8px 0;
+//   vertical-align: middle;
+// }
 
 .image {
   width: 30px;

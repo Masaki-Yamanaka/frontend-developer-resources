@@ -1,2 +1,2 @@
-export * from "./Resource"
-export * from "./ResourceForm"
+export * from './Resource'
+export * from './ResourceForm'
