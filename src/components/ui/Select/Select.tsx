@@ -1,4 +1,3 @@
-import styles from './Select.module.scss'
 import { selectItem, selectProps } from '@/src/types'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
@@ -25,7 +24,7 @@ export const BaseSelect = ({ handleChange, items }: selectProps) => {
         value={isSelected}
       >
         {items?.map((item: selectItem, index: number) => (
-          <MenuItem key={index} value={item.value} className={styles.option}>
+          <MenuItem key={index} value={item.value}>
             {item.label}
           </MenuItem>
         ))}
