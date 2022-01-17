@@ -24,6 +24,7 @@ export type PageLinkProps = {
   className?: string
   href: string
   children: ReactNode
+  target: boolean
 }
 export type CategoryType = {
   id: string
@@ -98,6 +99,7 @@ export type ModalProps = {
 export type ResourceTableProps = {
   openCreateModal: () => void
   resources: Resource[]
+  clickResource: (resource: Resource) => void
 }
 
 export type selectItem = {

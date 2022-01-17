@@ -13,6 +13,7 @@ import { BaseSelect } from '@/src/components/ui/Select'
 import { sortItems, filtersItemByCategory } from '@/src/components/utils/useSelectItems'
 import { SelectChangeEvent } from '@mui/material/Select'
 import { ResourceCard } from '@/src/components/model/resource/ResourceCard'
+import { Resource } from '@/src/API'
 
 const ResourcePage: NextPage = () => {
   const { isOpen, openModal, closeModal } = useModal()
@@ -26,6 +27,8 @@ const ResourcePage: NextPage = () => {
     changeSortQuery,
     filterResourcesByCategory,
     resources,
+    clickResource,
+    selectedResource,
   } = useResource()
 
   const [modalType, setModalType] = useState<string>('')
@@ -41,7 +44,8 @@ const ResourcePage: NextPage = () => {
           <title>Resource</title>
           <meta name='description' content='Resource' />
         </Head>
-        <ResourceCard />
+        {selectedResource ? <ResourceCard resource={selectedResource} /> : null}
+
         <div className={styles.selectBoxes}>
           <div className={styles.selectBox}>
             <BaseSelect
@@ -62,7 +66,11 @@ const ResourcePage: NextPage = () => {
           items={filtersItemByChecked}
         /> */}
         {isLoading ? <p>Loading.........</p> : null}
-        <ResourceTable openCreateModal={() => openCreateModal()} resources={resources} />
+        <ResourceTable
+          openCreateModal={() => openCreateModal()}
+          resources={resources}
+          clickResource={(resource: Resource) => clickResource(resource)}
+        />
       </div>
       <BaseModal
         title={modalType === 'create' ? 'リソースを新規作成する' : 'リソースを編集する'}

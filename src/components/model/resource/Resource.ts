@@ -37,6 +37,7 @@ export const useResource = () => {
   const { currentUser } = useCurrentUser()
   const [sortQuery, setSortQuery] = useState<string>('createdAtDESC')
   const [filterQuery, setFilterQuery] = useState<ModelResourceFilterInput | undefined>(undefined)
+  const [selectedResource, setSelectedResource] = useState<Resource | null>(null)
 
   const createCategory = async (name: string) => {
     return await createCategoryData(name)
@@ -298,6 +299,9 @@ export const useResource = () => {
     if (!response) return
     setResources([...response])
   }
+  const clickResource = (resource: Resource) => {
+    setSelectedResource(resource)
+  }
 
   return {
     categories,
@@ -318,5 +322,7 @@ export const useResource = () => {
     filterResourcesByCategory,
     changeSortQuery,
     isChecked,
+    clickResource,
+    selectedResource
   }
 }

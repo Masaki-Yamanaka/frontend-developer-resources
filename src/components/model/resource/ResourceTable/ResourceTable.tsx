@@ -8,7 +8,11 @@ import { AiOutlinePlus, AiOutlineMore, AiFillCheckCircle } from 'react-icons/Ai'
 import { ResourceTableProps } from '@/src/types'
 import { Checkbox } from '@/src/components/ui/Checkbox'
 
-export const ResourceTable = ({ openCreateModal, resources }: ResourceTableProps) => {
+export const ResourceTable = ({
+  openCreateModal,
+  resources,
+  clickResource,
+}: ResourceTableProps) => {
   const { openModal } = useModal()
   const { isCurrentUserChecked, deleteResource, updateResource, getCategoryName, handleCheck } =
     useResource()
@@ -33,7 +37,7 @@ export const ResourceTable = ({ openCreateModal, resources }: ResourceTableProps
           <th className={styles.th}></th>
         </tr>
         {resources.map((resource: Resource) => (
-          <tr className={styles.tr} key={resource.id}>
+          <tr className={styles.tr} key={resource.id} onClick={() => clickResource(resource)}>
             <td className={styles.td}>
               <Checkbox
                 checked={isCurrentUserChecked(resource)}
