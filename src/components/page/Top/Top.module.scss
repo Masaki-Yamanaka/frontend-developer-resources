@@ -1,11 +1,12 @@
 .container {
   display: flex;
   height: calc(100% - 70px);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .postContainer {
   width: 70%;
+  margin: 32px 0;
 }
 
 .notification {

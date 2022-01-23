@@ -1,22 +1,34 @@
-import { NextImage } from '@/src/components/ui/Image'
 import { Post } from '@/src/API'
+import { NextImage } from '@/src/components/ui/Image'
 import { CategoryLabel } from '@/src/components/ui/CategoryLabel'
 import styles from './PostCard.module.scss'
 
 export const PostCard = ({ post }: { post: Post }) => {
   return (
     <section className={styles.container}>
-      <CategoryLabel categoryName={post.category?.name || ''} />
-      <h1>Post</h1>
-      <div>{post.title}</div>
-      <div>{post.content}</div>
+      <div className={styles.header}>
+        <CategoryLabel categoryName={post.category?.name || ''} />
+        <h1 className={styles.title}>{post.title}</h1>
+      </div>
       <NextImage
-        className={styles.image}
-        src={post.user?.profileImagePath || ''}
+        className={styles.thumbnail}
+        src='https://placehold.jp/540x220.png'
         alt={`${post.user?.name}_icon`}
-        width={100}
-        height={80}
+        width={600}
+        height={220}
       />
+      <div className={styles.detail}>
+        <NextImage
+          className={styles.userIcon}
+          src={post.user?.profileImagePath || ''}
+          alt={`${post.user?.name}_icon`}
+          width={32}
+          height={32}
+        />
+        <p className={styles.userName}>{post.user?.name}</p>
+        <p className={styles.updatedAt}>{post.updatedAt}</p>
+      </div>
+      <div>{post.content}</div>
     </section>
   )
 }
