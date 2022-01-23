@@ -97,6 +97,11 @@ export type ModalProps = {
 
 export type ResourceTableProps = {
   openCreateModal: () => void
+  isCurrentUserChecked: (resource: Resource) => boolean
+  deleteResource: (resource: Resource) => Promise<void>
+  updateResource: (resource: UpdateResourceInput) => void
+  handleCheck: (resource: Resource) => Promise<void>
+  getCategoryName: (categoryId: string) => string | undefined
   resources: Resource[]
 }
 

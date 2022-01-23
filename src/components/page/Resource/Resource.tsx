@@ -12,6 +12,7 @@ import { useResource } from '@/src/components/model/resource'
 import { BaseSelect } from '@/src/components/ui/Select'
 import { sortItems, filtersItemByCategory } from '@/src/components/utils/useSelectItems'
 import { SelectChangeEvent } from '@mui/material/Select'
+import { Resource, UpdateResourceInput } from '@/src/API'
 
 const ResourcePage: NextPage = () => {
   const { isOpen, openModal, closeModal } = useModal()
@@ -25,8 +26,12 @@ const ResourcePage: NextPage = () => {
     changeSortQuery,
     filterResourcesByCategory,
     resources,
+    isCurrentUserChecked,
+    updateResource,
+    handleCheck,
+    getCategoryName,
+    deleteResource,
   } = useResource()
-
   const [modalType, setModalType] = useState<string>('')
   const openCreateModal = () => {
     openModal()
@@ -59,7 +64,15 @@ const ResourcePage: NextPage = () => {
           items={filtersItemByChecked}
         /> */}
         {isLoading ? <p>Loading.........</p> : null}
-        <ResourceTable openCreateModal={() => openCreateModal()} resources={resources} />
+        <ResourceTable
+          openCreateModal={() => openCreateModal()}
+          resources={resources}
+          isCurrentUserChecked={(resource: Resource) => isCurrentUserChecked(resource)}
+          updateResource={(resource: UpdateResourceInput) => updateResource(resource)}
+          deleteResource={(resource: Resource) => deleteResource(resource)}
+          handleCheck={(resource: Resource) => handleCheck(resource)}
+          getCategoryName={(categoryId: string) => getCategoryName(categoryId)}
+        />
       </div>
       <BaseModal
         title={modalType === 'create' ? 'リソースを新規作成する' : 'リソースを編集する'}
