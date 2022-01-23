@@ -1,4 +1,5 @@
 import '@/styles/globals.scss'
+import '@/styles/select.scss'
 import type { AppProps } from 'next/app'
 import Amplify from 'aws-amplify'
 import { AuthProvider } from '@/src/components/model/auth'
