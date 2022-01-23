@@ -1,23 +1,15 @@
-import { useState, useEffect } from 'react'
-import { Post, Category } from '@/src/API'
-import { fetchPosts } from '@/src/components/api/post'
+import { useState, useEffect, useContext } from 'react'
+import { Category } from '@/src/API'
 import { fetchCategories } from '@/src/components/api/category'
+import { PostContext } from '@/src/components/model/post/PostContext'
 
 export const usePost = () => {
-  const [posts, setPosts] = useState<Post[]>([])
+  const context = useContext(PostContext)
   const [categories, setCategories] = useState<Category[]>([])
 
-  const updateDisplayPosts = async () => {
-    const fetchedPosts = await fetchPosts()
-    if (!fetchedPosts) return
-    setPosts(fetchedPosts)
+  if (context === undefined) {
+    throw new Error('PostContext is undefined');
   }
-
-  useEffect(() => {
-    ;(async () => {
-      await updateDisplayPosts()
-    })()
-  }, [])
 
   useEffect(() => {
     (async () => {
@@ -27,5 +19,5 @@ export const usePost = () => {
     })()
   }, [])
 
-  return { posts, setPosts, categories, updateDisplayPosts }
+  return { context, categories }
 }
