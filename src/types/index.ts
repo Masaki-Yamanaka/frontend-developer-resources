@@ -54,14 +54,6 @@ export type ResourceFromSpreadsheet = {
   url: string
 }
 
-export type NextImageProps = {
-  className?: string
-  src: string
-  alt: string
-  width: number
-  height: number
-}
-
 export type PostCreateFormProps = {
   categories: Category[]
   updateDisplayPosts: () => Promise<void>

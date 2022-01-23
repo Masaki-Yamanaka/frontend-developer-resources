@@ -1,0 +1,11 @@
+@use '@/styles/variables' as *;
+
+.label {
+  display: flex;
+  justify-content: center;
+  width: 100px;
+  height: 28px;
+  color: white;
+  border-radius: 16px;
+  background-color: $light-green;
+}
