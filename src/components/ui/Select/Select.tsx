@@ -4,7 +4,7 @@ import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { useEffect, useState } from 'react'
 
-export const BaseSelect = ({ handleChange, items }: selectProps) => {
+export const BaseSelect = ({ handleChange, items, }: selectProps) => {
   const [isSelected, setIsSelected] = useState<string>('')
   useEffect(() => {
     if (items.length && isSelected === '') {
