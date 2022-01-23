@@ -1,10 +1,12 @@
 import { NextImage } from '@/src/components/ui/Image'
 import { Post } from '@/src/API'
+import { CategoryLabel } from '@/src/components/ui/CategoryLabel'
 import styles from './PostCard.module.scss'
 
 export const PostCard = ({ post }: { post: Post }) => {
   return (
     <section className={styles.container}>
+      <CategoryLabel categoryName={post.category?.name || ''} />
       <h1>Post</h1>
       <div>{post.title}</div>
       <div>{post.content}</div>
@@ -15,7 +17,6 @@ export const PostCard = ({ post }: { post: Post }) => {
         width={100}
         height={80}
       />
-      <div>{post.category?.name}</div>
     </section>
   )
 }

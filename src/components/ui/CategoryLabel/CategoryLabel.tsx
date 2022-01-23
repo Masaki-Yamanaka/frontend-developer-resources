@@ -1,3 +1,5 @@
+import styles from './CategoryLabel.module.scss'
+
 export const CategoryLabel = ({ categoryName }: { categoryName: string }) => {
-  return <p>{categoryName}</p>
+  return <p className={styles.label}>{categoryName}</p>
 }
