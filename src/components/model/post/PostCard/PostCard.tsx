@@ -4,7 +4,7 @@ import styles from './PostCard.module.scss'
 
 export const PostCard = ({ post }: { post: Post }) => {
   return (
-    <section>
+    <section className={styles.container}>
       <h1>Post</h1>
       <div>{post.title}</div>
       <div>{post.content}</div>

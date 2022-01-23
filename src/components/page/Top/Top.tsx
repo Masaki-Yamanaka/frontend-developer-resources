@@ -15,12 +15,12 @@ export const Top = () => {
           {context.posts?.map((post) => (
             <div key={post.id} className={style.postCard}>
               <PostCard post={post} />
-              <PostUpdateForm
+              {/* <PostUpdateForm
                 post={post}
                 categories={categories}
                 updateDisplayPosts={context.updatePosts}
               />
-              <PostDeleteButton postId={post.id} updateDisplayPosts={context.updatePosts} />
+              <PostDeleteButton postId={post.id} updateDisplayPosts={context.updatePosts} /> */}
             </div>
           ))}
         </section>
