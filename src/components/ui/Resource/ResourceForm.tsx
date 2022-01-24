@@ -51,7 +51,6 @@ export default function ResourceForm(props: ResourceFormType) {
           handleChange={(event) => handleChangeSelect(event.target.value)}
           items={filtersItemByCategory(props.categories ? props.categories : [])}
         />
-        x
         <input
           defaultValue={ResourceType.RESOURCE}
           {...register('ResourceType')}
