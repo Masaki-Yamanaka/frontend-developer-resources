@@ -8,13 +8,13 @@ import { AiOutlinePlus, AiOutlineMore, AiFillCheckCircle } from 'react-icons/Ai'
 import { ResourceTableProps } from '@/src/types'
 import { Checkbox } from '@/src/components/ui/Checkbox'
 
-export const ResourceTable = ({ openCreateModal, resources }: ResourceTableProps) => {
+export const ResourceTable = (props: ResourceTableProps) => {
   const { openModal } = useModal()
-  const { isCurrentUserChecked, deleteResource, updateResource, getCategoryName, handleCheck } =
-    useResource()
+  // const { isCurrentUserChecked, deleteResource, updateResource, getCategoryName, handleCheck } =
+  //   useResource()
 
   const openEditModal = (resource: Resource) => {
-    updateResource(resource)
+    props.updateResource(resource)
     openModal()
   }
 
@@ -32,25 +32,27 @@ export const ResourceTable = ({ openCreateModal, resources }: ResourceTableProps
           <th className={styles.th}>CATEGORY</th>
           <th className={styles.th}></th>
         </tr>
-        {resources.map((resource: Resource) => (
+        {props.resources.map((resource: Resource) => (
           <tr className={styles.tr} key={resource.id}>
             <td className={styles.td}>
               <Checkbox
-                checked={isCurrentUserChecked(resource)}
-                handleCheck={() => handleCheck(resource)}
+                checked={props.isCurrentUserChecked(resource)}
+                handleCheck={() => props.handleCheck(resource)}
                 resource={resource}
               />
             </td>
 
-            <td className={styles.td}>{resource.title}</td>
+            <td className={styles.td} onClick={() => openEditModal(resource)}>
+              {resource.title}
+            </td>
 
-            <td className={styles.td}>{getCategoryName(resource.categoryId)}</td>
+            <td className={styles.td}>{props.getCategoryName(resource.categoryId)}</td>
             <td className={`${styles.td} ${styles.icon}`}>
               <AiOutlineMore size={30} />
             </td>
           </tr>
         ))}
-        <tr className={`${styles.tr} ${styles.footer}`} onClick={openCreateModal}>
+        <tr className={`${styles.tr} ${styles.footer}`} onClick={props.openCreateModal}>
           <th className={`${styles.th} ${styles.add}`}>
             <AiOutlinePlus size={30} />
             <div className={styles.new}>NEW</div>

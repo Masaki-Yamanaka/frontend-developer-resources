@@ -46,6 +46,7 @@ export const useResource = () => {
     ;(async () => {
       setIsLoading(true)
       try {
+        console.log('aaaa')
         const fetchCategoriesData = await fetchCategories()
         if (!fetchCategoriesData) return
         const categoryItems = [...fetchCategoriesData]
@@ -60,7 +61,7 @@ export const useResource = () => {
           name: categoryItem.name,
         }))
         setCategories(makeCategoriesData)
-        fetchResourcesWithSort(sortQuery, filterQuery)
+        fetchResourcesWithSort('createdAtDESC', undefined)
         handleSetAllResourceCount()
       } catch (error) {
         console.log(error)
@@ -188,6 +189,7 @@ export const useResource = () => {
       await updateUserResourceData('checkResources')
     }
     setIsChecked(!isChecked)
+    console.log(filterQuery)
     fetchResourcesWithSort(sortQuery, filterQuery)
   }
 
@@ -264,6 +266,8 @@ export const useResource = () => {
   const filterResourcesByCategory = (categoryId: string) => {
     setIsLoading(true)
     if (!categoryId) {
+      console.log('categoryId', categoryId)
+      setFilterQuery(undefined)
       return fetchResourcesWithSort(sortQuery, undefined)
     }
     const newFilterQuery = { categoryId: { eq: categoryId } }
