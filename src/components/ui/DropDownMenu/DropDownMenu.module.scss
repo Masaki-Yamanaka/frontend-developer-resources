@@ -1,0 +1,37 @@
+@use '@/styles/variables' as *;
+
+.dropDownContainer {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  z-index: 1;
+}
+
+.dropDownButton {
+  border-radius: 50%;
+
+  &:hover {
+    color: white;
+    background-color: $light-grey;
+  }
+}
+
+.dropDownMenu {
+  position: absolute;
+  width: 120px;
+  padding: 8px 0;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 0 10px $purple;
+}
+
+.dropDownContent {
+  width: 100%;
+  padding: 8px;
+  color: $font-grey;
+  text-align: start;
+
+  &:hover {
+    background-color: $light-purple;
+  }
+}

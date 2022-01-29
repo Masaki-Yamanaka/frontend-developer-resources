@@ -1,8 +1,7 @@
 import { Post } from '@/src/API'
 import { NextImage } from '@/src/components/ui/Image'
 import { CategoryLabel } from '@/src/components/ui/CategoryLabel'
-import { IconContext } from 'react-icons'
-import { FiMoreHorizontal } from 'react-icons/Fi'
+import { DropDownMenu } from '@/src/components/ui/DropDownMenu'
 import styles from './PostCard.module.scss'
 
 export const PostCard = ({ post }: { post: Post }) => {
@@ -11,23 +10,7 @@ export const PostCard = ({ post }: { post: Post }) => {
       <div className={styles.header}>
         <CategoryLabel categoryName={post.category?.name || ''} />
         <h1 className={styles.title}>{post.title}</h1>
-        <div className={styles.dropDownContainer}>
-          <IconContext.Provider value={{ size: '24px' }}>
-            <button>
-              <FiMoreHorizontal className={styles.dropDownButton} />
-            </button>
-          </IconContext.Provider>
-          <div className={styles.dropDownMenu}>
-            <ul>
-              <li>
-                <button className={styles.dropDownContent}>編集</button>
-              </li>
-              <li>
-                <button className={styles.dropDownContent}>削除</button>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <DropDownMenu />
       </div>
       <NextImage
         className={styles.thumbnail}
