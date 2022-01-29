@@ -1,9 +1,19 @@
-import { useState } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 import { IconContext } from 'react-icons'
 import { FiMoreHorizontal } from 'react-icons/Fi'
 import styles from './DropDownMenu.module.scss'
 
-export const DropDownMenu = () => {
+type InputProps = {
+  label: string
+  value: string | number
+}
+
+export type DropDownMenuProps = {
+  contents: InputProps[]
+  setSelectedMenu: Dispatch<SetStateAction<any>>
+}
+
+export const DropDownMenu = ({ contents, setSelectedMenu }: DropDownMenuProps) => {
   const [isOpen, setIsOpen] = useState(false)
   return (
     <div className={styles.dropDownContainer}>
@@ -15,12 +25,16 @@ export const DropDownMenu = () => {
       {isOpen && (
         <div className={styles.dropDownMenu}>
           <ul>
-            <li>
-              <button className={styles.dropDownContent}>編集</button>
-            </li>
-            <li>
-              <button className={styles.dropDownContent}>削除</button>
-            </li>
+            {contents.map((content, index) => (
+              <li key={index}>
+                <button
+                  className={styles.dropDownContent}
+                  onClick={() => setSelectedMenu(content.value)}
+                >
+                  {content.label}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
       )}

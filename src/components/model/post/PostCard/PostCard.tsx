@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Post } from '@/src/API'
 import { NextImage } from '@/src/components/ui/Image'
 import { CategoryLabel } from '@/src/components/ui/CategoryLabel'
@@ -5,12 +6,19 @@ import { DropDownMenu } from '@/src/components/ui/DropDownMenu'
 import styles from './PostCard.module.scss'
 
 export const PostCard = ({ post }: { post: Post }) => {
+  const dropDownMenuContents = [
+    { label: '編集', value: 'edit' },
+    { label: '削除', value: 'delete' },
+  ]
+  const [selectedMenu, setSelectedMenu] = useState('')
+  console.log(selectedMenu)
+
   return (
     <section className={styles.container}>
       <div className={styles.header}>
         <CategoryLabel categoryName={post.category?.name || ''} />
         <h1 className={styles.title}>{post.title}</h1>
-        <DropDownMenu />
+        <DropDownMenu contents={dropDownMenuContents} setSelectedMenu={setSelectedMenu} />
       </div>
       <NextImage
         className={styles.thumbnail}
