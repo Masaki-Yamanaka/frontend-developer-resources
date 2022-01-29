@@ -23,6 +23,7 @@
   border-radius: 8px;
   background-color: white;
   box-shadow: 0 0 10px $purple;
+  animation: fadeIn 0.2s ease;
 }
 
 .dropDownContent {
@@ -33,5 +34,14 @@
 
   &:hover {
     background-color: $light-purple;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
