@@ -1,6 +1,8 @@
 import { Post } from '@/src/API'
 import { NextImage } from '@/src/components/ui/Image'
 import { CategoryLabel } from '@/src/components/ui/CategoryLabel'
+import { IconContext } from 'react-icons'
+import { FiMoreHorizontal } from 'react-icons/Fi'
 import styles from './PostCard.module.scss'
 
 export const PostCard = ({ post }: { post: Post }) => {
@@ -9,6 +11,9 @@ export const PostCard = ({ post }: { post: Post }) => {
       <div className={styles.header}>
         <CategoryLabel categoryName={post.category?.name || ''} />
         <h1 className={styles.title}>{post.title}</h1>
+        <IconContext.Provider value={{ size: '24px' }}>
+          <FiMoreHorizontal className={styles.dropDownButton} />
+        </IconContext.Provider>
       </div>
       <NextImage
         className={styles.thumbnail}
